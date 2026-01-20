@@ -159,10 +159,10 @@ h6 {
 }
 
 .header .logo img {
-  max-height: 100px;
+  max-height: 80px;
   height: auto;
   width: auto;
-  margin-right: 80px;
+  margin-right: 0px;
   transition: all 0.3s ease;
 }
 
