@@ -23,10 +23,11 @@
 :root { 
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
   --default-color: #363f40; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #1f2f31; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #099aa7; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+  --heading-color: #066636; /* Main brand green color for headings and important elements */
+  --accent-color: #e20c14; /* Red accent color for CTAs and interactive elements */
+  --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections */
+  --contrast-color: #ffffff; /* Contrast color for text, ensuring readability */
+  --brand-yellow: #e9c10a; /* Brand yellow color for highlights and accents */
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
@@ -158,8 +159,11 @@ h6 {
 }
 
 .header .logo img {
-  max-height: 36px;
-  margin-right: 8px;
+  max-height: 100px;
+  height: auto;
+  width: auto;
+  margin-right: 80px;
+  transition: all 0.3s ease;
 }
 
 .header .logo h1 {
