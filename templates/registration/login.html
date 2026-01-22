@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Staff Login - {{ site_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .login-container {
+        max-width: 500px;
+        margin: 100px auto;
+        padding: 2rem;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .login-header img {
+        max-width: 150px;
+        margin-bottom: 1rem;
+    }
+    
+    .login-form .form-control {
+        height: 50px;
+        padding: 0.5rem 1rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+    
+    .login-form .btn-login {
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1.1rem;
+        background-color: var(--accent-color);
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .login-form .btn-login:hover {
+        background-color: #0d6efd;
+        transform: translateY(-2px);
+    }
+    
+    .login-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #eee;
+    }
+    
+    .error-message {
+        color: #dc3545;
+        margin-bottom: 1.5rem;
+        padding: 0.75rem 1.25rem;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-header">
+        <img src="{% static 'assets/img/asamang-logo.png' %}" alt="{{ site_name }} Logo">
+        <h2>Staff Login</h2>
+        <p class="text-muted">Please enter your credentials to access the admin dashboard</p>
+    </div>
+    
+    {% if form.errors %}
+    <div class="error-message">
+        Your username and password didn't match. Please try again.
+    </div>
+    {% endif %}
+    
+    {% if next %}
+        {% if user.is_authenticated %}
+        <div class="error-message">
+            Your account doesn't have access to this page. To proceed, please login with an account that has access.
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            Please login to see this page.
+        </div>
+        {% endif %}
+    {% endif %}
+    
+    <form method="post" action="{% url 'login' %}" class="login-form">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" id="id_username" required autofocus>
+        </div>
+        
+        <div class="mb-4">
+            <label for="id_password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="id_password" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-login">Sign In</button>
+    </form>
+    
+    <div class="login-footer">
+        <p class="mb-0">Need help? <a href="mailto:admin@asamangsda.com">Contact Administrator</a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Add focus styles to form inputs
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        input.addEventListener('blur', function() {
+            if (this.value === '') {
+                this.parentElement.classList.remove('focused');
+            }
+        });
+        
+        // Initialize focused state if input has value
+        if (input.value !== '') {
+            input.parentElement.classList.add('focused');
+        }
+    });
+</script>
+{% endblock %}

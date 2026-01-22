@@ -54,8 +54,7 @@
               
               <!-- CTA Buttons -->
               <div class="d-flex flex-wrap gap-3 mb-4">
-                <a href="#" class="btn btn-lg px-4" style="background-color: var(--accent-color); color: white;">Schedule Consultation</a>
-                </a>
+                <a href="{% url 'core:appointment' %}" class="btn btn-lg px-4" style="background-color: var(--accent-color); color: white;">Schedule Consultation</a>
               </div>
               
               <!-- Quick Links -->
@@ -151,7 +150,7 @@
                   </div>
                   
                   <div class="text-center">
-                    <a href="appointment.html" class="btn btn-sm d-inline-flex align-items-center justify-content-center py-1 px-3 rounded-pill" style="background-color: var(--accent-color); color: white; border: none; font-size: 0.85rem;">
+                    <a href="{% url 'core:appointment' %}" class="btn btn-sm d-inline-flex align-items-center justify-content-center py-1 px-3 rounded-pill" style="background-color: var(--accent-color); color: white; border: none; font-size: 0.85rem;">
                       <i class="bi bi-calendar-plus me-1"></i>
                       Book Appointment
                     </a>

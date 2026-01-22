@@ -1,0 +1,294 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard - {{ site_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Dashboard Styles */
+    .admin-dashboard {
+        padding: 2rem 0;
+    }
+    .dashboard-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+    .stats-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: transform 0.2s;
+    }
+    .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    }
+    .stats-number {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin: 0.5rem 0;
+    }
+    .stats-label {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .appointment-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    .appointment-card:hover {
+        box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+    }
+    .appointment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+    .appointment-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+    .appointment-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    .detail-item {
+        margin-bottom: 0.5rem;
+    }
+    .detail-label {
+        font-weight: 600;
+        color: #7f8c8d;
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+    }
+    .detail-value {
+        color: #2c3e50;
+        font-size: 0.95rem;
+    }
+    .nav-tabs {
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+    .nav-tabs .nav-link {
+        border: none;
+        color: #7f8c8d;
+        font-weight: 500;
+        padding: 0.75rem 1.5rem;
+        border-bottom: 2px solid transparent;
+    }
+    .nav-tabs .nav-link.active {
+        color: #3498db;
+        border-bottom: 2px solid #3498db;
+        background: transparent;
+    }
+    .btn-admin {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        border-radius: 4px;
+        transition: all 0.2s;
+    }
+    .btn-approve {
+        background-color: #2ecc71;
+        border-color: #2ecc71;
+        color: white;
+    }
+    .btn-approve:hover {
+        background-color: #27ae60;
+        border-color: #27ae60;
+        color: white;
+    }
+    .btn-reject {
+        background-color: #e74c3c;
+        border-color: #e74c3c;
+        color: white;
+    }
+    .btn-reject:hover {
+        background-color: #c0392b;
+        border-color: #c0392b;
+        color: white;
+    }
+    .status-badge {
+        padding: 0.25rem 0.5rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .status-pending {
+        background-color: #f1c40f;
+        color: #000;
+    }
+    .status-confirmed {
+        background-color: #2ecc71;
+        color: white;
+    }
+    .status-cancelled {
+        background-color: #e74c3c;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- ======= Admin Dashboard Section ======= -->
+<section id="admin-dashboard" class="admin-dashboard">
+    <div class="container">
+        <div class="dashboard-header d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="mb-2">Admin Dashboard</h1>
+                <p class="text-muted mb-0">Manage appointments and view system statistics</p>
+            </div>
+            <div>
+                <a href="{% url 'core:staff_signup' %}" class="btn btn-primary">
+                    <i class="bi bi-person-plus me-1"></i> New Staff
+                </a>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stats-number">{{ pending_count }}</div>
+                            <div class="stats-label">Pending Appointments</div>
+                        </div>
+                        <div class="text-primary" style="font-size: 2.5rem;">
+                            <i class="bi bi-hourglass-split"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stats-number">{{ confirmed_count }}</div>
+                            <div class="stats-label">Confirmed Appointments</div>
+                        </div>
+                        <div class="text-success" style="font-size: 2.5rem;">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stats-number">{{ cancelled_count }}</div>
+                            <div class="stats-label">Cancelled Appointments</div>
+                        </div>
+                        <div class="text-danger" style="font-size: 2.5rem;">
+                            <i class="bi bi-x-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-tabs" id="appointmentTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">
+                    Pending <span class="badge bg-warning text-dark ms-1">{{ pending_count }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="confirmed-tab" data-bs-toggle="tab" data-bs-target="#confirmed" type="button" role="tab" aria-controls="confirmed" aria-selected="false">
+                    Confirmed <span class="badge bg-success ms-1">{{ confirmed_count }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled" type="button" role="tab" aria-controls="cancelled" aria-selected="false">
+                    Cancelled <span class="badge bg-danger ms-1">{{ cancelled_count }}</span>
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="appointmentTabsContent">
+            <!-- Pending Appointments Tab -->
+            <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                {% if pending_appointments %}
+                    {% for appointment in pending_appointments %}
+                        {% include 'admin/appointment_card.html' with appointment=appointment show_actions=True %}
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info">No pending appointments found.</div>
+                {% endif %}
+            </div>
+
+            <!-- Confirmed Appointments Tab -->
+            <div class="tab-pane fade" id="confirmed" role="tabpanel" aria-labelledby="confirmed-tab">
+                {% if confirmed_appointments %}
+                    {% for appointment in confirmed_appointments %}
+                        {% include 'admin/appointment_card.html' with appointment=appointment show_actions=False %}
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info">No confirmed appointments found.</div>
+                {% endif %}
+            </div>
+
+            <!-- Cancelled Appointments Tab -->
+            <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
+                {% if cancelled_appointments %}
+                    {% for appointment in cancelled_appointments %}
+                        {% include 'admin/appointment_card.html' with appointment=appointment show_actions=False %}
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info">No cancelled appointments found.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Activate the first tab
+    var firstTabEl = document.querySelector('#appointmentTabs .nav-link:first-child');
+    var firstTab = new bootstrap.Tab(firstTabEl);
+    firstTab.show();
+
+    // Handle form submissions with confirmation
+    document.addEventListener('DOMContentLoaded', function() {
+        // Approve button click handler
+        document.querySelectorAll('.btn-approve').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (!confirm('Are you sure you want to approve this appointment?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Reject button click handler
+        document.querySelectorAll('.btn-reject').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (!confirm('Are you sure you want to reject this appointment?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

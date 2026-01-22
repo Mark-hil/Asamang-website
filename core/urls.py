@@ -23,4 +23,10 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("blog/", views.blog, name="blog"),
     path("blog/<slug:slug>/", views.blog_detail, name="blog_detail"),
+
+    # Admin Dashboard and Staff Management
+    path("dashboard/", views.admin_dashboard, name="admin_dashboard"),
+    path("staff/signup/", views.staff_signup, name="staff_signup"),
+    path("appointments/approve/<int:pk>/", views.approve_appointment, name="approve_appointment"),
+    path("appointments/reject/<int:pk>/", views.reject_appointment, name="reject_appointment"),
 ]
