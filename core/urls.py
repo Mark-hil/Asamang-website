@@ -10,7 +10,7 @@ urlpatterns = [
     # Main Pages
     path("about/", views.about, name="about"),
     path("departments/", views.departments, name="departments"),
-    path("departments/<int:pk>/", views.department_detail, name="department_detail"),
+    path("departments/<int:pk>/", views.department_detail, name="department_details"),
     path("services/", views.services, name="services"),
     path("services/<int:pk>/", views.service_detail, name="service_detail"),
     path("doctors/", views.doctors, name="doctors"),
@@ -21,4 +21,6 @@ urlpatterns = [
     path("terms/", views.terms, name="terms"),
     path("privacy/", views.privacy, name="privacy"),
     path("contact/", views.contact, name="contact"),
+    path("blog/", views.blog, name="blog"),
+    path("blog/<slug:slug>/", views.blog_detail, name="blog_detail"),
 ]

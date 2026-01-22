@@ -1,0 +1,785 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} - Asamang SDA Blog{% endblock %}
+
+{% block body_class %}blog-detail-page{% endblock %}
+
+{% block content %}
+
+  <main class="main">
+    <!-- Page Title -->
+    <div class="page-title">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1 class="heading-title">Blog Details</h1>
+              <p class="mb-0">
+                Read the full article and discover more about our latest health insights and tips.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="breadcrumbs">
+        <div class="container">
+          <ol>
+            <li><a href="{% url 'core:home' %}">Home</a></li>
+            <li><a href="{% url 'core:blog' %}">Blog</a></li>
+            <li class="current">Blog Details</li>
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <!-- Blog Details Section -->
+    <section id="blog-details" class="blog-details section">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <!-- Main Content -->
+          <div class="col-lg-8">
+            <article class="blog-post">
+              <div class="post-img">
+                <img src="{% static 'img/blog/blog-details.jpg' %}" alt="" class="img-fluid">
+              </div>
+
+              <h2 class="post-title">10 Tips for a Healthier Lifestyle</h2>
+
+              <div class="post-meta">
+                <ul>
+                  <li><i class="bi bi-person"></i> <a href="#">Admin</a></li>
+                  <li><i class="bi bi-calendar"></i> January 22, 2025</li>
+                  <li><i class="bi bi-chat"></i> 12 Comments</li>
+                  <li><i class="bi bi-tag"></i> <a href="#">Health Tips</a>, <a href="#">Lifestyle</a></li>
+                </ul>
+              </div>
+
+              <div class="post-content">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. 
+                  Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non 
+                  venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.
+                </p>
+
+                <h3>1. Eat a Balanced Diet</h3>
+                <p>
+                  A balanced diet is essential for maintaining good health and well-being. It provides the necessary nutrients your body needs to function 
+                  properly. Focus on consuming a variety of fruits, vegetables, whole grains, lean proteins, and healthy fats.
+                </p>
+                <img src="{% static 'img/blog/healthy-diet.jpg' %}" class="img-fluid my-3" alt="Healthy Diet">
+                <p>
+                  Try to limit processed foods, sugary snacks, and excessive amounts of caffeine. Drinking plenty of water throughout the day is also crucial 
+                  for maintaining proper hydration and supporting various bodily functions.
+                </p>
+
+                <h3>2. Exercise Regularly</h3>
+                <p>
+                  Regular physical activity is one of the most important things you can do for your health. Aim for at least 150 minutes of moderate-intensity 
+                  aerobic activity or 75 minutes of vigorous-intensity activity each week, along with muscle-strengthening activities on 2 or more days a week.
+                </p>
+                <blockquote>
+                  <p>"The only bad workout is the one that didn't happen."</p>
+                </blockquote>
+                <p>
+                  Find activities you enjoy, whether it's walking, swimming, cycling, or dancing. The key is to stay consistent and make exercise a regular 
+                  part of your routine.
+                </p>
+
+                <h3>3. Get Enough Sleep</h3>
+                <p>
+                  Quality sleep is essential for overall health and well-being. Most adults need 7-9 hours of sleep per night. Good sleep helps improve 
+                  concentration, productivity, and immune function while reducing the risk of chronic diseases.
+                </p>
+                <p>
+                  Create a relaxing bedtime routine, keep your bedroom cool and dark, and avoid screens before bedtime to improve sleep quality.
+                </p>
+
+                <h3>4. Manage Stress</h3>
+                <p>
+                  Chronic stress can have negative effects on both physical and mental health. Practice stress-reducing techniques such as deep breathing, 
+                  meditation, yoga, or spending time in nature.
+                </p>
+                <img src="{% static 'img/blog/stress-management.jpg' %}" class="img-fluid my-3" alt="Stress Management">
+                <p>
+                  Learning to manage stress effectively can improve your mood, boost immune function, and reduce the risk of various health problems.
+                </p>
+
+                <h3>5. Stay Hydrated</h3>
+                <p>
+                  Drinking enough water is crucial for maintaining good health. Water helps regulate body temperature, transport nutrients, and remove waste. 
+                  Aim to drink at least 8 glasses of water per day, or more if you're physically active or in hot weather.
+                </p>
+
+                <h3>6. Limit Alcohol and Avoid Smoking</h3>
+                <p>
+                  Excessive alcohol consumption and smoking can have serious negative effects on your health. If you choose to drink alcohol, do so in 
+                  moderation. Quitting smoking is one of the best things you can do for your health.
+                </p>
+
+                <h3>7. Maintain Social Connections</h3>
+                <p>
+                  Strong social connections can improve mental health and increase longevity. Make time for family and friends, join clubs or groups with 
+                  similar interests, and engage in community activities.
+                </p>
+
+                <h3>8. Practice Good Hygiene</h3>
+                <p>
+                  Good hygiene practices, such as regular handwashing, can help prevent the spread of illnesses. Maintain good oral hygiene by brushing 
+                  and flossing daily, and visit your dentist regularly.
+                </p>
+
+                <h3>9. Schedule Regular Check-ups</h3>
+                <p>
+                  Regular health check-ups can help detect potential health issues before they become serious. Visit your healthcare provider for routine 
+                  screenings and vaccinations as recommended.
+                </p>
+
+                <h3>10. Practice Mindfulness</h3>
+                <p>
+                  Mindfulness involves being fully present in the moment and can help reduce stress and improve mental well-being. Try incorporating 
+                  mindfulness techniques into your daily routine, such as mindful eating or taking short meditation breaks.
+                </p>
+
+                <div class="conclusion">
+                  <h4>Conclusion</h4>
+                  <p>
+                    Adopting these healthy lifestyle tips can significantly improve your overall well-being. Remember that small, consistent changes 
+                    over time can lead to lasting benefits for your health and happiness.
+                  </p>
+                </div>
+              </div>
+
+              <div class="post-footer">
+                <div class="post-tags">
+                  <span>Tags:</span>
+                  <a href="#">Health</a>
+                  <a href="#">Wellness</a>
+                  <a href="#">Lifestyle</a>
+                  <a href="#">Tips</a>
+                </div>
+
+                <div class="share-buttons">
+                  <span>Share:</span>
+                  <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                  <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                  <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                  <a href="#" class="whatsapp"><i class="bi bi-whatsapp"></i></a>
+                </div>
+              </div>
+
+              <!-- Author Box -->
+              <div class="author-box">
+                <div class="author-img">
+                  <img src="{% static 'img/doctors/doctor-1.jpg' %}" alt="" class="img-fluid">
+                </div>
+                <div class="author-info">
+                  <h4>Dr. Sarah Johnson</h4>
+                  <p class="author-title">Chief Medical Officer</p>
+                  <p>
+                    Dr. Sarah Johnson is a board-certified physician with over 15 years of experience in preventive medicine and health promotion. 
+                    She is passionate about helping people achieve their health goals through evidence-based lifestyle changes.
+                  </p>
+                  <div class="social-links">
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Comments Section -->
+              <div class="comments">
+                <h4>Comments (3)</h4>
+                
+                <!-- Comment 1 -->
+                <div class="comment">
+                  <div class="comment-img">
+                    <img src="{% static 'img/testimonials/testimonials-1.jpg' %}" alt="" class="img-fluid">
+                  </div>
+                  <div class="comment-content">
+                    <h5>John Doe <span>2 days ago</span></h5>
+                    <p>
+                      Great article! I've been following these tips for a few months now and have noticed a significant improvement in my energy levels 
+                      and overall well-being. The section on stress management was particularly helpful.
+                    </p>
+                    <a href="#" class="reply-btn">Reply</a>
+                  </div>
+                </div>
+
+                <!-- Comment 2 -->
+                <div class="comment reply">
+                  <div class="comment-img">
+                    <img src="{% static 'img/testimonials/testimonials-2.jpg' %}" alt="" class="img-fluid">
+                  </div>
+                  <div class="comment-content">
+                    <h5>Jane Smith <span>1 day ago</span> <span class="reply-tag">Replying to John Doe</span></h5>
+                    <p>
+                      I completely agree, John! The stress management techniques mentioned here have been a game-changer for me. I've been practicing 
+                      mindfulness for a few weeks now, and I can already feel the difference.
+                    </p>
+                    <a href="#" class="reply-btn">Reply</a>
+                  </div>
+                </div>
+
+                <!-- Comment 3 -->
+                <div class="comment">
+                  <div class="comment-img">
+                    <img src="{% static 'img/testimonials/testimonials-3.jpg' %}" alt="" class="img-fluid">
+                  </div>
+                  <div class="comment-content">
+                    <h5>Michael Brown <span>5 hours ago</span></h5>
+                    <p>
+                      Thanks for sharing these valuable tips! I particularly liked the emphasis on social connections. It's easy to overlook how important 
+                      they are for our mental health.
+                    </p>
+                    <a href="#" class="reply-btn">Reply</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Comment Form -->
+              <div class="comment-form">
+                <h4>Leave a Comment</h4>
+                <form>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <input type="text" class="form-control" placeholder="Your Name">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <input type="email" class="form-control" placeholder="Your Email">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Website (Optional)">
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control" rows="5" placeholder="Your Comment"></textarea>
+                  </div>
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="save-info">
+                    <label class="form-check-label" for="save-info">
+                      Save my name, email, and website in this browser for the next time I comment.
+                    </label>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Post Comment</button>
+                </form>
+              </div>
+            </article>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="col-lg-4">
+            <!-- Search Widget -->
+            <div class="sidebar-widget search-widget">
+              <h4 class="widget-title">Search</h4>
+              <form action="#" class="search-form">
+                <input type="text" placeholder="Search..." class="form-control">
+                <button type="submit" class="search-btn"><i class="bi bi-search"></i></button>
+              </form>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="sidebar-widget categories-widget">
+              <h4 class="widget-title">Categories</h4>
+              <ul>
+                <li><a href="#">Health Tips <span>(12)</span></a></li>
+                <li><a href="#">Nutrition <span>(8)</span></a></li>
+                <li><a href="#">Fitness <span>(5)</span></a></li>
+                <li><a href="#">Mental Health <span>(7)</span></a></li>
+                <li><a href="#">Preventive Care <span>(9)</span></a></li>
+              </ul>
+            </div>
+
+            <!-- Popular Posts Widget -->
+            <div class="sidebar-widget popular-posts">
+              <h4 class="widget-title">Popular Posts</h4>
+              <div class="post-item">
+                <div class="post-img">
+                  <img src="{% static 'img/blog/blog-popular-1.jpg' %}" alt="">
+                </div>
+                <div>
+                  <h5><a href="#">10 Superfoods for Better Health</a></h5>
+                  <time datetime="2025-01-20">January 20, 2025</time>
+                </div>
+              </div>
+              <div class="post-item">
+                <div class="post-img">
+                  <img src="{% static 'img/blog/blog-popular-2.jpg' %}" alt="">
+                </div>
+                <div>
+                  <h5><a href="#">The Benefits of Regular Exercise</a></h5>
+                  <time datetime="2025-01-18">January 18, 2025</time>
+                </div>
+              </div>
+              <div class="post-item">
+                <div class="post-img">
+                  <img src="{% static 'img/blog/blog-popular-3.jpg' %}" alt="">
+                </div>
+                <div>
+                  <h5><a href="#">Understanding Mental Health</a></h5>
+                  <time datetime="2025-01-15">January 15, 2025</time>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tags Widget -->
+            <div class="sidebar-widget tags-widget">
+              <h4 class="widget-title">Tags</h4>
+              <div class="tags">
+                <a href="#">Health</a>
+                <a href="#">Wellness</a>
+                <a href="#">Nutrition</a>
+                <a href="#">Fitness</a>
+                <a href="#">Mental Health</a>
+                <a href="#">Prevention</a>
+                <a href="#">Lifestyle</a>
+                <a href="#">Exercise</a>
+              </div>
+            </div>
+
+            <!-- Newsletter Widget -->
+            <div class="sidebar-widget newsletter-widget">
+              <h4 class="widget-title">Newsletter</h4>
+              <p>Subscribe to our newsletter to get the latest health tips and updates.</p>
+              <form class="newsletter-form">
+                <input type="email" class="form-control" placeholder="Your Email Address">
+                <button type="submit" class="btn btn-primary w-100 mt-2">Subscribe</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Blog Details Section -->
+
+  </main>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* Blog Details Page Styles */
+  .blog-detail-page .blog-post {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .blog-detail-page .post-img {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 25px;
+  }
+  
+  .blog-detail-page .post-img img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s ease;
+  }
+  
+  .blog-detail-page .post-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c4964;
+    margin-bottom: 15px;
+  }
+  
+  .blog-detail-page .post-meta {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f4f8;
+  }
+  
+  .blog-detail-page .post-meta ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .blog-detail-page .post-meta li {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  .blog-detail-page .post-meta i {
+    margin-right: 5px;
+    color: #1977cc;
+  }
+  
+  .blog-detail-page .post-content {
+    color: #4e6b88;
+    line-height: 1.8;
+  }
+  
+  .blog-detail-page .post-content h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2c4964;
+    margin: 30px 0 15px;
+  }
+  
+  .blog-detail-page .post-content p {
+    margin-bottom: 15px;
+  }
+  
+  .blog-detail-page .post-content img {
+    border-radius: 10px;
+    margin: 20px 0;
+  }
+  
+  .blog-detail-page blockquote {
+    background: #f8f9fa;
+    border-left: 4px solid #1977cc;
+    font-style: italic;
+    padding: 20px;
+    margin: 25px 0;
+  }
+  
+  .blog-detail-page .conclusion {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 30px 0;
+  }
+  
+  .blog-detail-page .conclusion h4 {
+    color: #2c4964;
+    margin-bottom: 15px;
+  }
+  
+  .blog-detail-page .post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    margin: 30px 0;
+    border-top: 1px solid #f0f4f8;
+    border-bottom: 1px solid #f0f4f8;
+  }
+  
+  .blog-detail-page .post-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .blog-detail-page .post-tags span {
+    font-weight: 600;
+    color: #2c4964;
+  }
+  
+  .blog-detail-page .post-tags a {
+    background: #f0f4f8;
+    color: #4e6b88;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    transition: all 0.3s ease;
+  }
+  
+  .blog-detail-page .post-tags a:hover {
+    background: #1977cc;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .blog-detail-page .share-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .blog-detail-page .share-buttons span {
+    font-weight: 600;
+    color: #2c4964;
+  }
+  
+  .blog-detail-page .share-buttons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .blog-detail-page .share-buttons .facebook { background: #3b5998; }
+  .blog-detail-page .share-buttons .twitter { background: #1da1f2; }
+  .blog-detail-page .share-buttons .linkedin { background: #0077b5; }
+  .blog-detail-page .share-buttons .whatsapp { background: #25d366; }
+  
+  .blog-detail-page .share-buttons a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Author Box */
+  .author-box {
+    display: flex;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 40px 0;
+  }
+  
+  .author-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+    flex-shrink: 0;
+  }
+  
+  .author-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .author-info h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c4964;
+    margin-bottom: 5px;
+  }
+  
+  .author-title {
+    color: #1977cc;
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  .author-info p {
+    color: #4e6b88;
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #e9ecef;
+    color: #2c4964;
+    transition: all 0.3s ease;
+  }
+  
+  .social-links a:hover {
+    background: #1977cc;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  /* Comments Section */
+  .comments {
+    margin: 40px 0;
+  }
+  
+  .comments h4 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2c4964;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f4f8;
+  }
+  
+  .comment {
+    display: flex;
+    margin-bottom: 30px;
+  }
+  
+  .comment.reply {
+    margin-left: 50px;
+  }
+  
+  .comment-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+    flex-shrink: 0;
+  }
+  
+  .comment-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .comment-content h5 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c4964;
+    margin-bottom: 5px;
+  }
+  
+  .comment-content h5 span {
+    font-size: 13px;
+    font-weight: 400;
+    color: #6c757d;
+    margin-left: 10px;
+  }
+  
+  .reply-tag {
+    display: inline-block;
+    background: #f0f4f8;
+    color: #1977cc;
+    font-size: 12px !important;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: 10px;
+  }
+  
+  .comment-content p {
+    color: #4e6b88;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .reply-btn {
+    color: #1977cc;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+  
+  .reply-btn:hover {
+    color: #0d5b9c;
+    text-decoration: none;
+  }
+  
+  /* Comment Form */
+  .comment-form {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 30px;
+    margin-top: 40px;
+  }
+  
+  .comment-form h4 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2c4964;
+    margin-bottom: 20px;
+  }
+  
+  .comment-form .form-control {
+    border: 1px solid #e0e6ed;
+    border-radius: 5px;
+    padding: 10px 15px;
+    height: auto;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  
+  .comment-form textarea.form-control {
+    min-height: 150px;
+  }
+  
+  .comment-form .form-check-label {
+    font-size: 13px;
+    color: #6c757d;
+    line-height: 1.5;
+  }
+  
+  .comment-form .btn-primary {
+    background: #1977cc;
+    border: none;
+    padding: 10px 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .comment-form .btn-primary:hover {
+    background: #166ab4;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(25, 119, 204, 0.2);
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 991.98px) {
+    .author-box {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .author-img {
+      margin: 0 auto 20px;
+    }
+    
+    .social-links {
+      justify-content: center;
+    }
+    
+    .comment.reply {
+      margin-left: 30px;
+    }
+  }
+  
+  @media (max-width: 767.98px) {
+    .blog-detail-page .post-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    
+    .blog-detail-page .share-buttons {
+      width: 100%;
+      justify-content: flex-start;
+    }
+    
+    .comment {
+      flex-direction: column;
+    }
+    
+    .comment-img {
+      margin-bottom: 15px;
+    }
+    
+    .comment.reply {
+      margin-left: 20px;
+    }
+  }
+  
+  @media (max-width: 575.98px) {
+    .blog-detail-page .post-title {
+      font-size: 24px;
+    }
+    
+    .blog-detail-page .post-content h3 {
+      font-size: 20px;
+    }
+    
+    .comment-form {
+      padding: 20px 15px;
+    }
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,487 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blog - Asamang SDA{% endblock %}
+
+{% block body_class %}blog-page{% endblock %}
+
+{% block content %}
+
+  <main class="main">
+    <!-- Page Title -->
+    <div class="page-title">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1 class="heading-title">Our Blog</h1>
+              <p class="mb-0">
+                Stay updated with the latest health tips, news, and updates from Asamang SDA.
+                Our blog covers a wide range of health topics to help you live a healthier life.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="breadcrumbs">
+        <div class="container">
+          <ol>
+            <li><a href="{% url 'core:home' %}">Home</a></li>
+            <li class="current">Blog</li>
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog section">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <!-- Main Content -->
+          <div class="col-lg-8">
+            <div class="row">
+              <!-- Blog Post 1 -->
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="blog-card">
+                  <div class="post-img">
+                    <img src="{% static 'img/blog/blog-1.jpg' %}" alt="" class="img-fluid">
+                  </div>
+                  <div class="post-content">
+                    <div class="post-meta">
+                      <span class="post-date"><i class="bi bi-calendar"></i> January 22, 2025</span>
+                      <span class="post-comments"><i class="bi bi-chat"></i> 12 Comments</span>
+                    </div>
+                    <h3 class="post-title"><a href="{% url 'core:blog_detail' 'healthy-living-tips' %}">10 Tips for a Healthier Lifestyle</a></h3>
+                    <p>Discover simple yet effective ways to improve your overall health and wellbeing with these practical tips.</p>
+                    <a href="{% url 'core:blog_detail' 'healthy-living-tips' %}" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Blog Post 2 -->
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="blog-card">
+                  <div class="post-img">
+                    <img src="{% static 'img/blog/blog-2.jpg' %}" alt="" class="img-fluid">
+                  </div>
+                  <div class="post-content">
+                    <div class="post-meta">
+                      <span class="post-date"><i class="bi bi-calendar"></i> January 15, 2025</span>
+                      <span class="post-comments"><i class="bi bi-chat"></i> 8 Comments</span>
+                    </div>
+                    <h3 class="post-title"><a href="{% url 'core:blog_detail' 'importance-of-regular-checkups' %}">The Importance of Regular Health Checkups</a></h3>
+                    <p>Learn why regular health checkups are crucial for early detection and prevention of potential health issues.</p>
+                    <a href="{% url 'core:blog_detail' 'importance-of-regular-checkups' %}" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Blog Post 3 -->
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="blog-card">
+                  <div class="post-img">
+                    <img src="{% static 'img/blog/blog-3.jpg' %}" alt="" class="img-fluid">
+                  </div>
+                  <div class="post-content">
+                    <div class="post-meta">
+                      <span class="post-date"><i class="bi bi-calendar"></i> January 8, 2025</span>
+                      <span class="post-comments"><i class="bi bi-chat"></i> 15 Comments</span>
+                    </div>
+                    <h3 class="post-title"><a href="{% url 'core:blog_detail' 'healthy-eating-habits' %}">Healthy Eating Habits for a Better Life</a></h3>
+                    <p>Explore the best eating habits that can help you maintain a balanced diet and improve your overall health.</p>
+                    <a href="{% url 'core:blog_detail' 'healthy-eating-habits' %}" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Blog Post 4 -->
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="blog-card">
+                  <div class="post-img">
+                    <img src="{% static 'img/blog/blog-4.jpg' %}" alt="" class="img-fluid">
+                  </div>
+                  <div class="post-content">
+                    <div class="post-meta">
+                      <span class="post-date"><i class="bi bi-calendar"></i> January 1, 2025</span>
+                      <span class="post-comments"><i class="bi bi-chat"></i> 10 Comments</span>
+                    </div>
+                    <h3 class="post-title"><a href="{% url 'core:blog_detail' 'stress-management-techniques' %}">Effective Stress Management Techniques</a></h3>
+                    <p>Discover proven techniques to manage stress and improve your mental and physical wellbeing.</p>
+                    <a href="{% url 'core:blog_detail' 'stress-management-techniques' %}" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="blog-pagination" data-aos="fade-up" data-aos-delay="500">
+              <ul class="pagination justify-content-center">
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="col-lg-4">
+            <!-- Search Widget -->
+            <div class="sidebar-widget search-widget" data-aos="fade-up" data-aos-delay="100">
+              <h4 class="widget-title">Search</h4>
+              <form action="#" class="search-form">
+                <input type="text" placeholder="Search..." class="form-control">
+                <button type="submit" class="search-btn"><i class="bi bi-search"></i></button>
+              </form>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="sidebar-widget categories-widget" data-aos="fade-up" data-aos-delay="200">
+              <h4 class="widget-title">Categories</h4>
+              <ul>
+                <li><a href="#">Health Tips <span>(12)</span></a></li>
+                <li><a href="#">Nutrition <span>(8)</span></a></li>
+                <li><a href="#">Fitness <span>(5)</span></a></li>
+                <li><a href="#">Mental Health <span>(7)</span></a></li>
+                <li><a href="#">Preventive Care <span>(9)</span></a></li>
+              </ul>
+            </div>
+
+            <!-- Recent Posts Widget -->
+            <div class="sidebar-widget recent-posts" data-aos="fade-up" data-aos-delay="300">
+              <h4 class="widget-title">Recent Posts</h4>
+              <div class="post-item">
+                <div class="post-img">
+                  <img src="{% static 'img/blog/blog-recent-1.jpg' %}" alt="">
+                </div>
+                <div>
+                  <h5><a href="{% url 'core:blog_detail' 'healthy-living-tips' %}">10 Tips for a Healthier Lifestyle</a></h5>
+                  <time datetime="2025-01-22">January 22, 2025</time>
+                </div>
+              </div>
+              <div class="post-item">
+                <div class="post-img">
+                  <img src="{% static 'img/blog/blog-recent-2.jpg' %}" alt="">
+                </div>
+                <div>
+                  <h5><a href="{% url 'core:blog_detail' 'importance-of-regular-checkups' %}">The Importance of Regular Health Checkups</a></h5>
+                  <time datetime="2025-01-15">January 15, 2025</time>
+                </div>
+              </div>
+              <div class="post-item">
+                <div class="post-img">
+                  <img src="{% static 'img/blog/blog-recent-3.jpg' %}" alt="">
+                </div>
+                <div>
+                  <h5><a href="{% url 'core:blog_detail' 'healthy-eating-habits' %}">Healthy Eating Habits for a Better Life</a></h5>
+                  <time datetime="2025-01-08">January 8, 2025</time>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tags Widget -->
+            <div class="sidebar-widget tags-widget" data-aos="fade-up" data-aos-delay="400">
+              <h4 class="widget-title">Tags</h4>
+              <div class="tags">
+                <a href="#">Health</a>
+                <a href="#">Wellness</a>
+                <a href="#">Nutrition</a>
+                <a href="#">Fitness</a>
+                <a href="#">Mental Health</a>
+                <a href="#">Prevention</a>
+                <a href="#">Lifestyle</a>
+                <a href="#">Exercise</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Blog Section -->
+
+  </main>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* Blog Page Styles */
+  .blog-page .blog-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+  }
+  
+  .blog-page .blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .blog-page .post-img {
+    overflow: hidden;
+    height: 200px;
+  }
+  
+  .blog-page .post-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+  }
+  
+  .blog-page .blog-card:hover .post-img img {
+    transform: scale(1.05);
+  }
+  
+  .blog-page .post-content {
+    padding: 25px;
+  }
+  
+  .blog-page .post-meta {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 10px;
+  }
+  
+  .blog-page .post-meta i {
+    margin-right: 5px;
+    color: #1977cc;
+  }
+  
+  .blog-page .post-meta .post-comments {
+    margin-left: 15px;
+  }
+  
+  .blog-page .post-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  
+  .blog-page .post-title a {
+    color: #2c4964;
+    transition: 0.3s;
+  }
+  
+  .blog-page .post-title a:hover {
+    color: #1977cc;
+    text-decoration: none;
+  }
+  
+  .blog-page .read-more {
+    display: inline-flex;
+    align-items: center;
+    color: #1977cc;
+    font-weight: 500;
+    margin-top: 15px;
+  }
+  
+  .blog-page .read-more i {
+    margin-left: 5px;
+    transition: 0.3s;
+  }
+  
+  .blog-page .read-more:hover i {
+    transform: translateX(5px);
+  }
+  
+  /* Sidebar Styles */
+  .sidebar-widget {
+    background: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .widget-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c4964;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f4f8;
+  }
+  
+  /* Search Widget */
+  .search-form {
+    position: relative;
+  }
+  
+  .search-form input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #e0e6ed;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .search-form .search-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    background: transparent;
+    border: none;
+    padding: 0 15px;
+    color: #1977cc;
+  }
+  
+  /* Categories Widget */
+  .categories-widget ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .categories-widget li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #e0e6ed;
+  }
+  
+  .categories-widget li:last-child {
+    border-bottom: none;
+  }
+  
+  .categories-widget a {
+    display: flex;
+    justify-content: space-between;
+    color: #4e6b88;
+    transition: 0.3s;
+  }
+  
+  .categories-widget a:hover {
+    color: #1977cc;
+    text-decoration: none;
+    padding-left: 5px;
+  }
+  
+  /* Recent Posts Widget */
+  .post-item {
+    display: flex;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #e0e6ed;
+  }
+  
+  .post-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  
+  .post-item .post-img {
+    width: 80px;
+    height: 60px;
+    margin-right: 15px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .post-item .post-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .post-item h5 {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .post-item h5 a {
+    color: #2c4964;
+    transition: 0.3s;
+  }
+  
+  .post-item h5 a:hover {
+    color: #1977cc;
+    text-decoration: none;
+  }
+  
+  .post-item time {
+    display: block;
+    font-size: 12px;
+    color: #6c757d;
+  }
+  
+  /* Tags Widget */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -3px;
+  }
+  
+  .tags a {
+    display: inline-block;
+    padding: 5px 12px;
+    margin: 3px;
+    font-size: 13px;
+    color: #4e6b88;
+    background: #f0f4f8;
+    border-radius: 3px;
+    transition: 0.3s;
+  }
+  
+  .tags a:hover {
+    background: #1977cc;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  /* Pagination */
+  .blog-pagination {
+    margin-top: 30px;
+  }
+  
+  .pagination .page-link {
+    color: #1977cc;
+    border: 1px solid #dee2e6;
+    margin: 0 3px;
+    border-radius: 5px !important;
+  }
+  
+  .pagination .page-item.active .page-link {
+    background-color: #1977cc;
+    border-color: #1977cc;
+  }
+  
+  .pagination .page-link:hover {
+    background-color: #f0f4f8;
+  }
+  
+  .pagination .page-item.active .page-link:hover {
+    background-color: #1977cc;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 991.98px) {
+    .blog-page .post-img {
+      height: 250px;
+    }
+  }
+  
+  @media (max-width: 767.98px) {
+    .blog-page .post-img {
+      height: 200px;
+    }
+  }
+  
+  @media (max-width: 575.98px) {
+    .blog-page .post-img {
+      height: 180px;
+    }
+    
+    .post-item .post-img {
+      width: 60px;
+      height: 50px;
+    }
+  }
+</style>
+{% endblock %}

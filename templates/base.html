@@ -48,10 +48,11 @@
           <li><a href="{% url 'core:departments' %}" class="{% if '/departments/' in request.path %}active{% endif %} text-dark fw-medium">Departments</a></li>
           <li><a href="{% url 'core:services' %}" class="{% if '/services/' in request.path %}active{% endif %} text-dark fw-medium">Services</a></li>
           <li><a href="{% url 'core:doctors' %}" class="{% if '/doctors/' in request.path %}active{% endif %} text-dark fw-medium">Doctors</a></li>
+          <li><a href="{% url 'core:blog' %}" class="{% if '/blog/' in request.path %}active{% endif %} text-dark fw-medium">Blog</a></li>
           <li class="dropdown">
             <a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="{% url 'core:department_detail' 1 %}">Department Details</a></li>
+              <li><a href="{% url 'core:department_details' 1 %}">Department Details</a></li>
               <li><a href="{% url 'core:service_detail' 1 %}">Service Details</a></li>
               <li><a href="{% url 'core:appointment' %}">Appointment</a></li>
               <li><a href="{% url 'core:testimonials' %}">Testimonials</a></li>
