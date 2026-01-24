@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>New Appointment Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .appointment-details {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>New Appointment Booking</h2>
+    </div>
+    
+    <div class="content">
+        <p>Hello Admin,</p>
+        
+        <p>A new appointment has been booked with the following details:</p>
+        
+        <div class="appointment-details">
+            <p><strong>Patient Name:</strong> {{ appointment.name }}</p>
+            <p><strong>Email:</strong> {{ appointment.email }}</p>
+            <p><strong>Phone:</strong> {{ appointment.phone }}</p>
+            <p><strong>Department:</strong> {{ appointment.department }}</p>
+            <p><strong>Doctor:</strong> {{ appointment.doctor }}</p>
+            <p><strong>Appointment Date:</strong> {{ appointment.appointment_date|date:"F j, Y" }}</p>
+            <p><strong>Appointment Time:</strong> {{ appointment.appointment_time|time:"g:i A" }}</p>
+            {% if appointment.message %}
+                <p><strong>Message:</strong><br>{{ appointment.message }}</p>
+            {% endif %}
+        </div>
+        
+        <p>Please log in to the admin panel to review and manage this appointment.</p>
+        
+        <p>Best regards,<br>{{ site_name }} Team</p>
+    </div>
+    
+    <div class="footer">
+        <p>This is an automated message. Please do not reply to this email.</p>
+        <p>&copy; {% now "Y" %} {{ site_name }}. All rights reserved.</p>
+    </div>
+</body>
+</html>

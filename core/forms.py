@@ -145,3 +145,18 @@ class AppointmentForm(forms.ModelForm):
                 raise forms.ValidationError("Appointments are only available on weekdays (Monday to Friday).")
         
         return cleaned_data
+
+
+class RejectionForm(forms.Form):
+    """Form for providing a reason when rejecting an appointment."""
+    reason = forms.CharField(
+        label="Reason for Rejection",
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 4,
+            'placeholder': 'Please provide a reason for rejecting this appointment...',
+            'required': 'required'
+        }),
+        help_text="This will be included in the notification email to the patient.",
+        required=True
+    )

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment {{ appointment.get_status_display }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 15px 0;
+            background-color: #4CAF50;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Appointment {{ appointment.get_status_display }}</h2>
+    </div>
+    
+    <div class="content">
+        <p>Dear {{ appointment.name }},</p>
+        
+        <p>Your appointment has been <strong>{{ appointment.get_status_display|lower }}</strong>.</p>
+        
+        <p><strong>Appointment Details:</strong></p>
+        <ul>
+            <li><strong>Date:</strong> {{ appointment.appointment_date|date:"F j, Y" }}</li>
+            <li><strong>Time:</strong> {{ appointment.appointment_time|time:"g:i A" }}</li>
+            <li><strong>Doctor:</strong> {{ appointment.doctor }}</li>
+            <li><strong>Department:</strong> {{ appointment.department }}</li>
+            {% if appointment.status_notes %}
+            <li><strong>Notes:</strong> {{ appointment.status_notes }}</li>
+            {% endif %}
+        </ul>
+        
+        <p>If you have any questions or need to reschedule, please contact us at <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.</p>
+        
+        <p>Thank you for choosing {{ site_name }}!</p>
+        
+        <p>Best regards,<br>The {{ site_name }} Team</p>
+    </div>
+    
+    <div class="footer">
+        <p>This is an automated message. Please do not reply to this email.</p>
+        <p>© {% now "Y" %} {{ site_name }}. All rights reserved.</p>
+    </div>
+</body>
+</html>

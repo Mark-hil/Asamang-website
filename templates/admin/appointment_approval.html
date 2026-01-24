@@ -1,0 +1,133 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Pending Appointments - {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/css/forms.css' %}">
+<style>
+    .appointment-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .appointment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    .appointment-actions {
+        display: flex;
+        gap: 10px;
+    }
+    .appointment-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 10px;
+    }
+    .detail-item {
+        margin-bottom: 5px;
+    }
+    .detail-label {
+        font-weight: 600;
+        color: #666;
+        font-size: 0.9em;
+    }
+    .detail-value {
+        margin-top: 3px;
+    }
+    .btn-approve {
+        background-color: #28a745;
+        color: white;
+    }
+    .btn-reject {
+        background-color: #dc3545;
+        color: white;
+    }
+    .no-appointments {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <h1>Pending Appointments</h1>
+    
+    {% if pending_appointments %}
+        {% for appointment in pending_appointments %}
+            <div class="appointment-card">
+                <div class="appointment-header">
+                    <h2>Appointment #{{ appointment.id }}</h2>
+                    <div class="appointment-actions">
+                        <form method="post" action="{% url 'core:approve_appointment' appointment.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="button btn-approve" onclick="return confirm('Approve this appointment?')">
+                                <i class="fas fa-check"></i> Approve
+                            </button>
+                        </form>
+                        <form method="post" action="{% url 'core:reject_appointment' appointment.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="button btn-reject" onclick="return confirm('Reject this appointment?')">
+                                <i class="fas fa-times"></i> Reject
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="appointment-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Patient Name</div>
+                        <div class="detail-value">{{ appointment.name }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-value">{{ appointment.email }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Phone</div>
+                        <div class="detail-value">{{ appointment.phone }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Department</div>
+                        <div class="detail-value">{{ appointment.department }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Doctor</div>
+                        <div class="detail-value">{{ appointment.doctor }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Appointment Date</div>
+                        <div class="detail-value">{{ appointment.appointment_date|date:"F d, Y" }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Appointment Time</div>
+                        <div class="detail-value">{{ appointment.appointment_time|time:"h:i A" }}</div>
+                    </div>
+                </div>
+                
+                {% if appointment.message %}
+                    <div class="detail-item">
+                        <div class="detail-label">Additional Notes</div>
+                        <div class="detail-value">{{ appointment.message|linebreaksbr }}</div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-appointments">
+            <p>No pending appointments found.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

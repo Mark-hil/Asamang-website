@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView
+from django.utils import timezone
 
 # Home
 def home(request):
@@ -39,13 +40,46 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Count, Q
 from django.contrib.auth import get_user_model
-from .forms import AppointmentForm
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
+from .forms import AppointmentForm, RejectionForm
 from .auth_forms import StaffSignupForm
 from .models import Appointment
 
 User = get_user_model()
 
 # Appointment
+def send_admin_notification(appointment):
+    """Send notification to admin about new appointment."""
+    subject = f"New Appointment Booking: {appointment.name}"
+    
+    context = {
+        'appointment': appointment,
+        'site_name': getattr(settings, 'SITE_NAME', 'Our Medical Center'),
+    }
+    
+    # Render HTML email
+    html_message = render_to_string('emails/new_appointment_notification.html', context)
+    plain_message = strip_tags(html_message)
+    
+    try:
+        send_mail(
+            subject=subject,
+            message=plain_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.ADMIN_EMAIL],
+            html_message=html_message,
+            fail_silently=False,
+        )
+        return True
+    except Exception as e:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.error(f"Failed to send admin notification email: {str(e)}")
+        return False
+
 @require_http_methods(["GET", "POST"])
 def appointment(request):
     if request.method == 'POST':
@@ -53,6 +87,10 @@ def appointment(request):
         if form.is_valid():
             appointment = form.save(commit=False)
             appointment.save()
+            
+            # Send notification to admin
+            send_admin_notification(appointment)
+            
             messages.success(request, 'Your appointment has been booked successfully! We will contact you shortly to confirm.')
             return redirect('core:appointment')
         else:
@@ -201,18 +239,48 @@ def approve_appointment(request, pk):
     appointment = get_object_or_404(Appointment, pk=pk)
     if appointment.status == 'pending':
         appointment.status = 'confirmed'
+        appointment.processed_by = request.user
+        appointment.processed_at = timezone.now()
         appointment.save()
-        messages.success(request, f"Appointment for {appointment.name} has been approved.")
-        # Here you can add email notification logic
+        
+        # Send email notification
+        try:
+            appointment.send_status_notification(request)
+            messages.success(request, f"Appointment for {appointment.name} has been approved. Notification sent to {appointment.email}.")
+        except Exception as e:
+            messages.warning(request, f"Appointment approved but failed to send email notification: {str(e)}")
+    else:
+        messages.warning(request, "Only pending appointments can be approved.")
+    
     return redirect('core:admin_dashboard')
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def reject_appointment(request, pk):
     """View to reject a pending appointment."""
     appointment = get_object_or_404(Appointment, pk=pk)
-    if appointment.status == 'pending':
-        appointment.status = 'cancelled'
-        appointment.save()
-        messages.success(request, f"Appointment for {appointment.name} has been rejected.")
-        # Here you can add email notification logic
-    return redirect('core:admin_dashboard')
+    
+    if request.method == 'POST':
+        form = RejectionForm(request.POST)
+        if form.is_valid():
+            appointment.status = 'cancelled'
+            appointment.processed_by = request.user
+            appointment.processed_at = timezone.now()
+            appointment.status_notes = form.cleaned_data.get('reason', '')
+            appointment.save()
+            
+            # Send email notification
+            try:
+                appointment.send_status_notification(request)
+                messages.success(request, f"Appointment for {appointment.name} has been rejected. Notification sent to {appointment.email}.")
+            except Exception as e:
+                messages.warning(request, f"Appointment rejected but failed to send email notification: {str(e)}")
+            
+            return redirect('core:admin_dashboard')
+    else:
+        form = RejectionForm()
+    
+    return render(request, 'admin/confirm_reject.html', {
+        'appointment': appointment,
+        'form': form,
+        'title': 'Reject Appointment'
+    })

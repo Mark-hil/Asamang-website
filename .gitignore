@@ -1,3 +1,6 @@
 .venv/
 todo.txt
 sample/
+# Environment variables
+.env
+
