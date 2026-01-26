@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Delete Blog Post - {{ site_name }}{% endblock %}
+
+{% block content %}
+<main class="main">
+  <!-- Page Title -->
+  <div class="page-title">
+    <div class="container">
+      <div class="row d-flex justify-content-center text-center">
+        <div class="col-lg-8">
+          <h1 class="heading-title">Delete Blog Post</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body p-4">
+              <h4 class="card-title text-center mb-4">Confirm Deletion</h4>
+              
+              <div class="alert alert-danger" role="alert">
+                <h5 class="alert-heading">Warning!</h5>
+                <p>You are about to delete the following blog post. This action cannot be undone.</p>
+                <hr>
+                <p class="mb-0">
+                  <strong>Title:</strong> {{ object.title }}
+                </p>
+              </div>
+
+              <div class="card mb-4">
+                <div class="card-body">
+                  <h6 class="card-subtitle mb-2 text-muted">Post Details</h6>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <p class="mb-1"><strong>Author:</strong> {{ object.author.get_full_name|default:object.author.username }}</p>
+                      <p class="mb-1"><strong>Published:</strong> {{ object.published_date|date:"F j, Y" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="mb-1"><strong>Category:</strong> {{ object.category }}</p>
+                      <p class="mb-1"><strong>Status:</strong> 
+                        <span class="badge {% if object.status == 'published' %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                          {{ object.get_status_display }}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between">
+                <a href="{% url 'core:blog_detail' object.slug %}" class="btn btn-outline-secondary">
+                  <i class="bi bi-arrow-left"></i> Cancel and Go Back
+                </a>
+                <form method="post" class="d-inline">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Confirm Delete
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  .card {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+  }
+  
+  .alert {
+    border-left: 4px solid #dc3545;
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .btn i {
+    font-size: 1rem;
+  }
+</style>
+{% endblock %}

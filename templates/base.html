@@ -80,6 +80,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
               {% if user.is_staff %}
                 <li><a class="dropdown-item" href="{% url 'core:admin_dashboard' %}"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</a></li>
+                <li><a class="dropdown-item" href="{% url 'core:doctors' %}"><i class="bi bi-people me-2"></i>Manage Doctors</a></li>
                 <li><a class="dropdown-item" href="{% url 'core:staff_signup' %}"><i class="bi bi-person-plus me-2"></i>Add Staff Member</a></li>
                 <li><hr class="dropdown-divider"></li>
               {% endif %}

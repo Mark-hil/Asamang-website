@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Delete Doctor - Asamang Hospital{% endblock %}
+
+{% block content %}
+<main id="main">
+  <!-- ======= Breadcrumbs ======= -->
+  <div class="breadcrumbs">
+    <div class="container">
+      <h2>Delete Doctor</h2>
+      <ol>
+        <li><a href="{% url 'core:home' %}">Home</a></li>
+        <li><a href="{% url 'core:doctors' %}">Doctors</a></li>
+        <li>Delete Doctor</li>
+      </ol>
+    </div>
+  </div><!-- End Breadcrumbs -->
+
+  <section class="contact mt-4">
+    <div class="container" data-aos="fade-up">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body p-4">
+              <h4 class="card-title text-center mb-4">Confirm Deletion</h4>
+              
+              <div class="alert alert-danger" role="alert">
+                <h5 class="alert-heading">Warning!</h5>
+                <p>You are about to delete the following doctor's profile. This action cannot be undone.</p>
+                <hr>
+                <p class="mb-0">
+                  <strong>Name:</strong> Dr. {{ doctor.name }}<br>
+                  <strong>Specialization:</strong> {{ doctor.get_specialization_display }}
+                </p>
+              </div>
+
+              <div class="card mb-4">
+                <div class="card-body">
+                  <h6 class="card-subtitle mb-2 text-muted">Details</h6>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <p class="mb-1"><strong>Qualifications:</strong> {{ doctor.qualifications|default:"N/A" }}</p>
+                      <p class="mb-1"><strong>Experience:</strong> {{ doctor.experience|default:"0" }} years</p>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="mb-1"><strong>Status:</strong> 
+                        {% if doctor.is_available %}
+                          <span class="badge bg-success">Available</span>
+                        {% else %}
+                          <span class="badge bg-secondary">Not Available</span>
+                        {% endif %}
+                      </p>
+                      <p class="mb-1"><strong>Consultation Fee:</strong> GHC {{ doctor.consultation_fee|default:"0.00" }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alert alert-warning" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <strong>Note:</strong> This will permanently delete the doctor's profile and all associated data.
+              </div>
+
+              <form method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="d-flex justify-content-between">
+                  <a href="{% url 'core:doctors' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Cancel
+                  </a>
+                  <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash me-1"></i> Yes, Delete Permanently
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}

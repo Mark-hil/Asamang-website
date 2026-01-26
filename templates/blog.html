@@ -6,7 +6,6 @@
 {% block body_class %}blog-page{% endblock %}
 
 {% block content %}
-
   <main class="main">
     <!-- Page Title -->
     <div class="page-title">
@@ -19,6 +18,13 @@
                 Stay updated with the latest health tips, news, and updates from Asamang SDA.
                 Our blog covers a wide range of health topics to help you live a healthier life.
               </p>
+              {% if user.is_staff %}
+                <div class="mt-3">
+                  <a href="{% url 'core:blog_create' %}" class="btn btn-primary">
+                    <i class="bi bi-plus-lg me-1"></i> New Blog Post
+                  </a>
+                </div>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -39,93 +45,98 @@
         <div class="row">
           <!-- Main Content -->
           <div class="col-lg-8">
-            <div class="row">
-              <!-- Blog Post 1 -->
-              <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="blog-card">
-                  <div class="post-img">
-                    <img src="{% static 'img/blog/blog-1.jpg' %}" alt="" class="img-fluid">
-                  </div>
-                  <div class="post-content">
-                    <div class="post-meta">
-                      <span class="post-date"><i class="bi bi-calendar"></i> January 22, 2025</span>
-                      <span class="post-comments"><i class="bi bi-chat"></i> 12 Comments</span>
+            {% if posts %}
+              <div class="row">
+                {% for post in posts %}
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+                  <div class="blog-card">
+                    <div class="post-img">
+                      {% if post.featured_image %}
+                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="img-fluid">
+                      {% else %}
+                        <img src="{% static 'img/blog/blog-placeholder.jpg' %}" alt="{{ post.title }}" class="img-fluid">
+                      {% endif %}
+                      {% if user.is_staff %}
+                        <div class="admin-actions mt-2">
+                          <a href="{% url 'core:blog_update' post.slug %}" class="btn btn-sm btn-warning me-1">
+                            <i class="bi bi-pencil"></i> Edit
+                          </a>
+                          <a href="{% url 'core:blog_delete' post.slug %}" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i> Delete
+                          </a>
+                        </div>
+                      {% endif %}
                     </div>
-                    <h3 class="post-title"><a href="{% url 'core:blog_detail' 'healthy-living-tips' %}">10 Tips for a Healthier Lifestyle</a></h3>
-                    <p>Discover simple yet effective ways to improve your overall health and wellbeing with these practical tips.</p>
-                    <a href="{% url 'core:blog_detail' 'healthy-living-tips' %}" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
+                    <div class="post-content">
+                      <div class="post-meta">
+                        <span class="post-date"><i class="bi bi-calendar"></i> {{ post.published_date|date:"F j, Y" }}</span>
+                        <span class="post-comments"><i class="bi bi-chat"></i> {{ post.comments.count }} Comments</span>
+                      </div>
+                      <h3 class="post-title"><a href="{% url 'core:blog_detail' post.slug %}">{{ post.title }}</a></h3>
+                      <div class="post-category">
+                        <i class="bi bi-folder"></i> {{ post.category }}
+                      </div>
+                      <p>{{ post.excerpt|truncatewords:30 }}</p>
+                      <a href="{% url 'core:blog_detail' post.slug %}" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
+                      
+                      {% if post.tags %}
+                        <div class="post-tags mt-2">
+                          {% for tag in post.get_tags %}
+                            <span class="badge bg-light text-dark">{{ tag }}</span>
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
 
-              <!-- Blog Post 2 -->
-              <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="blog-card">
-                  <div class="post-img">
-                    <img src="{% static 'img/blog/blog-2.jpg' %}" alt="" class="img-fluid">
-                  </div>
-                  <div class="post-content">
-                    <div class="post-meta">
-                      <span class="post-date"><i class="bi bi-calendar"></i> January 15, 2025</span>
-                      <span class="post-comments"><i class="bi bi-chat"></i> 8 Comments</span>
-                    </div>
-                    <h3 class="post-title"><a href="{% url 'core:blog_detail' 'importance-of-regular-checkups' %}">The Importance of Regular Health Checkups</a></h3>
-                    <p>Learn why regular health checkups are crucial for early detection and prevention of potential health issues.</p>
-                    <a href="{% url 'core:blog_detail' 'importance-of-regular-checkups' %}" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
-                  </div>
+              <!-- Pagination -->
+              {% if is_paginated %}
+                <div class="blog-pagination" data-aos="fade-up" data-aos-delay="500">
+                  <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="First">
+                          <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                    {% endif %}
+                    
+                    {% for num in page_obj.paginator.page_range %}
+                      {% if page_obj.number == num %}
+                        <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    
+                    {% if page_obj.has_next %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                          <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                      </li>
+                    {% endif %}
+                  </ul>
                 </div>
+              {% endif %}
+            {% else %}
+              <div class="alert alert-info" role="alert">
+                No blog posts found. {% if user.is_staff %}<a href="{% url 'core:blog_create' %}">Create your first post</a>{% endif %}
               </div>
-
-              <!-- Blog Post 3 -->
-              <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
-                <div class="blog-card">
-                  <div class="post-img">
-                    <img src="{% static 'img/blog/blog-3.jpg' %}" alt="" class="img-fluid">
-                  </div>
-                  <div class="post-content">
-                    <div class="post-meta">
-                      <span class="post-date"><i class="bi bi-calendar"></i> January 8, 2025</span>
-                      <span class="post-comments"><i class="bi bi-chat"></i> 15 Comments</span>
-                    </div>
-                    <h3 class="post-title"><a href="{% url 'core:blog_detail' 'healthy-eating-habits' %}">Healthy Eating Habits for a Better Life</a></h3>
-                    <p>Explore the best eating habits that can help you maintain a balanced diet and improve your overall health.</p>
-                    <a href="{% url 'core:blog_detail' 'healthy-eating-habits' %}" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Blog Post 4 -->
-              <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
-                <div class="blog-card">
-                  <div class="post-img">
-                    <img src="{% static 'img/blog/blog-4.jpg' %}" alt="" class="img-fluid">
-                  </div>
-                  <div class="post-content">
-                    <div class="post-meta">
-                      <span class="post-date"><i class="bi bi-calendar"></i> January 1, 2025</span>
-                      <span class="post-comments"><i class="bi bi-chat"></i> 10 Comments</span>
-                    </div>
-                    <h3 class="post-title"><a href="{% url 'core:blog_detail' 'stress-management-techniques' %}">Effective Stress Management Techniques</a></h3>
-                    <p>Discover proven techniques to manage stress and improve your mental and physical wellbeing.</p>
-                    <a href="{% url 'core:blog_detail' 'stress-management-techniques' %}" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pagination -->
-            <div class="blog-pagination" data-aos="fade-up" data-aos-delay="500">
-              <ul class="pagination justify-content-center">
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
+            {% endif %}
           </div>
 
           <!-- Sidebar -->
@@ -133,70 +144,84 @@
             <!-- Search Widget -->
             <div class="sidebar-widget search-widget" data-aos="fade-up" data-aos-delay="100">
               <h4 class="widget-title">Search</h4>
-              <form action="#" class="search-form">
-                <input type="text" placeholder="Search..." class="form-control">
+              <form method="get" action="{% url 'core:blog' %}" class="search-form">
+                <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search..." class="form-control">
                 <button type="submit" class="search-btn"><i class="bi bi-search"></i></button>
               </form>
             </div>
 
             <!-- Categories Widget -->
+            {% if categories %}
             <div class="sidebar-widget categories-widget" data-aos="fade-up" data-aos-delay="200">
               <h4 class="widget-title">Categories</h4>
               <ul>
-                <li><a href="#">Health Tips <span>(12)</span></a></li>
-                <li><a href="#">Nutrition <span>(8)</span></a></li>
-                <li><a href="#">Fitness <span>(5)</span></a></li>
-                <li><a href="#">Mental Health <span>(7)</span></a></li>
-                <li><a href="#">Preventive Care <span>(9)</span></a></li>
+                <li><a href="?" class="{% if not request.GET.category %}active{% endif %}">All <span>({{ total_posts }})</span></a></li>
+                {% for category in categories %}
+                <li>
+                  <a href="?category={{ category|urlencode }}" class="{% if request.GET.category == category %}active{% endif %}">
+                    {{ category }} <span>({{ category.post_count }})</span>
+                  </a>
+                </li>
+                {% endfor %}
               </ul>
             </div>
+            {% endif %}
 
             <!-- Recent Posts Widget -->
+            {% if recent_posts %}
             <div class="sidebar-widget recent-posts" data-aos="fade-up" data-aos-delay="300">
               <h4 class="widget-title">Recent Posts</h4>
+              {% for post in recent_posts %}
               <div class="post-item">
                 <div class="post-img">
-                  <img src="{% static 'img/blog/blog-recent-1.jpg' %}" alt="">
+                  {% if post.featured_image %}
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                  {% else %}
+                    <img src="{% static 'img/blog/blog-placeholder.jpg' %}" alt="{{ post.title }}">
+                  {% endif %}
                 </div>
                 <div>
-                  <h5><a href="{% url 'core:blog_detail' 'healthy-living-tips' %}">10 Tips for a Healthier Lifestyle</a></h5>
-                  <time datetime="2025-01-22">January 22, 2025</time>
+                  <h5><a href="{% url 'core:blog_detail' post.slug %}">{{ post.title|truncatewords:6 }}</a></h5>
+                  <time datetime="{{ post.published_date|date:'Y-m-d' }}">{{ post.published_date|date:"F j, Y" }}</time>
                 </div>
               </div>
-              <div class="post-item">
-                <div class="post-img">
-                  <img src="{% static 'img/blog/blog-recent-2.jpg' %}" alt="">
-                </div>
-                <div>
-                  <h5><a href="{% url 'core:blog_detail' 'importance-of-regular-checkups' %}">The Importance of Regular Health Checkups</a></h5>
-                  <time datetime="2025-01-15">January 15, 2025</time>
-                </div>
-              </div>
-              <div class="post-item">
-                <div class="post-img">
-                  <img src="{% static 'img/blog/blog-recent-3.jpg' %}" alt="">
-                </div>
-                <div>
-                  <h5><a href="{% url 'core:blog_detail' 'healthy-eating-habits' %}">Healthy Eating Habits for a Better Life</a></h5>
-                  <time datetime="2025-01-08">January 8, 2025</time>
-                </div>
-              </div>
+              {% endfor %}
             </div>
+            {% endif %}
+
+            <!-- Popular Posts Widget -->
+            {% if popular_posts %}
+            <div class="sidebar-widget popular-posts" data-aos="fade-up" data-aos-delay="350">
+              <h4 class="widget-title">Popular Posts</h4>
+              {% for post in popular_posts %}
+              <div class="post-item">
+                <div class="post-img">
+                  {% if post.featured_image %}
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                  {% else %}
+                    <img src="{% static 'img/blog/blog-placeholder.jpg' %}" alt="{{ post.title }}">
+                  {% endif %}
+                </div>
+                <div>
+                  <h5><a href="{% url 'core:blog_detail' post.slug %}">{{ post.title|truncatewords:6 }}</a></h5>
+                  <div class="post-views"><i class="bi bi-eye"></i> {{ post.view_count }} views</div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
 
             <!-- Tags Widget -->
+            {% if tags %}
             <div class="sidebar-widget tags-widget" data-aos="fade-up" data-aos-delay="400">
               <h4 class="widget-title">Tags</h4>
               <div class="tags">
-                <a href="#">Health</a>
-                <a href="#">Wellness</a>
-                <a href="#">Nutrition</a>
-                <a href="#">Fitness</a>
-                <a href="#">Mental Health</a>
-                <a href="#">Prevention</a>
-                <a href="#">Lifestyle</a>
-                <a href="#">Exercise</a>
+                {% for tag in tags %}
+                <a href="?q={{ tag|urlencode }}" class="{% if tag in request.GET.q %}active{% endif %}">{{ tag }}</a>
+                {% endfor %}
               </div>
             </div>
+            {% endif %}
           </div>
         </div>
       </div>

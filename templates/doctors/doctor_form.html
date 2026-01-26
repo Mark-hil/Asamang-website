@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if form.instance.pk %}Update{% else %}Add New{% endif %} Doctor - Asamang Hospital{% endblock %}
+
+{% block content %}
+<main id="main">
+  <!-- ======= Breadcrumbs ======= -->
+  <div class="breadcrumbs">
+    <div class="container">
+      <h2>{% if form.instance.pk %}Update{% else %}Add New{% endif %} Doctor</h2>
+      <ol>
+        <li><a href="{% url 'core:home' %}">Home</a></li>
+        <li><a href="{% url 'core:doctors' %}">Doctors</a></li>
+        <li>{% if form.instance.pk %}Update{% else %}Add{% endif %} Doctor</li>
+      </ol>
+    </div>
+  </div><!-- End Breadcrumbs -->
+
+  <section class="contact mt-4">
+    <div class="container" data-aos="fade-up">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body p-4">
+              <h4 class="card-title mb-4">Doctor Details</h4>
+              
+              <form method="post" enctype="multipart/form-data" class="php-email-form">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                  <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.name.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  <div class="col-md-6 form-group mt-3 mt-md-0">
+                    {{ form.specialization.label_tag }}
+                    {{ form.specialization }}
+                    {% if form.specialization.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.specialization.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <div class="form-group mt-3">
+                  {{ form.qualifications.label_tag }}
+                  {{ form.qualifications }}
+                  <small class="form-text text-muted">Separate multiple qualifications with commas</small>
+                  {% if form.qualifications.errors %}
+                    <div class="invalid-feedback d-block">
+                      {{ form.qualifications.errors.0 }}
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="row mt-3">
+                  <div class="col-md-6 form-group">
+                    {{ form.experience.label_tag }}
+                    <div class="input-group">
+                      {{ form.experience }}
+                      <span class="input-group-text">years</span>
+                    </div>
+                    {% if form.experience.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.experience.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  <div class="col-md-6 form-group">
+                    {{ form.consultation_fee.label_tag }}
+                    <div class="input-group">
+                      <span class="input-group-text">GHC</span>
+                      {{ form.consultation_fee }}
+                    </div>
+                    {% if form.consultation_fee.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.consultation_fee.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <div class="form-group mt-3">
+                  {{ form.bio.label_tag }}
+                  {{ form.bio }}
+                  {% if form.bio.errors %}
+                    <div class="invalid-feedback d-block">
+                      {{ form.bio.errors.0 }}
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="form-group mt-3">
+                  {{ form.image.label_tag }}
+                  {{ form.image }}
+                  {% if form.instance.image %}
+                    <div class="mt-2">
+                      <img src="{{ form.instance.image.url }}" alt="Current image" class="img-thumbnail" style="max-height: 150px;">
+                    </div>
+                  {% endif %}
+                  {% if form.image.errors %}
+                    <div class="invalid-feedback d-block">
+                      {{ form.image.errors.0 }}
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="row mt-3">
+                  <div class="col-md-6">
+                    <div class="form-check form-switch">
+                      {{ form.is_available }}
+                      <label class="form-check-label" for="{{ form.is_available.id_for_label }}">
+                        Currently Available
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt-4">
+                  <div class="col-12">
+                    <h5 class="mb-3">Contact & Social Media</h5>
+                  </div>
+                  <div class="col-md-6 form-group">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.email.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-6 form-group">
+                    {{ form.phone.label_tag }}
+                    {{ form.phone }}
+                    {% if form.phone.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.phone.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-6 form-group">
+                    {{ form.twitter.label_tag }}
+                    <div class="input-group">
+                      <span class="input-group-text">@</span>
+                      {{ form.twitter }}
+                    </div>
+                    {% if form.twitter.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.twitter.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-6 form-group">
+                    {{ form.facebook.label_tag }}
+                    {{ form.facebook }}
+                    {% if form.facebook.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.facebook.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-6 form-group">
+                    {{ form.instagram.label_tag }}
+                    <div class="input-group">
+                      <span class="input-group-text">@</span>
+                      {{ form.instagram }}
+                    </div>
+                    {% if form.instagram.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.instagram.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-6 form-group">
+                    {{ form.linkedin.label_tag }}
+                    {{ form.linkedin }}
+                    {% if form.linkedin.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.linkedin.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <div class="row mt-4">
+                  <div class="col-12">
+                    <h5 class="mb-3">Availability</h5>
+                  </div>
+                  <div class="col-md-6 form-group">
+                    {{ form.available_days.label_tag }}
+                    {{ form.available_days }}
+                    {% if form.available_days.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.available_days.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-6 form-group">
+                    {{ form.available_time.label_tag }}
+                    {{ form.available_time }}
+                    {% if form.available_time.errors %}
+                      <div class="invalid-feedback d-block">
+                        {{ form.available_time.errors.0 }}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-primary me-2">
+                    <i class="bi bi-save me-1"></i> Save Doctor
+                  </button>
+                  <a href="{% url 'core:doctors' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-x-circle me-1"></i> Cancel
+                  </a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize form validation
+  const form = document.querySelector('form.php-email-form');
+  
+  if (form) {
+    form.addEventListener('submit', function(event) {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  }
+  
+  // Preview image before upload
+  const imageInput = document.getElementById('id_image');
+  const imagePreview = document.querySelector('.img-thumbnail');
+  
+  if (imageInput && imagePreview) {
+    imageInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.src = '';
+        imagePreview.style.display = 'none';
+      }
+    });
+  }
+});
+</script>
+{% endblock %}

@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Appointment
+from .models import Appointment, Doctor, BlogPost, BlogComment
+from django.forms import ModelForm, Textarea
 from django.utils import timezone
 from datetime import time, datetime
 
@@ -160,3 +161,57 @@ class RejectionForm(forms.Form):
         help_text="This will be included in the notification email to the patient.",
         required=True
     )
+
+
+class DoctorForm(forms.ModelForm):
+    """Form for creating and updating doctor profiles."""
+    class Meta:
+        model = Doctor
+        fields = '__all__'
+
+
+class CommentForm(forms.ModelForm):
+    """
+    Form for submitting comments on blog posts.
+    """
+    class Meta:
+        model = BlogComment
+        fields = ['name', 'email', 'body', 'post']
+        widgets = {
+            'post': forms.HiddenInput(),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Your Name',
+                'required': 'required'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Your Email',
+                'required': 'required'
+            }),
+            'body': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Your Comment',
+                'required': 'required'
+            })
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ensure all fields have the form-control class except hidden fields
+        for field_name, field in self.fields.items():
+            if field_name != 'post':  # Don't add form-control class to hidden fields
+                field.widget.attrs.update({
+                    'class': 'form-control',
+                    'placeholder': f'Your {field_name.capitalize()}',
+                })
+        # Special handling for the body field
+        if 'body' in self.fields:
+            self.fields['body'].widget.attrs.update({
+                'rows': 4,
+            })
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        return email.lower().strip() if email else ''

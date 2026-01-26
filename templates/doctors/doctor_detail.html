@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ doctor.name }} - Asamang SDA{% endblock %}
+
+{% block content %}
+<main class="main">
+  <!-- Page Title -->
+  <div class="page-title">
+    <div class="heading">
+      <div class="container">
+        <div class="row d-flex justify-content-center text-center">
+          <div class="col-lg-10">
+            <h1 class="heading-title">Doctor Profile</h1>
+            <nav class="breadcrumbs">
+              <ol>
+                <li><a href="{% url 'core:home' %}">Home</a></li>
+                <li><a href="{% url 'core:doctors' %}">Our Doctors</a></li>
+                <li class="current">{{ doctor.name }}</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- End Page Title -->
+
+  <!-- Doctor Details Section -->
+  <section class="section doctor-details">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card doctor-card">
+            <div class="doctor-img">
+              {% if doctor.image %}
+                <img src="{{ doctor.image.url }}" class="img-fluid" alt="{{ doctor.name }}" onerror="this.onerror=null; this.src='{% static 'assets/img/health/staff-1.webp' %}'">
+              {% else %}
+                <img src="{% static 'assets/img/health/staff-1.webp' %}" class="img-fluid" alt="{{ doctor.name }}">
+              {% endif %}
+              {% if doctor.experience >= 10 %}
+                <span class="tag">Senior Consultant</span>
+              {% elif doctor.experience < 3 %}
+                <span class="tag alt">New</span>
+              {% endif %}
+            </div>
+            <div class="card-body text-center">
+              <h3 class="doctor-name">Dr. {{ doctor.name }}</h3>
+              <p class="doctor-title">{{ doctor.specialization }}</p>
+              <p class="text-muted">{{ doctor.qualifications }}</p>
+              
+              <div class="doctor-meta mb-3">
+                <span class="badge bg-primary">{{ doctor.specialization }}</span>
+                <span class="badge ms-2 {% if doctor.is_available %}bg-success{% else %}bg-secondary{% endif %}">
+                  {% if doctor.is_available %}Available Now{% else %}Currently Unavailable{% endif %}
+                </span>
+              </div>
+
+              {% if doctor.consultation_fee > 0 %}
+                <div class="consultation-fee mb-3">
+                  <h5>Consultation Fee</h5>
+                  <h4 class="text-primary">GHC {{ doctor.consultation_fee }}</h4>
+                </div>
+              {% endif %}
+
+              <div class="doctor-contact mb-4">
+                {% if doctor.email %}
+                  <p class="mb-1">
+                    <i class="bi bi-envelope me-2"></i> 
+                    <a href="mailto:{{ doctor.email }}">{{ doctor.email }}</a>
+                  </p>
+                {% endif %}
+                {% if doctor.phone %}
+                  <p class="mb-0">
+                    <i class="bi bi-telephone me-2"></i> 
+                    <a href="tel:{{ doctor.phone }}">{{ doctor.phone }}</a>
+                  </p>
+                {% endif %}
+              </div>
+
+              <div class="doctor-social mb-3">
+                {% if doctor.twitter %}
+                  <a href="{{ doctor.twitter }}" target="_blank" class="me-2">
+                    <i class="bi bi-twitter"></i>
+                  </a>
+                {% endif %}
+                {% if doctor.facebook %}
+                  <a href="{{ doctor.facebook }}" target="_blank" class="me-2">
+                    <i class="bi bi-facebook"></i>
+                  </a>
+                {% endif %}
+                {% if doctor.linkedin %}
+                  <a href="{{ doctor.linkedin }}" target="_blank" class="me-2">
+                    <i class="bi bi-linkedin"></i>
+                  </a>
+                {% endif %}
+                {% if doctor.instagram %}
+                  <a href="{{ doctor.instagram }}" target="_blank">
+                    <i class="bi bi-instagram"></i>
+                  </a>
+                {% endif %}
+              </div>
+
+              <div class="doctor-actions">
+                <a href="{% url 'core:appointment' %}?doctor={{ doctor.id }}" class="btn btn-primary w-100 mb-2">
+                  <i class="bi bi-calendar-plus me-2"></i> Book Appointment
+                </a>
+                {% if user.is_staff %}
+                  <div class="d-flex gap-2 mt-2">
+                    <a href="{% url 'core:doctor_update' slug=doctor.slug %}" class="btn btn-warning flex-grow-1">
+                      <i class="bi bi-pencil me-2"></i> Edit
+                    </a>
+                    <a href="{% url 'core:doctor_delete' slug=doctor.slug %}" class="btn btn-danger">
+                      <i class="bi bi-trash"></i>
+                    </a>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">About Dr. {{ doctor.name }}</h4>
+              <div class="doctor-bio">
+                {{ doctor.bio|linebreaks }}
+              </div>
+
+              <div class="doctor-schedule mt-4">
+                <h5>Availability</h5>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="schedule-item">
+                      <h6><i class="bi bi-calendar-week me-2"></i> Working Days</h6>
+                      <p class="mb-0">{{ doctor.available_days|default:"Monday - Friday" }}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="schedule-item">
+                      <h6><i class="bi bi-clock me-2"></i> Working Hours</h6>
+                      <p class="mb-0">{{ doctor.available_time|default:"9:00 AM - 5:00 PM" }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="doctor-experience mt-4">
+                <h5>Experience & Education</h5>
+                <ul class="list-unstyled">
+                  <li class="mb-2">
+                    <i class="bi bi-award text-primary me-2"></i>
+                    <strong>Experience:</strong> {{ doctor.experience }} Years
+                  </li>
+                  <li>
+                    <i class="bi bi-mortarboard text-primary me-2"></i>
+                    <strong>Qualifications:</strong> {{ doctor.qualifications }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.doctor-card {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border: none;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.doctor-img {
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+}
+
+.doctor-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.doctor-card:hover .doctor-img img {
+  transform: scale(1.05);
+}
+
+.tag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--color-primary);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tag.alt {
+  background: var(--color-secondary);
+}
+
+.doctor-name {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-secondary);
+}
+
+.doctor-title {
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.doctor-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  color: var(--color-primary);
+  margin: 0 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.doctor-social a:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: translateY(-3px);
+}
+
+.schedule-item {
+  background: #f8f9fa;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  height: 100%;
+}
+
+.schedule-item h6 {
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.consultation-fee {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.consultation-fee h5 {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+}
+
+.consultation-fee h4 {
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.doctor-bio {
+  line-height: 1.8;
+  color: #4a4a4a;
+}
+
+.doctor-bio p:last-child {
+  margin-bottom: 0;
+}
+</style>
+{% endblock %}

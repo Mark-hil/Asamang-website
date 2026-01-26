@@ -732,221 +732,65 @@
         </div>
 
         <div class="specialists-showcase" data-aos="fade-up" data-aos-delay="300">
-          <div class="specialist-card featured" data-aos="slide-up" data-aos-delay="100">
+          {% for doctor in featured_doctors %}
+          <div class="specialist-card {% if forloop.first %}featured{% endif %}" data-aos="slide-up" data-aos-delay="{{ forloop.counter }}00">
             <div class="card-content">
               <div class="specialist-info">
                 <div class="profile-section">
                   <div class="profile-image">
-                    <img src="{% static 'assets/img/health/staff-1.webp' %}" alt="Dr. Jennifer Morgan" class="img-fluid">
-                    <div class="online-status active"></div>
+                    {% if doctor.image %}
+                      <img src="{{ doctor.image.url }}" alt="Dr. {{ doctor.name }}" class="img-fluid">
+                    {% else %}
+                      <img src="{% static 'assets/img/health/staff-1.webp' %}" alt="Dr. {{ doctor.name }}" class="img-fluid">
+                    {% endif %}
+                    <div class="online-status {% if doctor.is_available %}active{% else %}offline{% endif %}"></div>
                   </div>
                   <div class="specialist-data">
-                    <h3>Dr. Jennifer Morgan</h3>
-                    <p class="specialty">Senior Cardiologist</p>
+                    <h3>Dr. {{ doctor.name }}</h3>
+                    <p class="specialty">{{ doctor.specialization }}</p>
                     <div class="credentials">
-                      <span class="badge">MD, FACC</span>
-                      <span class="experience">18 years</span>
+                      <span class="badge">{{ doctor.qualifications|default:"MD" }}</span>
+                      <span class="experience">{{ doctor.experience }} years experience</span>
                     </div>
                   </div>
                 </div>
                 <div class="rating-info">
                   <div class="stars-display">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                  </div>
-                  <span class="score">4.9</span>
-                  <small>(142 patients)</small>
-                </div>
-              </div>
-              <div class="quick-actions">
-                <a href="#" class="action-btn outline">Profile</a>
-                <a href="#" class="action-btn primary">Consult</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="specialist-card" data-aos="slide-up" data-aos-delay="200">
-            <div class="card-content">
-              <div class="specialist-info">
-                <div class="profile-section">
-                  <div class="profile-image">
-                    <img src="{% static 'assets/img/health/staff-3.webp' %}" alt="Dr. Robert Kim" class="img-fluid">
-                    <div class="online-status busy"></div>
-                  </div>
-                  <div class="specialist-data">
-                    <h3>Dr. Robert Kim</h3>
-                    <p class="specialty">Neurosurgeon</p>
-                    <div class="credentials">
-                      <span class="badge">MD, PhD</span>
-                      <span class="experience">24 years</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="rating-info">
-                  <div class="stars-display">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-half"></i>
+                    {% with ''|center:5 as range %}
+                      {% for _ in range %}
+                        {% if forloop.counter <= 5 %}
+                          <i class="bi bi-star-fill"></i>
+                        {% else %}
+                          <i class="bi bi-star"></i>
+                        {% endif %}
+                      {% endfor %}
+                    {% endwith %}
                   </div>
                   <span class="score">4.8</span>
-                  <small>(98 patients)</small>
+                  <small>({{ forloop.counter }}2 patients)</small>
                 </div>
               </div>
               <div class="quick-actions">
-                <a href="#" class="action-btn outline">Profile</a>
-                <a href="#" class="action-btn primary">Schedule</a>
+                <a href="{% url 'core:doctor_detail' slug=doctor.slug %}" class="action-btn outline">Profile</a>
+                <a href="{% url 'core:appointment' %}?doctor={{ doctor.id }}" class="action-btn primary">
+                  {% if forloop.counter|divisibleby:2 %}
+                    {% if forloop.counter|divisibleby:3 %}
+                      Book Now
+                    {% else %}
+                      Consult
+                    {% endif %}
+                  {% else %}
+                    {% if forloop.counter|divisibleby:3 %}
+                      Request
+                    {% else %}
+                      Schedule
+                    {% endif %}
+                  {% endif %}
+                </a>
               </div>
             </div>
           </div>
-
-          <div class="specialist-card" data-aos="slide-up" data-aos-delay="300">
-            <div class="card-content">
-              <div class="specialist-info">
-                <div class="profile-section">
-                  <div class="profile-image">
-                    <img src="{% static 'assets/img/health/staff-5.webp' %}" alt="Dr. Sarah Thompson" class="img-fluid">
-                    <div class="online-status active"></div>
-                  </div>
-                  <div class="specialist-data">
-                    <h3>Dr. Sarah Thompson</h3>
-                    <p class="specialty">Pediatric Specialist</p>
-                    <div class="credentials">
-                      <span class="badge">MD, FAAP</span>
-                      <span class="experience">12 years</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="rating-info">
-                  <div class="stars-display">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                  </div>
-                  <span class="score">5.0</span>
-                  <small>(156 patients)</small>
-                </div>
-              </div>
-              <div class="quick-actions">
-                <a href="#" class="action-btn outline">Profile</a>
-                <a href="#" class="action-btn primary">Book Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="specialist-card" data-aos="slide-up" data-aos-delay="400">
-            <div class="card-content">
-              <div class="specialist-info">
-                <div class="profile-section">
-                  <div class="profile-image">
-                    <img src="{% static 'assets/img/health/staff-7.webp' %}" alt="Dr. Michael Rivera" class="img-fluid">
-                    <div class="online-status offline"></div>
-                  </div>
-                  <div class="specialist-data">
-                    <h3>Dr. Michael Rivera</h3>
-                    <p class="specialty">Orthopedic Surgeon</p>
-                    <div class="credentials">
-                      <span class="badge">MD, FAAOS</span>
-                      <span class="experience">20 years</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="rating-info">
-                  <div class="stars-display">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-half"></i>
-                  </div>
-                  <span class="score">4.7</span>
-                  <small>(134 patients)</small>
-                </div>
-              </div>
-              <div class="quick-actions">
-                <a href="#" class="action-btn outline">Profile</a>
-                <a href="#" class="action-btn primary">Request</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="specialist-card" data-aos="slide-up" data-aos-delay="500">
-            <div class="card-content">
-              <div class="specialist-info">
-                <div class="profile-section">
-                  <div class="profile-image">
-                    <img src="{% static 'assets/img/health/staff-9.webp' %}" alt="Dr. Lisa Garcia" class="img-fluid">
-                    <div class="online-status active"></div>
-                  </div>
-                  <div class="specialist-data">
-                    <h3>Dr. Lisa Garcia</h3>
-                    <p class="specialty">Dermatologist</p>
-                    <div class="credentials">
-                      <span class="badge">MD, FAAD</span>
-                      <span class="experience">15 years</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="rating-info">
-                  <div class="stars-display">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i>
-                  </div>
-                  <span class="score">4.6</span>
-                  <small>(89 patients)</small>
-                </div>
-              </div>
-              <div class="quick-actions">
-                <a href="#" class="action-btn outline">Profile</a>
-                <a href="#" class="action-btn primary">Consult</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="specialist-card" data-aos="slide-up" data-aos-delay="600">
-            <div class="card-content">
-              <div class="specialist-info">
-                <div class="profile-section">
-                  <div class="profile-image">
-                    <img src="{% static 'assets/img/health/staff-12.webp' %}" alt="Dr. Daniel Wong" class="img-fluid">
-                    <div class="online-status active"></div>
-                  </div>
-                  <div class="specialist-data">
-                    <h3>Dr. Daniel Wong</h3>
-                    <p class="specialty">Oncology Expert</p>
-                    <div class="credentials">
-                      <span class="badge">MD, FASCO</span>
-                      <span class="experience">21 years</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="rating-info">
-                  <div class="stars-display">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                  </div>
-                  <span class="score">4.9</span>
-                  <small>(211 patients)</small>
-                </div>
-              </div>
-              <div class="quick-actions">
-                <a href="#" class="action-btn outline">Profile</a>
-                <a href="#" class="action-btn primary">Appointment</a>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
 
         </div>
 

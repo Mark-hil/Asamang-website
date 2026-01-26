@@ -1,10 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView
 from django.utils import timezone
+from .models import Doctor
 
 # Home
 def home(request):
-    return render(request, "home.html")
+    # Get 6 random available doctors
+    featured_doctors = Doctor.objects.filter(is_available=True).order_by('?')[:6]
+    return render(request, "home.html", {
+        'featured_doctors': featured_doctors
+    })
 
 # About
 def about(request):
