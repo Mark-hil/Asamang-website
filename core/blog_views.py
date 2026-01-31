@@ -1,13 +1,32 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, UpdateView as BaseUpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
-from django.urls import reverse_lazy
-from django.db.models import Q
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
+from django.views import View
+from django.http import HttpResponseForbidden
+from django import forms
+from tinymce.widgets import TinyMCE
 
 from .models import BlogPost, BlogComment
 from .forms import CommentForm
+
+# Create a custom form for BlogPost with TinyMCE
+class BlogPostForm(forms.ModelForm):
+    content = forms.CharField(
+        widget=TinyMCE(
+            attrs={
+                'required': True,
+                'cols': 30,
+                'rows': 10,
+            }
+        )
+    )
+    
+    class Meta:
+        model = BlogPost
+        fields = ['title', 'category', 'content', 'excerpt', 'featured_image', 'tags', 'status']
 
 class BlogPostListView(ListView):
     model = BlogPost
@@ -89,10 +108,22 @@ class BlogPostDetailView(DetailView):
         ).exclude(id=post.id)[:3]
         
         # Get comments for this post
-        context['comments'] = post.comments.filter(active=True).order_by('created_at')
+        if self.request.user.is_staff:
+            # Show all comments to staff users
+            context['comments'] = post.comments.all().order_by('created_at')
+        else:
+            # Show only active comments to regular users
+            context['comments'] = post.comments.filter(active=True).order_by('created_at')
+            
+        # Add active comments count to context
+        context['active_comments_count'] = post.comments.filter(active=True).count()
         
-        # Initialize comment form with post ID
-        context['comment_form'] = CommentForm(initial={'post': post.id})
+        # For the comment form
+        context['comment_form'] = CommentForm(initial={
+            'post': post.id,
+            'name': self.request.user.get_full_name() if self.request.user.is_authenticated else '',
+            'email': self.request.user.email if self.request.user.is_authenticated else ''
+        })
         
         # Add recent posts for sidebar
         context['recent_posts'] = BlogPost.objects.filter(
@@ -113,35 +144,29 @@ class BlogPostDetailView(DetailView):
     # Comment submission is handled by the add_comment_to_post function view
 
 
-class BlogPostCreateView(LoginRequiredMixin, CreateView):
+class BlogPostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = BlogPost
-    fields = ['title', 'category', 'content', 'excerpt', 'featured_image', 'tags', 'status']
+    form_class = BlogPostForm
     template_name = 'blog_post_form.html'
     
     def form_valid(self, form):
         form.instance.author = self.request.user
+        if 'publish' in self.request.POST:
+            form.instance.published_date = timezone.now()
+            form.instance.status = 'published'
+        return super().form_valid(form)
+    
+    def get_success_url(self):
         messages.success(self.request, 'Blog post created successfully!')
-        return super().form_valid(form)
+        return reverse('core:blog_detail', kwargs={'slug': self.object.slug})
         
-    def get_success_url(self):
-        return reverse_lazy('core:blog_detail', kwargs={'slug': self.object.slug})
-    fields = ['title', 'category', 'content', 'excerpt', 'featured_image', 'tags', 'status']
-    template_name = 'blog_post_form.html'
-    
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        if not form.instance.excerpt:
-            form.instance.excerpt = form.cleaned_data['content'][:200] + '...'
-        return super().form_valid(form)
-    
-    def get_success_url(self):
-        messages.success(self.request, 'Your post has been created!')
-        return reverse_lazy('core:blog_detail', kwargs={'slug': self.object.slug})
+    def test_func(self):
+        return self.request.user.is_staff
 
 
 class BlogPostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = BlogPost
-    fields = ['title', 'category', 'content', 'excerpt', 'featured_image', 'tags', 'status']
+    form_class = BlogPostForm
     template_name = 'blog_post_form.html'
     
     def form_valid(self, form):
@@ -172,18 +197,33 @@ class BlogPostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
+import logging
+logger = logging.getLogger(__name__)
+
 def add_comment_to_post(request, slug):
     post = get_object_or_404(BlogPost, slug=slug, status='published')
     
     if request.method == 'POST':
+        logger.info(f"Received POST data: {request.POST}")
         form = CommentForm(request.POST)
+        
         if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.active = True  # Set to False if you want to moderate comments
-            comment.save()
-            messages.success(request, 'Your comment has been submitted and is awaiting moderation.')
-            return redirect('core:blog_detail', slug=post.slug)
+            try:
+                comment = form.save(commit=False)
+                comment.post = post
+                comment.active = True
+                comment.save()
+                logger.info(f"Comment saved successfully: {comment.id}")
+                messages.success(request, 'Your comment has been submitted and is awaiting moderation.')
+                return redirect('core:blog_detail', slug=post.slug)
+            except Exception as e:
+                logger.error(f"Error saving comment: {str(e)}")
+                messages.error(request, 'There was an error saving your comment. Please try again.')
+        else:
+            logger.warning(f"Form validation failed: {form.errors}")
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
     else:
         form = CommentForm(initial={'post': post.id})
     
@@ -202,3 +242,38 @@ def add_comment_to_post(request, slug):
         'tags': post.get_tags()
     }
     return render(request, 'blog_detail.html', context)
+
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, BaseUpdateView):
+    model = BlogComment
+    template_name = 'comment_edit.html'
+    fields = ['name', 'email', 'body', 'active']
+    
+    def test_func(self):
+        return self.request.user.is_staff
+    
+    def get_success_url(self):
+        messages.success(self.request, 'Comment updated successfully.')
+        return reverse('core:blog_detail', kwargs={'slug': self.object.post.slug})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post'] = self.object.post
+        return context
+
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = BlogComment
+    template_name = 'comment_confirm_delete.html'
+    
+    def test_func(self):
+        return self.request.user.is_staff
+    
+    def get_success_url(self):
+        messages.success(self.request, 'Comment deleted successfully.')
+        return reverse('core:blog_detail', kwargs={'slug': self.object.post.slug})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post'] = self.object.post
+        return context

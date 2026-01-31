@@ -4,3 +4,4 @@ sample/
 # Environment variables
 .env
 media/
+.env.example

@@ -149,8 +149,27 @@ def testimonials(request):
 def faq(request):
     return render(request, "faq.html")
 
-def gallery(request):
-    return render(request, "gallery.html")
+# core/views.py
+from django.views.generic import ListView
+from .models import GalleryImage
+
+class GalleryView(ListView):
+    model = GalleryImage
+    template_name = 'gallery.html'
+    context_object_name = 'gallery_images'
+    
+    def get_queryset(self):
+        queryset = GalleryImage.objects.filter(is_active=True).order_by('order', '-created_at')
+        category = self.request.GET.get('category')
+        if category:
+            queryset = queryset.filter(category=category)
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = GalleryImage.Category.choices
+        context['selected_category'] = self.request.GET.get('category', '*')
+        return context
 
 def terms(request):
     return render(request, "terms.html")

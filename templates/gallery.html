@@ -14,10 +14,8 @@
           <div class="col-lg-8">
             <h1 class="heading-title">Gallery</h1>
             <p class="mb-0">
-              Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo
-              odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum
-              debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat
-              ipsum dolorem.
+              Explore our collection of beautiful moments and memories. 
+              From nature to architecture and people, we've captured it all.
             </p>
           </div>
         </div>
@@ -35,188 +33,59 @@
 
   <!-- Gallery Section -->
   <section id="gallery" class="gallery section">
-
     <div class="container" data-aos="fade-up" data-aos-delay="100">
-
       <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
         <ul class="gallery-filters isotope-filters" data-aos="fade-up" data-aos-delay="200">
           <li data-filter="*" class="filter-active">All</li>
-          <li data-filter=".filter-nature">Nature</li>
-          <li data-filter=".filter-architecture">Architecture</li>
-          <li data-filter=".filter-people">People</li>
+          {% for category_value, category_label in categories %}
+            <li data-filter=".filter-{{ category_value|lower }}">{{ category_label }}</li>
+          {% endfor %}
         </ul>
 
         <div class="row gallery-grid isotope-container" data-aos="fade-up" data-aos-delay="300">
-
-          <div class="col-xl-3 col-md-4 col-sm-6 gallery-item isotope-item filter-nature">
-            <div class="gallery-card">
-              <div class="gallery-image">
-                <img src="{% static 'img/gallery/gallery-1.webp' %}" class="img-fluid" alt="">
-              </div>
-              <div class="gallery-overlay">
-                <h4>Natural Beauty</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="gallery-actions">
-                  <a href="{% static 'img/gallery/gallery-1.webp' %}" title="View Image" class="glightbox"><i class="bi bi-eye"></i></a>
-                  <a href="{% url 'core:gallery' %}"><i class="bi bi-info-circle"></i></a>
+          {% for image in gallery_images %}
+            <div class="col-xl-3 col-md-4 col-sm-6 gallery-item isotope-item filter-{{ image.category }}">
+              <div class="gallery-card">
+                <div class="gallery-image">
+                  <img src="{{ image.image.url }}" class="img-fluid" alt="{{ image.title }}" loading="lazy">
+                </div>
+                <div class="gallery-overlay">
+                  <h4>{{ image.title }}</h4>
+                  {% if image.description %}<p>{{ image.description|truncatechars:50 }}</p>{% endif %}
+                  <div class="gallery-actions">
+                    <a href="{{ image.image.url }}" title="{{ image.title }}" class="glightbox" data-gallery="gallery">
+                      <i class="bi bi-eye"></i>
+                    </a>
+                    <a href="{{ image.image.url }}" 
+                       class="glightbox"
+                       data-glightbox="title: {{ image.title }}; description: {{ image.description|default:'' }}; type: image" 
+                       data-description="{{ image.description|default:'' }}" 
+                       title="View Details">
+                      <i class="bi bi-info-circle"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div><!-- End Gallery Item -->
-
-          <div class="col-xl-3 col-md-4 col-sm-6 gallery-item isotope-item filter-architecture">
-            <div class="gallery-card">
-              <div class="gallery-image">
-                <img src="{% static 'img/gallery/gallery-2.webp' %}" class="img-fluid" alt="">
-              </div>
-              <div class="gallery-overlay">
-                <h4>Urban Landscape</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="gallery-actions">
-                  <a href="{% static 'img/gallery/gallery-2.webp' %}" title="View Image" class="glightbox"><i class="bi bi-eye"></i></a>
-                  <a href="{% url 'core:gallery' %}"><i class="bi bi-info-circle"></i></a>
-                </div>
-              </div>
+          {% empty %}
+            <div class="col-12 text-center py-5">
+              <p>No images found in the gallery.</p>
             </div>
-          </div><!-- End Gallery Item -->
-
-          <div class="col-xl-3 col-md-4 col-sm-6 gallery-item isotope-item filter-people">
-            <div class="gallery-card">
-              <div class="gallery-image">
-                <img src="{% static 'img/gallery/gallery-3.webp' %}" class="img-fluid" alt="">
-              </div>
-              <div class="gallery-overlay">
-                <h4>Candid Moments</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="gallery-actions">
-                  <a href="{% static 'img/gallery/gallery-3.webp' %}" title="View Image" class="glightbox"><i class="bi bi-eye"></i></a>
-                  <a href="{% url 'core:gallery' %}"><i class="bi bi-info-circle"></i></a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Gallery Item -->
-
-          <div class="col-xl-3 col-md-4 col-sm-6 gallery-item isotope-item filter-nature">
-            <div class="gallery-card">
-              <div class="gallery-image">
-                <img src="{% static 'img/gallery/gallery-4.webp' %}" class="img-fluid" alt="">
-              </div>
-              <div class="gallery-overlay">
-                <h4>Wilderness</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="gallery-actions">
-                  <a href="{% static 'img/gallery/gallery-4.webp' %}" title="View Image" class="glightbox"><i class="bi bi-eye"></i></a>
-                  <a href="{% url 'core:gallery' %}"><i class="bi bi-info-circle"></i></a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Gallery Item -->
-
-          <div class="col-xl-3 col-md-4 col-sm-6 gallery-item isotope-item filter-architecture">
-            <div class="gallery-card">
-              <div class="gallery-image">
-                <img src="{% static 'img/gallery/gallery-5.webp' %}" class="img-fluid" alt="">
-              </div>
-              <div class="gallery-overlay">
-                <h4>Modern Design</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="gallery-actions">
-                  <a href="{% static 'img/gallery/gallery-5.webp' %}" title="View Image" class="glightbox"><i class="bi bi-eye"></i></a>
-                  <a href="{% url 'core:gallery' %}"><i class="bi bi-info-circle"></i></a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Gallery Item -->
-
-          <div class="col-xl-3 col-md-4 col-sm-6 gallery-item isotope-item filter-people">
-            <div class="gallery-card">
-              <div class="gallery-image">
-                <img src="{% static 'img/gallery/gallery-6.webp' %}" class="img-fluid" alt="">
-              </div>
-              <div class="gallery-overlay">
-                <h4>Portrait Studies</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="gallery-actions">
-                  <a href="{% static 'img/gallery/gallery-6.webp' %}" title="View Image" class="glightbox"><i class="bi bi-eye"></i></a>
-                  <a href="{% url 'core:gallery' %}"><i class="bi bi-info-circle"></i></a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Gallery Item -->
-
-          <div class="col-xl-3 col-md-4 col-sm-6 gallery-item isotope-item filter-nature">
-            <div class="gallery-card">
-              <div class="gallery-image">
-                <img src="{% static 'img/gallery/gallery-7.webp' %}" class="img-fluid" alt="">
-              </div>
-              <div class="gallery-overlay">
-                <h4>Serene Waters</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="gallery-actions">
-                  <a href="{% static 'img/gallery/gallery-7.webp' %}" title="View Image" class="glightbox"><i class="bi bi-eye"></i></a>
-                  <a href="{% url 'core:gallery' %}"><i class="bi bi-info-circle"></i></a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Gallery Item -->
-
-          <div class="col-xl-3 col-md-4 col-sm-6 gallery-item isotope-item filter-architecture">
-            <div class="gallery-card">
-              <div class="gallery-image">
-                <img src="{% static 'img/gallery/gallery-8.webp' %}" class="img-fluid" alt="">
-              </div>
-              <div class="gallery-overlay">
-                <h4>Historical Places</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="gallery-actions">
-                  <a href="{% static 'img/gallery/gallery-8.webp' %}" title="View Image" class="glightbox"><i class="bi bi-eye"></i></a>
-                  <a href="{% url 'core:gallery' %}"><i class="bi bi-info-circle"></i></a>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
         </div>
       </div>
-
     </div>
-
   </section><!-- /Gallery Section -->
-
 {% endblock %}
 
-{% block extra_js %}
-  <script>
-    // Initialize Isotope for gallery filtering
-    window.addEventListener('load', function() {
-      const galleryIsotope = document.querySelector('.isotope-layout');
-      if (galleryIsotope) {
-        let galleryFilters = galleryIsotope.querySelectorAll('.isotope-filters li');
-        
-        galleryFilters.forEach(function(filter) {
-          filter.addEventListener('click', function() {
-            galleryFilters.forEach(el => el.classList.remove('filter-active'));
-            this.classList.add('filter-active');
-            
-            const filterValue = this.getAttribute('data-filter');
-            const container = galleryIsotope.querySelector('.isotope-container');
-            
-            if (window.Isotope) {
-              const iso = new Isotope(container, {
-                itemSelector: '.isotope-item',
-                layoutMode: 'masonry',
-                masonry: {
-                  columnWidth: '.isotope-item'
-                }
-              });
-              
-              if (filterValue === '*') {
-                iso.arrange({ filter: '*' });
-              } else {
-                iso.arrange({ filter: filterValue });
-              }
-            }
-          });
-        });
-      }
-    });
-  </script>
+{% block extra_css %}
+  <style>
+    .glightbox-container .gslide-image img {
+      max-height: 80vh;
+      max-width: 90vw;
+      object-fit: contain;
+    }
+  </style>
 {% endblock %}
+
+{% block extra_js %}{% endblock %}

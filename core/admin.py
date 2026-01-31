@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Appointment, Doctor
+from .models import Appointment, Doctor, GalleryImage
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
@@ -44,5 +44,23 @@ class DoctorAdmin(admin.ModelAdmin):
         ('Social Media', {
             'fields': ('twitter', 'facebook', 'instagram', 'linkedin'),
             'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(GalleryImage)
+class GalleryImageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'is_active', 'order', 'created_at')
+    list_filter = ('category', 'is_active', 'created_at')
+    search_fields = ('title', 'description')
+    list_editable = ('is_active', 'order', 'category')
+    ordering = ('order', '-created_at')
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'image', 'description', 'category')
+        }),
+        ('Advanced Options', {
+            'classes': ('collapse',),
+            'fields': ('is_active', 'order'),
         }),
     )

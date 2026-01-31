@@ -8,8 +8,10 @@ from .doctor_views import (
 from .blog_views import (
     BlogPostListView, BlogPostDetailView, 
     BlogPostCreateView, BlogPostUpdateView, 
-    BlogPostDeleteView, add_comment_to_post
+    BlogPostDeleteView, add_comment_to_post,
+    CommentUpdateView, CommentDeleteView
 )
+from .views import GalleryView
 
 app_name = 'core'
 
@@ -35,7 +37,7 @@ urlpatterns = [
     path("appointment/", views.appointment, name="appointment"),
     path("testimonials/", views.testimonials, name="testimonials"),
     path("faq/", views.faq, name="faq"),
-    path("gallery/", views.gallery, name="gallery"),
+    path("gallery/", GalleryView.as_view(), name="gallery"),
     path("terms/", views.terms, name="terms"),
     path("privacy/", views.privacy, name="privacy"),
     path("contact/", views.contact, name="contact"),
@@ -46,6 +48,13 @@ urlpatterns = [
     path("blog/<slug:slug>/edit/", BlogPostUpdateView.as_view(), name="blog_update"),
     path("blog/<slug:slug>/delete/", BlogPostDeleteView.as_view(), name="blog_delete"),
     path("blog/<slug:slug>/comment/", add_comment_to_post, name="add_comment"),
+    path("comments/<int:pk>/edit/", CommentUpdateView.as_view(), name="edit_comment"),
+    path("comments/<int:pk>/delete/", CommentDeleteView.as_view(), name="delete_comment"),
+
+    # Gallery URLs
+    # path("gallery/add/", views.gallery_add, name="gallery_add"),
+    # path("gallery/<int:pk>/edit/", views.gallery_edit, name="gallery_edit"),
+    # path("gallery/<int:pk>/delete/", views.gallery_delete, name="gallery_delete"),
 
     # Admin Dashboard and Staff Management
     path("dashboard/", views.admin_dashboard, name="admin_dashboard"),

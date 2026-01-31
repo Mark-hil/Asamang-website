@@ -108,7 +108,20 @@
    * Initiate glightbox
    */
   const glightbox = GLightbox({
-    selector: '.glightbox'
+    selector: '.glightbox',
+    touchNavigation: true,
+    loop: true,
+    plyr: { 
+      config: { ratio: '16:9' } 
+    },
+    openEffect: 'zoom',
+    closeEffect: 'fade',
+    slideEffect: 'slide',
+    moreText: 'Read more',
+    moreLength: 60,
+    descPosition: 'bottom',
+    onOpen: () => { document.body.style.overflow = 'hidden' },
+    onClose: () => { document.body.style.overflow = '' }
   });
 
   /**

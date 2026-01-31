@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Third-party apps
-    'ckeditor',
-    'ckeditor_uploader',
+    'tinymce',
     
     # Local apps
     'core',
@@ -150,24 +149,28 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# CKEditor settings
-CKEDITOR_UPLOAD_PATH = 'uploads/'
-CKEDITOR_IMAGE_BACKEND = 'pillow'
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            ['Bold', 'Italic', 'Underline', 'Strike'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink'],
-            ['RemoveFormat', 'Source'],
-            ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
-            ['Styles', 'Format', 'Font', 'FontSize'],
-            ['TextColor', 'BGColor'],
-        ],
-        'height': 400,
-        'width': '100%',
-    },
+# TinyMCE settings
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 400,
+    'width': '100%',
+    'menubar': True,
+    'plugins': [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table paste code help wordcount',
+        'codesample'
+    ],
+    'toolbar': 'undo redo | formatselect | bold italic backcolor | \
+        alignleft aligncenter alignright alignjustify | \
+        bullist numlist outdent indent | removeformat | help | codesample',
+    'content_css': [
+        '//www.tiny.cloud/css/codepen.min.css',
+    ],
+    'content_style': 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+    'images_upload_url': '/upload_image/',  # You'll need to set up this URL
+    'relative_urls': False,
+    'remove_script_host': True,
+    'convert_urls': True,
 }
 
 # File upload settings

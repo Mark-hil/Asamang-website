@@ -204,3 +204,38 @@ class BlogComment(models.Model):
     
     def __str__(self):
         return f'Comment by {self.name} on {self.post}'
+
+
+
+# core/models.py
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+class GalleryImage(models.Model):
+    class Category(models.TextChoices):
+        NATURE = 'nature', _('Nature')
+        ARCHITECTURE = 'architecture', _('Architecture')
+        PEOPLE = 'people', _('People')
+        EVENTS = 'events', _('Events')
+    
+    title = models.CharField(max_length=200, help_text="A descriptive title for the image")
+    image = models.ImageField(upload_to='gallery/%Y/%m/')
+    description = models.TextField(blank=True, help_text="Optional image description")
+    category = models.CharField(
+        max_length=20,
+        choices=Category.choices,
+        default=Category.EVENTS,
+        help_text="Category for filtering"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+    order = models.PositiveIntegerField(default=0, help_text="Order in which the image appears in the gallery")
+
+    class Meta:
+        ordering = ['order', '-created_at']
+        verbose_name = _('Gallery Image')
+        verbose_name_plural = _('Gallery Images')
+
+    def __str__(self):
+        return self.title
