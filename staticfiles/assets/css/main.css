@@ -28,16 +28,41 @@
   --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability */
   --brand-yellow: #e9c10a; /* Brand yellow color for highlights and accents */
+  
+  /* New color variables for consistent theming */
+  --brand-green: #066636;     /* Main brand green */
+  --brand-red: #e20c14;      /* Brand red for accents */
+  --brand-gold: #e9c10a;     /* Brand gold for highlights */
+  
+  /* State colors */
+  --success-color: #198754;  /* Green for success states */
+  --warning-color: #ffc107;  /* Yellow for warnings */
+  --danger-color: #dc3545;   /* Red for errors/danger */
+  --info-color: #0dcaf0;     /* Blue for information */
+  
+  /* Text colors */
+  --text-primary: #212529;   /* Primary text color */
+  --text-secondary: #6c757d; /* Secondary text color */
+  --text-muted: #adb5bd;     /* Muted text color */
+  
+  /* Background colors */
+  --bg-light: #f8f9fa;       /* Light background */
+  --bg-dark: #212529;        /* Dark background */
+  
+  /* Border colors */
+  --border-color: #dee2e6;   /* Default border color */
+  --border-light: #e9ecef;   /* Light border color */
+  --border-dark: #ced4da;    /* Dark border color */
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
   --nav-color: #363f40;  /* The default color of the main navmenu links */
-  --nav-hover-color: #1ba70985; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-hover-color: #e9c10a; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: #363f40; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #09a71179; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-dropdown-hover-color: #e9c10a; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
@@ -2658,6 +2683,144 @@ section,
 .call-to-action .contact-banner .contact-link:hover {
   color: color-mix(in srgb, var(--contrast-color), transparent 20%);
   border-bottom-color: var(--contrast-color);
+}
+
+/*--------------------------------------------------------------
+# Team Section
+--------------------------------------------------------------*/
+.team-section {
+  padding: 80px 0;
+  background-color: #fff;
+}
+
+.team-section .section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--heading-color);
+  margin-bottom: 0.5rem;
+  position: relative;
+  text-transform: capitalize;
+}
+
+.team-section .section-subtitle {
+  color: var(--accent-color);
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.team-section .section-title-underline {
+  width: 60px;
+  height: 3px;
+  background: var(--brand-yellow);
+  margin: 0 auto 2rem;
+  position: relative;
+}
+
+.team-section .section-title-underline::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 6px;
+  background: var(--accent-color);
+  left: 50%;
+  top: -1.5px;
+  transform: translateX(-50%);
+}
+
+.team-member {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.team-member:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.member-img {
+  position: relative;
+  overflow: hidden;
+  height: 280px;
+}
+
+.member-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.team-member:hover .member-img img {
+  transform: scale(1.05);
+}
+
+.social-links {
+  position: absolute;
+  bottom: -60px;
+  left: 0;
+  right: 0;
+  background: rgba(233, 193, 10, 0.9);
+  padding: 15px 0;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.team-member:hover .social-links {
+  bottom: 0;
+}
+
+.social-links a {
+  color: #fff;
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  background: #fff;
+  color: var(--brand-yellow);
+  transform: translateY(-3px);
+}
+
+.member-info {
+  padding: 25px 20px;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.member-info h4 {
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 1.25rem;
+  color: var(--heading-color);
+}
+
+.member-info span {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--accent-color);
+  font-weight: 500;
+  margin-bottom: 10px;
 }
 
 /*--------------------------------------------------------------

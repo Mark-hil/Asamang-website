@@ -3,5 +3,5 @@ todo.txt
 sample/
 # Environment variables
 .env
-media/
+# media/
 .env.example
