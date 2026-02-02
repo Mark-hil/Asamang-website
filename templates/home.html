@@ -8,7 +8,7 @@
 {% block content %}
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section position-relative" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('{% static 'assets/img/health/staff-8.webp' %}') no-repeat center center/cover; min-height: 90vh; display: flex; align-items: center; color: #fff;">
+    <section id="hero" class="hero section position-relative" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('{% static 'assets/img/health/dr-1.JPG' %}') no-repeat center center/cover; min-height: 90vh; display: flex; align-items: center; color: #fff;">
       <!-- Background Overlay -->
       <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
       
@@ -127,25 +127,25 @@
                     <div class="d-flex justify-content-between align-items-center py-2 border-bottom" style="font-size: 0.9rem;">
                       <div class="d-flex align-items-center">
                         <i class="bi bi-calendar-week me-2" style="color: var(--heading-color); font-size: 0.9rem;"></i>
-                        <span>Mon - Fri</span>
+                        <span>Sun - Fri</span>
                       </div>
-                      <span class="fw-medium" style="color: var(--heading-color); font-size: 0.9rem;">8:00 AM - 8:00 PM</span>
+                      <span class="fw-medium" style="color: var(--heading-color); font-size: 0.9rem;">24/7</span>
                     </div>
                     
                     <div class="d-flex justify-content-between align-items-center py-2 border-bottom" style="font-size: 0.9rem;">
                       <div class="d-flex align-items-center">
                         <i class="bi bi-calendar-day me-2" style="color: var(--heading-color); font-size: 0.9rem;"></i>
-                        <span>Saturday</span>
+                        <span>Special Clinic</span>
                       </div>
-                      <span class="fw-medium" style="color: var(--heading-color); font-size: 0.9rem;">9:00 AM - 5:00 PM</span>
+                      <span class="fw-medium" style="color: var(--heading-color); font-size: 0.9rem;">8:00 AM - 4:00 PM</span>
                     </div>
                     
                     <div class="d-flex justify-content-between align-items-center pt-2" style="font-size: 0.9rem;">
                       <div class="d-flex align-items-center">
                         <i class="bi bi-calendar-x me-2" style="color: var(--accent-color); font-size: 0.9rem;"></i>
-                        <span>Sunday</span>
+                        <span>Saturday</span>
                       </div>
-                      <span class="badge bg-light text-danger fw-normal" style="font-size: 0.8rem;">Emergency Only</span>
+                      <span class="badge bg-light text-danger fw-normal" style="font-size: 0.8rem;">Emergency Only expect Special Clinic</span>
                     </div>
                   </div>
                   
@@ -269,18 +269,18 @@
           <div class="col-lg-7" data-aos="fade-right" data-aos-delay="200">
             <div class="image-grid">
               <div class="primary-image">
-                <img src="{% static 'assets/img/health/facilities-6.webp' %}" alt="Modern hospital facility" class="img-fluid">
-                <div class="certification-badge">
+                <img src="{% static 'assets/img/health/surg-1.JPG' %}" alt="Modern hospital facility" class="img-fluid">
+                <!-- <div class="certification-badge">
                   <i class="bi bi-award"></i>
                   <span>JCI Accredited</span>
-                </div>
+                </div> -->
               </div>
               <div class="secondary-images">
                 <div class="small-image">
-                  <img src="{% static 'assets/img/health/consultation-3.webp' %}" alt="Doctor consultation" class="img-fluid">
+                  <img src="{% static 'assets/img/health/staff-6.JPG' %}" alt="Doctor consultation" class="img-fluid">
                 </div>
                 <div class="small-image">
-                  <img src="{% static 'assets/img/health/surgery-2.webp' %}" alt="Medical procedure" class="img-fluid">
+                  <img src="{% static 'assets/img/health/surg-2.JPG' %}" alt="Medical procedure" class="img-fluid">
                 </div>
               </div>
             </div>
@@ -360,7 +360,7 @@
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Featured Departments</h2>
+        <h2>Featured Service</h2>
         <p>Our departments combine experienced specialists, modern technology, and compassionate care to meet your health needs.</p>
       </div><!-- End Section Title -->
 
@@ -395,7 +395,7 @@
               <div class="col-lg-6 order-lg-2">
                 <div class="department-visual">
                   <div class="image-wrapper">
-                    <img src="{% static 'assets/img/health/emergency-3.webp' %}" alt="Emergency Department" class="img-fluid">
+                    <img src="{% static 'assets/img/health/emergency-1.JPG' %}" alt="Emergency Department" class="img-fluid">
                   </div>
                 </div>
               </div>
@@ -540,9 +540,9 @@
 
           <div class="departments-cta" data-aos="fade-up" data-aos-delay="600">
             <div class="cta-content">
-              <h3 class="cta-title">Explore All Our Medical Departments</h3>
+              <h3 class="cta-title">Explore All Our Medical Services</h3>
               <p class="cta-description">Discover a full range of specialized departments dedicated to providing expert care, advanced treatment, and patient-centered services.</p>
-              <a href="#" class="btn btn-primary">View All Departments</a>
+              <a href="{% url 'core:services' %}" class="btn btn-primary">View All Services</a>
             </div>
           </div>
 
@@ -553,19 +553,19 @@
     </section><!-- /Featured Departments Section -->
 
     <!-- Featured Services Section -->
-    <section id="featured-services" class="featured-services section">
+    <!-- <section id="featured-services" class="featured-services section"> -->
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <!-- <div class="container section-title" data-aos="fade-up">
         <h2>Featured Services</h2>
         <p>Our services cover a wide range of medical specialties, ensuring comprehensive care for all your health needs.</p>
-      </div><!-- End Section Title -->
+      </div>End Section Title -->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <!-- <div class="container" data-aos="fade-up" data-aos-delay="100"> -->
 
-        <div class="row gy-4">
+        <!-- <div class="row gy-4"> -->
 
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="service-card">
               <div class="service-icon">
                 <i class="fas fa-heartbeat"></i>
@@ -579,9 +579,9 @@
                 <a href="#" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
               </div>
             </div>
-          </div><!-- End Service Card -->
+          </div>End Service Card -->
 
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="service-card">
               <div class="service-icon">
                 <i class="fas fa-brain"></i>
@@ -595,9 +595,9 @@
                 <a href="#" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
               </div>
             </div>
-          </div><!-- End Service Card -->
+          </div>End Service Card -->
 
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="service-card">
               <div class="service-icon">
                 <i class="fas fa-bone"></i>
@@ -611,9 +611,9 @@
                 <a href="#" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
               </div>
             </div>
-          </div><!-- End Service Card -->
+          </div>End Service Card -->
 
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="service-card">
               <div class="service-icon">
                 <i class="fas fa-baby"></i>
@@ -627,9 +627,9 @@
                 <a href="#" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
               </div>
             </div>
-          </div><!-- End Service Card -->
+          </div>End Service Card -->
 
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="service-card">
               <div class="service-icon">
                 <i class="fas fa-ribbon"></i>
@@ -643,9 +643,9 @@
                 <a href="#" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
               </div>
             </div>
-          </div><!-- End Service Card -->
+          </div>End Service Card -->
 
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="service-card">
               <div class="service-icon">
                 <i class="fas fa-flask"></i>
@@ -659,22 +659,22 @@
                 <a href="#" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
               </div>
             </div>
-          </div><!-- End Service Card -->
+          </div>End Service Card -->
 
-        </div>
+        <!-- </div> -->
 
-      </div>
+      <!-- </div> -->
 
-    </section><!-- /Featured Services Section -->
+    <!-- </section>/Featured Services Section -->
 
     <!-- Find A Doctor Section -->
     <section id="find-a-doctor" class="find-a-doctor section">
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <!-- <div class="container section-title" data-aos="fade-up">
         <h2>Find A Doctor</h2>
         <p>Connect with our network of certified healthcare professionals across all medical disciplines</p>
-      </div><!-- End Section Title -->
+      </div>End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -795,7 +795,7 @@
         </div>
 
         <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="700">
-          <a href="specialists.html" class="view-all-link">
+          <a href="{% url 'core:doctors' %}" class="view-all-link">
             Browse Complete Directory
             <i class="bi bi-chevron-right"></i>
           </a>
@@ -814,13 +814,13 @@
           <div class="row align-items-center">
             <div class="col-lg-6">
               <div class="content-wrapper">
-                <h2>Exceptional Care for Your Health Journey</h2>
-                <p>Discover comprehensive healthcare services delivered with compassion and expertise. Our dedicated team is committed to providing personalized medical care that puts you first.</p>
+                <h2>Your Health, Our Priority</h2>
+                <p>At Asamang SDA Clinic, we believe in providing compassionate, comprehensive healthcare tailored to your unique needs. Our experienced team of medical professionals is dedicated to supporting your wellness journey with personalized care and modern medical expertise.</p>
 
                 <div class="action-buttons">
-                  <a href="appointment.html" class="primary-btn">Schedule Consultation</a>
-                  <a href="services.html" class="secondary-link">
-                    <span>Explore Services</span>
+                  <a href="{% url 'core:appointment' %}" class="primary-btn">Book Your Visit</a>
+                  <a href="{% url 'core:services' %}" class="secondary-link">
+                    <span>Discover Our Services</span>
                     <i class="fas fa-arrow-right"></i>
                   </a>
                 </div>
@@ -828,7 +828,11 @@
             </div>
             <div class="col-lg-6">
               <div class="hero-image" data-aos="zoom-in" data-aos-delay="300">
-                <img src="{% static 'assets/img/health/asamang.jpg' %}" alt="Healthcare Excellence" class="img-fluid">
+                <img src="{% static 'assets/img/health/admin-1.jpeg' %}" alt="Healthcare Excellence" class="img-fluid">
+                <div class="admin-info text-center p-3">
+                  <h4 class="mb-1 fw-bold">Mr. Kofi Adu Gyamfi</h4>
+                  <p class="mb-0 text-muted">Administrator</p>
+                </div>
               </div>
             </div>
           </div>
@@ -844,14 +848,14 @@
             </div>
             <div class="col-lg-3 col-md-6">
               <div class="stat-item">
-                <div class="stat-number">15K+</div>
-                <div class="stat-label">Happy Patients</div>
+                <div class="stat-number">60K+</div>
+                <div class="stat-label">Annual Patients</div>
               </div>
             </div>
             <div class="col-lg-3 col-md-6">
               <div class="stat-item">
-                <div class="stat-number">50+</div>
-                <div class="stat-label">Medical Experts</div>
+                <div class="stat-number">400+</div>
+                <div class="stat-label">Health Experts</div>
               </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -914,11 +918,11 @@
               </div>
             </div>
             <div class="contact-actions">
-              <a href="tel:+15551234567" class="call-btn">
+              <a href="tel:+233 531 047 199 " class="call-btn">
                 <i class="fas fa-phone"></i>
-                (555) 123-4567
+                +233 531 047 199 
               </a>
-              <a href="contact.html" class="contact-link">Get Directions</a>
+              <a href="{% url 'core:contact'%}" class="contact-link">Get Directions</a>
             </div>
           </div>
         </div>

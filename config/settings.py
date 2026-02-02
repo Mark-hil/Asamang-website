@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     
     # Local apps
     'core',
+    # 'storages',
 ]
 
 MIDDLEWARE = [
@@ -173,5 +174,34 @@ TINYMCE_DEFAULT_CONFIG = {
     'convert_urls': True,
 }
 
-# File upload settings
-FILE_UPLOAD_PERMISSIONS = 0o644
+# # File upload settings
+# FILE_UPLOAD_PERMISSIONS = 0o644
+
+
+# # AWS S3 Settings
+# AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+# AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
+# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+# AWS_DEFAULT_ACL = 'public-read'
+# AWS_QUERYSTRING_AUTH = False
+# AWS_IS_GZIPPED = True
+# AWS_S3_FILE_OVERWRITE = False
+
+# # Custom storage classes
+# CUSTOM_DOMAIN = AWS_S3_CUSTOM_DOMAIN
+
+# # Static files (CSS, JavaScript, Images)
+# STATICFILES_STORAGE = 'core.storage_backends.StaticStorage'
+# STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+
+# # Media files (Uploaded by users)
+# DEFAULT_FILE_STORAGE = 'core.storage_backends.MediaStorage'
+# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+# Ensure the static and media directories exist in your S3 bucket
+# You'll need to create these folders in your S3 bucket if they don't exist
