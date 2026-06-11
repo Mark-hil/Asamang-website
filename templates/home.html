@@ -72,9 +72,9 @@
           <!-- Floating Cards -->
           <div class="col-lg-5 position-relative">
             <!-- Emergency Card -->
-            <div class="card border-0 mb-3 overflow-hidden" data-aos="fade-left" data-aos-delay="200" style="border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
+            <div class="card border-0 mb-3 overflow-hidden glass-card" data-aos="fade-left" data-aos-delay="200">
               <div class="position-relative">
-                <div style="background: #f8f9fa; padding: 15px 20px;">
+                <div>
                   <div class="text-center mb-3">
                     <div class="bg-white p-2 rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 50px; height: 50px; box-shadow: 0 3px 10px rgba(0,0,0,0.05);">
                       <i class="bi bi-telephone-fill" style="color: var(--accent-color); font-size: 1.2rem;"></i>
@@ -101,9 +101,9 @@
                     </div>
                   </div>
                   
-                  <div class="text-center">
-                    <a href="tel:+233531047199" class="btn btn-sm d-inline-flex align-items-center justify-content-center py-1 px-3 rounded-pill" style="background-color: var(--accent-color); color: white; border: none; font-size: 0.85rem;">
-                      <i class="bi bi-telephone-fill me-1"></i>
+                  <div class="text-center mt-3">
+                    <a href="tel:+233531047199" class="btn modern-btn d-inline-flex align-items-center justify-content-center" style="background-color: var(--accent-color); color: white; border: none; font-size: 0.9rem;">
+                      <i class="bi bi-telephone-fill me-2"></i>
                       Call Now
                     </a>
                   </div>
@@ -112,9 +112,9 @@
             </div>
             
             <!-- Working Hours Card -->
-            <div class="card border-0 overflow-hidden" data-aos="fade-left" data-aos-delay="300" style="border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
+            <div class="card border-0 overflow-hidden glass-card" data-aos="fade-left" data-aos-delay="300">
               <div class="position-relative">
-                <div style="background: #f8f9fa; padding: 15px 20px;">
+                <div>
                   <div class="text-center mb-3">
                     <div class="bg-white p-2 rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 50px; height: 50px; box-shadow: 0 3px 10px rgba(0,0,0,0.05);">
                       <i class="bi bi-clock" style="color: var(--heading-color); font-size: 1.2rem;"></i>
@@ -149,9 +149,9 @@
                     </div>
                   </div>
                   
-                  <div class="text-center">
-                    <a href="{% url 'core:appointment' %}" class="btn btn-sm d-inline-flex align-items-center justify-content-center py-1 px-3 rounded-pill" style="background-color: var(--accent-color); color: white; border: none; font-size: 0.85rem;">
-                      <i class="bi bi-calendar-plus me-1"></i>
+                  <div class="text-center mt-3">
+                    <a href="{% url 'core:appointment' %}" class="btn modern-btn d-inline-flex align-items-center justify-content-center" style="background-color: var(--accent-color); color: white; border: none; font-size: 0.9rem;">
+                      <i class="bi bi-calendar-plus me-2"></i>
                       Book Appointment
                     </a>
                   </div>
@@ -259,7 +259,7 @@
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row">
-          <div class="col-lg-8 mx-auto text-center mb-5" data-aos="fade-up" data-aos-delay="150">
+          <div class="col-lg-8 mx-auto text-center mb-5" data-aos="text-reveal" data-aos-delay="150">
             <h2 class="section-heading">Excellence in Healthcare Since 1984</h2>
             <p class="lead-description">We are committed to providing world-class medical care through innovation, compassion,Christ centered healing ministry.</p>
           </div>
@@ -268,7 +268,7 @@
         <div class="row align-items-center gy-5">
           <div class="col-lg-7" data-aos="fade-right" data-aos-delay="200">
             <div class="image-grid">
-              <div class="primary-image">
+              <div class="primary-image" data-aos="img-reveal">
                 <img src="{% static 'assets/img/health/surg-1.JPG' %}" alt="Modern hospital facility" class="img-fluid">
                 <!-- <div class="certification-badge">
                   <i class="bi bi-award"></i>
@@ -276,10 +276,10 @@
                 </div> -->
               </div>
               <div class="secondary-images">
-                <div class="small-image">
+                <div class="small-image" data-aos="img-reveal" data-aos-delay="200">
                   <img src="{% static 'assets/img/health/staff-6.JPG' %}" alt="Doctor consultation" class="img-fluid">
                 </div>
-                <div class="small-image">
+                <div class="small-image" data-aos="img-reveal" data-aos-delay="400">
                   <img src="{% static 'assets/img/health/surg-2.JPG' %}" alt="Medical procedure" class="img-fluid">
                 </div>
               </div>

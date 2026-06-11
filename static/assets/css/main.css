@@ -14,9 +14,9 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Ubuntu",  sans-serif;
-  --nav-font: "Poppins",  sans-serif;
+  --default-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --heading-font: "Outfit", sans-serif;
+  --nav-font: "Inter", sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
@@ -654,7 +654,7 @@ h6 {
   opacity: 0;
   right: 15px;
   bottom: -15px;
-  z-index: 99999;
+  z-index: 996;
   background-color: var(--accent-color);
   width: 44px;
   height: 44px;
@@ -1264,8 +1264,8 @@ section,
 
 @media (max-width: 768px) {
   .home-about .image-grid .secondary-images {
-    flex-direction: row;
-    height: 180px;
+    flex-direction: column;
+    height: auto;
   }
 }
 
@@ -1430,8 +1430,9 @@ section,
   font-size: 1.05rem;
   font-weight: 500;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 50px;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(226, 12, 20, 0.2);
 }
 
 .home-about .content-wrapper .action-buttons .btn-explore:hover {
@@ -1448,9 +1449,9 @@ section,
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 14px 20px;
+  padding: 14px 24px;
   border: 2px solid color-mix(in srgb, var(--default-color), transparent 85%);
-  border-radius: 8px;
+  border-radius: 50px;
   transition: all 0.3s ease;
 }
 
@@ -1463,6 +1464,7 @@ section,
   border-color: var(--accent-color);
   color: var(--accent-color);
   transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
 }
 
 @media (max-width: 992px) {
@@ -1649,7 +1651,9 @@ section,
   padding: 40px 32px;
   height: 100%;
   transition: all 0.4s ease;
-  border-radius: 0;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 95%);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
   position: relative;
   overflow: hidden;
 }
@@ -1660,8 +1664,8 @@ section,
   top: 0;
   left: 0;
   width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent-color) 0%, transparent 100%);
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-color) 0%, var(--brand-green) 100%);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s ease;
@@ -1669,7 +1673,8 @@ section,
 
 .featured-departments .department-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 60px color-mix(in srgb, var(--default-color), transparent 85%);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  border-color: color-mix(in srgb, var(--accent-color), transparent 80%);
 }
 
 .featured-departments .department-card:hover::before {
@@ -3117,13 +3122,13 @@ section,
   max-height: 50px;
   max-width: 100%;
   opacity: 0.6;
-  transition: opacity 0.3s ease;
-  filter: grayscale(100%);
+  transition: all 0.3s ease;
+  filter: brightness(0) opacity(0.6);
 }
 
 .about .accreditation-section .accreditation-grid .accreditation-item:hover img {
   opacity: 1;
-  filter: grayscale(0%);
+  filter: brightness(0) opacity(1);
 }
 
 @media (max-width: 992px) {
@@ -6574,4 +6579,86 @@ section,
   padding-top: 60px;
   padding-bottom: 60px;
   /* Add your styles here */
+}
+/* Premium UI Upgrades */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+  padding: 20px !important;
+  transition: all 0.3s ease;
+}
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+}
+.glass-card .bg-white {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(4px);
+}
+.modern-btn {
+  border-radius: 50px !important;
+  padding: 10px 24px !important;
+  font-weight: 500;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(226, 12, 20, 0.2);
+}
+.modern-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(226, 12, 20, 0.3);
+}
+.premium-shadow {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.3s ease;
+}
+.premium-shadow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08) !important;
+}
+
+
+/* Advanced Viewport Animations (AOS Custom) */
+[data-aos="img-reveal"] {
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+[data-aos="img-reveal"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--heading-color);
+  transform-origin: right;
+  transform: scaleX(1);
+  transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: 2;
+}
+[data-aos="img-reveal"].aos-animate::after {
+  transform: scaleX(0);
+}
+[data-aos="img-reveal"] img {
+  opacity: 0;
+  transform: scale(1.1);
+  transition: opacity 0s 0.2s, transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+}
+[data-aos="img-reveal"].aos-animate img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Staggered text reveal */
+[data-aos="text-reveal"] {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  transform: translateY(20px);
+  transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1), transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+[data-aos="text-reveal"].aos-animate {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  transform: translateY(0);
 }

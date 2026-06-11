@@ -155,11 +155,11 @@
             <div class="sidebar-widget categories-widget" data-aos="fade-up" data-aos-delay="200">
               <h4 class="widget-title">Categories</h4>
               <ul>
-                <li><a href="?" class="{% if not request.GET.category %}active{% endif %}">All <span>({{ total_posts }})</span></a></li>
+                <li><a href="?" class="{% if not request.GET.category %}active{% endif %}">All {% if total_posts %}<span>({{ total_posts }})</span>{% endif %}</a></li>
                 {% for category in categories %}
                 <li>
                   <a href="?category={{ category|urlencode }}" class="{% if request.GET.category == category %}active{% endif %}">
-                    {{ category }} <span>({{ category.post_count }})</span>
+                    {{ category }} {% if category.post_count %}<span>({{ category.post_count }})</span>{% endif %}
                   </a>
                 </li>
                 {% endfor %}
