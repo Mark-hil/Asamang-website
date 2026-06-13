@@ -8,11 +8,9 @@ def compress_image(file_path):
             print(f"Compressing {file_path} (Current size: {size / 1024 / 1024:.2f} MB)")
             img = Image.open(file_path)
             
-            # Convert RGBA to RGB if needed
             if img.mode in ("RGBA", "P"):
                 img = img.convert("RGB")
             
-            # Resize if very large
             max_width = 1280
             if img.width > max_width:
                 ratio = max_width / img.width
