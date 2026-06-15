@@ -6,6 +6,9 @@ class StaticViewSitemap(sitemaps.Sitemap):
     changefreq = 'weekly'
     protocol = 'https'
 
+    def get_domain(self, site=None):
+        return 'asamangsdahospital.org.gh'
+
     def items(self):
         return [
             'core:home', 
