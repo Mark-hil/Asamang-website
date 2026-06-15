@@ -6,10 +6,70 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>{% block title %}Asamang SDA{% endblock %}</title>
-  <meta name="description" content="{% block meta_description %}{% endblock %}">
-  <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+  <title>{% block title %}Asamang SDA Hospital & Medical Center{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}Providing exceptional healthcare services with compassion and excellence. Our dedicated team is committed to your well-being at Asamang SDA Clinic.{% endblock %}">
+  <meta name="keywords" content="{% block meta_keywords %}hospital, clinic, Asamang, healthcare, medical center, emergency care, surgery, pediatrics, ghana{% endblock %}">
   <meta name="robots" content="index, follow">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://asamangsdahospital.org.gh{{ request.path }}">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="{% block og_title %}{{ self.title }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ self.meta_description }}{% endblock %}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:url" content="https://asamangsdahospital.org.gh{{ request.path }}">
+  <meta property="og:image" content="{% block og_image %}https://asamangsdahospital.org.gh{% static 'assets/img/health/2.JPG' %}{% endblock %}">
+  <meta property="og:site_name" content="Asamang SDA Hospital">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% block twitter_title %}{{ self.title }}{% endblock %}">
+  <meta name="twitter:description" content="{% block twitter_description %}{{ self.meta_description }}{% endblock %}">
+  <meta name="twitter:image" content="{% block twitter_image %}https://asamangsdahospital.org.gh{% static 'assets/img/health/2.JPG' %}{% endblock %}">
+
+  <!-- Structured Data (Schema.org) for MedicalClinic -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalClinic",
+    "name": "Asamang SDA Hospital",
+    "image": "https://asamangsdahospital.org.gh{% static 'assets/img/asamang-logo.png' %}",
+    "@id": "https://asamangsdahospital.org.gh",
+    "url": "https://asamangsdahospital.org.gh",
+    "telephone": "+233531047199",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "AA-254-5212",
+      "addressLocality": "Asamang",
+      "addressRegion": "Ashanti Region",
+      "addressCountry": "GH"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "00:00",
+        "closes": "23:59"
+      }
+    ],
+    "department": [
+      {
+        "@type": "MedicalClinic",
+        "name": "Emergency Department",
+        "telephone": "+233531047199"
+      }
+    ]
+  }
+  </script>
 
   <!-- Favicons -->
   <link href="{% static 'assets/img/asamang-logo.png' %}" rel="icon">
