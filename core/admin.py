@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Appointment, Doctor, GalleryImage
+from .models import Appointment, Doctor, GalleryImage, BlogPost, BlogComment
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
@@ -64,3 +64,44 @@ class GalleryImageAdmin(admin.ModelAdmin):
             'fields': ('is_active', 'order'),
         }),
     )
+
+
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'status', 'category', 'published_date', 'view_count')
+    list_filter = ('status', 'category', 'author', 'published_date')
+    search_fields = ('title', 'content', 'excerpt', 'tags')
+    prepopulated_fields = {'slug': ('title',)}
+    date_hierarchy = 'published_date'
+    ordering = ('-published_date',)
+    list_editable = ('status', 'category')
+    readonly_fields = ('view_count',)
+    fieldsets = (
+        ('Content', {
+            'fields': ('title', 'slug', 'author', 'category', 'content', 'excerpt', 'featured_image')
+        }),
+        ('Meta Data', {
+            'fields': ('tags', 'status', 'published_date', 'view_count'),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(BlogComment)
+class BlogCommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'post', 'active', 'created_at')
+    list_filter = ('active', 'created_at')
+    search_fields = ('name', 'email', 'body')
+    actions = ['approve_comments', 'disapprove_comments']
+    list_editable = ('active',)
+    ordering = ('-created_at',)
+
+    def approve_comments(self, request, queryset):
+        updated = queryset.update(active=True)
+        self.message_user(request, f'{updated} comment(s) were successfully approved.')
+    approve_comments.short_description = "Approve selected comments"
+
+    def disapprove_comments(self, request, queryset):
+        updated = queryset.update(active=False)
+        self.message_user(request, f'{updated} comment(s) were successfully disapproved.')
+    disapprove_comments.short_description = "Disapprove selected comments"
