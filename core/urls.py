@@ -11,7 +11,7 @@ from .blog_views import (
     BlogPostDeleteView, add_comment_to_post,
     CommentUpdateView, CommentDeleteView
 )
-from .views import GalleryView
+from .views import GalleryView, GalleryImageCreateView
 
 app_name = 'core'
 
@@ -52,7 +52,7 @@ urlpatterns = [
     path("comments/<int:pk>/delete/", CommentDeleteView.as_view(), name="delete_comment"),
 
     # Gallery URLs
-    # path("gallery/add/", views.gallery_add, name="gallery_add"),
+    path("gallery/add/", GalleryImageCreateView.as_view(), name="gallery_add"),
     # path("gallery/<int:pk>/edit/", views.gallery_edit, name="gallery_edit"),
     # path("gallery/<int:pk>/delete/", views.gallery_delete, name="gallery_delete"),
 

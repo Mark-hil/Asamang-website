@@ -49,7 +49,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
-from .forms import AppointmentForm, RejectionForm
+from .forms import AppointmentForm, RejectionForm, GalleryImageForm
 from .auth_forms import StaffSignupForm
 from .models import Appointment
 
@@ -170,6 +170,25 @@ class GalleryView(ListView):
         context['categories'] = GalleryImage.Category.choices
         context['selected_category'] = self.request.GET.get('category', '*')
         return context
+
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
+class GalleryImageCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = GalleryImage
+    form_class = GalleryImageForm
+    template_name = 'gallery_form.html'
+    success_url = reverse_lazy('core:gallery')
+    
+    def test_func(self):
+        return self.request.user.is_staff
+        
+    def form_valid(self, form):
+        # We can add custom logic here if needed before saving
+        response = super().form_valid(form)
+        messages.success(self.request, "Image successfully uploaded to the gallery!")
+        return response
 
 def terms(request):
     return render(request, "terms.html")

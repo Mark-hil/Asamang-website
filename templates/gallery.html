@@ -44,7 +44,7 @@
 
         {% if user.is_authenticated and user.is_staff %}
           <div class="text-center mb-4 mt-3" data-aos="fade-up" data-aos-delay="250">
-            <a href="{% url 'admin:core_galleryimage_add' %}" class="btn btn-primary btn-lg rounded-pill shadow-sm" target="_blank" style="background-color: var(--accent-color, #E60000); border: none;">
+            <a href="{% url 'core:gallery_add' %}" class="btn btn-primary btn-lg rounded-pill shadow-sm" style="background-color: var(--accent-color, #E60000); border: none;">
               <i class="bi bi-plus-circle me-2"></i> Add New Image
             </a>
           </div>

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Appointment, Doctor, BlogPost, BlogComment
+from .models import Appointment, Doctor, BlogPost, BlogComment, GalleryImage
 from django.forms import ModelForm, Textarea
 from django.utils import timezone
 from datetime import time, datetime
@@ -215,3 +215,31 @@ class CommentForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         return email.lower().strip() if email else ''
+
+
+class GalleryImageForm(forms.ModelForm):
+    """Form for adding images to the gallery from the frontend."""
+    class Meta:
+        model = GalleryImage
+        fields = ['title', 'image', 'description', 'category']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter image title',
+                'required': 'required'
+            }),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'accept': 'image/*',
+                'required': 'required'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'placeholder': 'Optional description'
+            }),
+            'category': forms.Select(attrs={
+                'class': 'form-select',
+                'required': 'required'
+            })
+        }
