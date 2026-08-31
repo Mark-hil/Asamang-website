@@ -1,339 +1,1062 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About Us | Asamang SDA Hospital in Sekyere South District{% endblock %}
-{% block meta_description %}Learn about Asamang SDA Hospital, a mission-based healthcare facility in the Sekyere South District, Ghana. Established in 1984 with over 400 dedicated healthcare professionals.{% endblock %}
-{% block meta_keywords %}about asamang sda hospital, healthcare ghana, mission hospital ashanti region, medical team asamang, CHAG hospital ghana{% endblock %}
+{% block title %}About Us | Asamang SDA Hospital & Medical Center{% endblock %}
+{% block meta_description %}Learn about Asamang SDA Hospital in Sekyere South District, Ghana. Established in 1984 under CHAG and Ghana Adventist Health Service, providing 40+ years of compassionate, holistic medical excellence.{% endblock %}
+{% block meta_keywords %}about asamang sda hospital, healthcare ghana, mission hospital ashanti region, medical team asamang, CHAG hospital ghana, sekyere south district referral hospital{% endblock %}
 
 {% block body_class %}about-page{% endblock %}
 
+{% block extra_css %}
+<style>
+  /* About Page Custom Enhanced Styling */
+  .about-hero {
+    background: linear-gradient(135deg, rgba(6, 102, 54, 0.04) 0%, rgba(233, 193, 10, 0.05) 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(6, 102, 54, 0.08);
+  }
+
+  .badge-pill-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 1px solid rgba(6, 102, 54, 0.15);
+  }
+
+  .section-tag {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .section-heading-lg {
+    font-family: var(--heading-font);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Overview & Story */
+  .about-story-card {
+    background: var(--surface-color);
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    height: 100%;
+  }
+
+  .story-highlight-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 20px;
+    background: #f8faf9;
+    border-radius: 12px;
+    border-left: 4px solid var(--heading-color);
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .story-highlight-box:hover {
+    transform: translateX(5px);
+    background: #f0f7f3;
+  }
+
+  .story-highlight-box i {
+    font-size: 1.5rem;
+    color: var(--heading-color);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .story-highlight-box h5 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--heading-color);
+    margin-bottom: 3px;
+  }
+
+  .story-highlight-box p {
+    font-size: 0.9rem;
+    color: var(--default-color);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Image Showcase */
+  .image-composition {
+    position: relative;
+  }
+
+  .main-hospital-img {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .sub-image-card {
+    position: absolute;
+    bottom: -30px;
+    right: -20px;
+    width: 55%;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 6px solid #ffffff;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  .sub-image-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .experience-badge {
+    position: absolute;
+    top: 25px;
+    left: -15px;
+    background: var(--heading-color);
+    color: #ffffff;
+    padding: 16px 22px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(6, 102, 54, 0.35);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .experience-badge .years {
+    font-size: 2.2rem;
+    font-weight: 800;
+    font-family: var(--heading-font);
+    line-height: 1;
+    color: var(--brand-gold);
+  }
+
+  .experience-badge .text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Key Metrics Section */
+  .metrics-strip {
+    background: linear-gradient(135deg, var(--heading-color) 0%, #044424 100%);
+    border-radius: 20px;
+    padding: 40px 30px;
+    color: #ffffff;
+    box-shadow: 0 15px 40px rgba(6, 102, 54, 0.25);
+    margin: 50px 0 80px;
+  }
+
+  .metric-card-item {
+    text-align: center;
+    padding: 15px;
+    position: relative;
+  }
+
+  .metric-card-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    .metric-card-item:not(:last-child)::after {
+      display: none;
+    }
+    .metric-card-item {
+      margin-bottom: 20px;
+    }
+    .sub-image-card {
+      position: static;
+      width: 100%;
+      margin-top: 15px;
+      border: none;
+    }
+    .experience-badge {
+      left: 15px;
+      top: 15px;
+    }
+  }
+
+  .metric-val {
+    font-size: 2.8rem;
+    font-weight: 800;
+    font-family: var(--heading-font);
+    color: var(--brand-gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .metric-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .metric-desc {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+  }
+
+  /* Mission, Vision, Values Cards */
+  .mvv-card {
+    background: var(--surface-color);
+    border-radius: 16px;
+    padding: 2.2rem 1.8rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    height: 100%;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mvv-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: transparent;
+    transition: background 0.3s ease;
+  }
+
+  .mvv-card.mission-box::before { background: var(--heading-color); }
+  .mvv-card.vision-box::before { background: var(--brand-gold); }
+  .mvv-card.promise-box::before { background: var(--accent-color); }
+
+  .mvv-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+  }
+
+  .mvv-icon-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .mission-box .mvv-icon-wrap { background: rgba(6, 102, 54, 0.1); color: var(--heading-color); }
+  .vision-box .mvv-icon-wrap { background: rgba(233, 193, 10, 0.15); color: #b89400; }
+  .promise-box .mvv-icon-wrap { background: rgba(226, 12, 20, 0.1); color: var(--accent-color); }
+
+  .mvv-card h4 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 0.9rem;
+    font-family: var(--heading-font);
+  }
+
+  .mvv-card p {
+    font-size: 0.95rem;
+    color: var(--default-color);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Departments & Specialties Pills */
+  .specialty-pill-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    text-align: center;
+    transition: all 0.3s ease;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  .specialty-pill-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--heading-color);
+    box-shadow: 0 10px 25px rgba(6, 102, 54, 0.1);
+    color: var(--heading-color);
+  }
+
+  .specialty-pill-card i {
+    font-size: 2rem;
+    color: var(--heading-color);
+    margin-bottom: 0.75rem;
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  .specialty-pill-card:hover i {
+    transform: scale(1.15);
+    color: var(--accent-color);
+  }
+
+  .specialty-pill-card span {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  /* Executive Leadership Team Cards */
+  .leadership-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 0.35s ease;
+    height: 100%;
+  }
+
+  .leadership-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.1);
+  }
+
+  .leadership-img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 270px;
+    background: #f0f3f2;
+    overflow: hidden;
+  }
+
+  .leadership-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.4s ease;
+  }
+
+  .leadership-card:hover .leadership-img-wrapper img {
+    transform: scale(1.05);
+  }
+
+  .leadership-body {
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+
+  .leadership-body h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 4px;
+  }
+
+  .leadership-body .role-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .leadership-socials {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .leadership-socials a {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #f4f6f5;
+    color: var(--heading-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.25s ease;
+    text-decoration: none;
+  }
+
+  .leadership-socials a:hover {
+    background: var(--heading-color);
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  /* NEWSTART Adventist Wellness */
+  .wellness-card {
+    background: linear-gradient(135deg, #f7faf8 0%, #eef5f0 100%);
+    border: 1px solid rgba(6, 102, 54, 0.12);
+    border-radius: 18px;
+    padding: 2.5rem;
+  }
+
+  .newstart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-top: 1.5rem;
+  }
+
+  .newstart-pill {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    border: 1px solid rgba(6, 102, 54, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  }
+
+  .newstart-letter {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--heading-color);
+    font-family: var(--heading-font);
+    display: block;
+    line-height: 1;
+  }
+
+  .newstart-word {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--default-color);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* Affiliations & Accreditations */
+  .partner-box {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  }
+
+  .partner-box i {
+    font-size: 2rem;
+    color: var(--heading-color);
+    margin-bottom: 8px;
+  }
+
+  .partner-box strong {
+    font-size: 0.95rem;
+    color: var(--heading-color);
+    margin-bottom: 2px;
+  }
+
+  .partner-box span {
+    font-size: 0.8rem;
+    color: #6c757d;
+  }
+
+  /* CTA Banner */
+  .about-cta-section {
+    background: linear-gradient(135deg, var(--heading-color) 0%, #03361d 100%);
+    border-radius: 24px;
+    padding: 60px 40px;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(6, 102, 54, 0.3);
+  }
+
+  .about-cta-section h1,
+  .about-cta-section h2,
+  .about-cta-section h3,
+  .about-cta-section h4 {
+    color: #ffffff !important;
+  }
+
+  .about-cta-section p {
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  .about-cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(233, 193, 10, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
+<main class="main">
 
-  <main class="main">
+  <!-- ==================== HERO / PAGE TITLE ==================== -->
+  <section class="about-hero">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-7" data-aos="fade-up">
+          <div class="badge-pill-custom mb-3">
+            <i class="bi bi-shield-fill-check text-success"></i>
+            Christian Health Association of Ghana (CHAG)
+          </div>
+          <h1 class="section-heading-lg mb-3">
+            Compassionate Care, Clinical Excellence Since 1984
+          </h1>
+          <p class="lead text-muted mb-4" style="font-size: 1.15rem; line-height: 1.7;">
+            Asamang Seventh-day Adventist Hospital is the premier medical referral center in the Sekyere South District, delivering comprehensive, faith-guided healthcare to thousands of families across the Ashanti Region and beyond.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="{% url 'core:appointment' %}" class="btn btn-lg px-4 py-2 text-white fw-medium shadow-sm" style="background-color: var(--accent-color); border-radius: 10px;">
+              <i class="bi bi-calendar-check me-2"></i>Book Consultation
+            </a>
+            <a href="{% url 'core:doctors' %}" class="btn btn-lg px-4 py-2 fw-medium border" style="color: var(--heading-color); background-color: #ffffff; border-color: rgba(6, 102, 54, 0.3); border-radius: 10px;">
+              <i class="bi bi-person-badge me-2"></i>Meet Our Doctors
+            </a>
+          </div>
+        </div>
 
-    <!-- Page Title -->
-    <div class="page-title">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1 class="heading-title">About</h1>
-              <p class="mb-3" style="text-align: justify; text-justify: inter-word;">
-                The Seventh-day Adventist Hospital in Asamang, Ghana, is a mission-based healthcare facility located in the Sekyere South District. As part of the Ghana Adventist Health Service, we operate under the Christian Health Association of Ghana (CHAG), an agency of the Ministry of Health.
-              </p>
-
-              <p class="mb-3" style="text-align: justify; text-justify: inter-word;">
-                Since our establishment in 1984, we have proudly served as the premier hospital in the Adventist Network. Our facility stands as the primary referral center for the district, offering comprehensive healthcare services that include:
-              </p>
-
-              <ul class="mb-3" style="text-align: left; padding-left: 30px; list-style-type: none;">
-                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Eye Care & Ophthalmology</li>
-                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Dental Services</li>
-                <li><i class="bi bi-check-circle-fill text-success me-2"></i>ENT (Ear, Nose, and Throat) Care</li>
-                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Gynecological Services</li>
-                <li><i class="bi bi-check-circle-fill text-success me-2"></i>General Surgery</li>
-                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Pediatric Care</li>
-                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Psychiatric Services</li>
-                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Reproductive and Child Health (RCH)</li>
-                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Advanced Diagnostic Imaging (X-Ray)</li>
-                <li><i class="bi bi-check-circle-fill text-success me-2"></i>And many other specialized services</li>
-              </ul>
-
-              <p class="mb-0" style="text-align: justify; text-justify: inter-word;">
-                Our commitment to excellence is reflected in our team of over 300 dedicated healthcare professionals, including specialists, nurses, and paramedics, supported by more than 90 skilled support staff. This experienced team works together to provide the highest standard of medical care, making us a true center of healthcare excellence in the region.
-              </p>
-            </div>
+        <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-left" data-aos-delay="150">
+          <div class="card border-0 p-4 shadow-sm" style="background: #ffffff; border-radius: 16px; border-left: 5px solid var(--brand-gold);">
+            <h5 class="fw-bold mb-2" style="color: var(--heading-color);">Quick Facts</h5>
+            <ul class="list-unstyled mb-0" style="font-size: 0.95rem;">
+              <li class="py-2 border-bottom d-flex justify-content-between">
+                <span class="text-muted"><i class="bi bi-calendar-event me-2 text-success"></i>Founded:</span>
+                <strong class="text-dark">1984 (40+ Years)</strong>
+              </li>
+              <li class="py-2 border-bottom d-flex justify-content-between">
+                <span class="text-muted"><i class="bi bi-geo-alt me-2 text-danger"></i>Location:</span>
+                <strong class="text-dark">Asamang, Ashanti</strong>
+              </li>
+              <li class="py-2 border-bottom d-flex justify-content-between">
+                <span class="text-muted"><i class="bi bi-people me-2 text-success"></i>Staff Size:</span>
+                <strong class="text-dark">400+ Healthcare Team</strong>
+              </li>
+              <li class="pt-2 d-flex justify-content-between">
+                <span class="text-muted"><i class="bi bi-clock-history me-2 text-warning"></i>Emergency:</span>
+                <strong class="text-success">24/7 Continuous Care</strong>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">About</li>
-          </ol>
-        </div>
+
+      <nav class="breadcrumbs mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+        <ol class="breadcrumb mb-0" style="font-size: 0.9rem;">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none text-muted"><i class="bi bi-house-door me-1"></i>Home</a></li>
+          <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">About Us</li>
+        </ol>
       </nav>
-    </div><!-- End Page Title -->
+    </div>
+  </section>
 
-    <!-- About Section -->
-    <section id="about" class="about section">
+  <!-- ==================== HOSPITAL STORY & IMAGE COMPOSITION ==================== -->
+  <section class="py-5 my-3">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <!-- Left: Image Composition -->
+        <div class="col-lg-6" data-aos="fade-right">
+          <div class="image-composition pe-lg-3">
+            <img src="{% static 'assets/img/health/staff-gr-1.JPG' %}" alt="Asamang SDA Hospital Team" class="main-hospital-img">
+            
+            <div class="experience-badge">
+              <span class="years">40+</span>
+              <span class="text">Years of<br>Healing Ministry</span>
+            </div>
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="intro-section">
-          <div class="row justify-content-center">
-            <div class="col-lg-8 text-center" data-aos="fade-up" data-aos-delay="100">
-              <h2>Excellence in Healthcare Since 1984</h2>
-              <p class="lead">We believe that exceptional medical care begins with understanding. Our dedicated team of professionals combines cutting-edge technology with compassionate, personalized treatment to ensure every patient receives the highest standard of care.</p>
+            <div class="sub-image-card d-none d-sm-block">
+              <img src="{% static 'assets/img/health/gr-2.JPG' %}" alt="Medical Staff Consultation">
             </div>
           </div>
         </div>
 
-        <div class="image-stats-section">
-          <div class="row align-items-center">
-            <div class="col-lg-7" data-aos="fade-right" data-aos-delay="200">
-              <div class="image-gallery">
-                <div class="main-image-container">
-                  <img src="{% static 'assets/img/health/staff-gr-1.JPG' %}" class="img-fluid main-image" alt="Medical facility">
-                </div>
-                <div class="secondary-images">
-                  <img src="{% static 'assets/img/health/gr-2.JPG' %}" class="img-fluid secondary-image" alt="Medical team" data-aos="zoom-in" data-aos-delay="400">
-                  <img src="{% static 'assets/img/health/gr-4.JPG' %}" class="img-fluid secondary-image" alt="Patient consultation" data-aos="zoom-in" data-aos-delay="500">
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-5" data-aos="fade-left" data-aos-delay="300">
-              <div class="stats-content">
-                <h3>Trusted Healthcare Provider</h3>
-                <p>We are committed to delivering high-quality, patient-centered healthcare through experienced professionals, advanced medical technology, and compassionate service you can rely on.</p>
-
-                <div class="stats-list">
-                  <div class="stat-row">
-                    <div class="stat-number">
-                      <span data-purecounter-start="0" data-purecounter-end="60000" data-purecounter-duration="0" class="purecounter">60K+</span>
-                    </div>
-                    <div class="stat-info">
-                      <h5>Annual Patient Visits</h5>
-                      <p>patients utilised our services</p>
-                    </div>
-                  </div>
-
-                  <div class="stat-row">
-                    <div class="stat-number">
-                      <span data-purecounter-start="0" data-purecounter-end="95" data-purecounter-duration="0" class="purecounter">95</span><span>%</span>
-                    </div>
-                    <div class="stat-info">
-                      <h5>Patient Satisfaction</h5>
-                      <p>Based on comprehensive feedback surveys</p>
-                    </div>
-                  </div>
-
-                  <div class="stat-row">
-                    <div class="stat-number">
-                      <span data-purecounter-start="0" data-purecounter-end="400+" data-purecounter-duration="0" class="purecounter">400+</span>
-                    </div>
-                    <div class="stat-info">
-                      <h5>health professionals</h5>
-                      <p>health professionals</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="mission-section" data-aos="fade-up" data-aos-delay="400">
-          <div class="row">
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-              <div class="mission-item">
-                <div class="mission-icon">
-                  <i class="bi bi-heart"></i>
-                </div>
-                <h4>Mission</h4>
-                <p>To use Christian principles and government policies in providing holistic health services with dedicated staff to ensure efficiency, effectiveness and client satisfaction.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-              <div class="mission-item">
-                <div class="mission-icon">
-                  <i class="bi bi-eye"></i>
-                </div>
-                <h4>Vision</h4>
-                <p>With prudent management practices and quality healthcare delivery the hospital would strive to become a medical centre of excellence.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
-              <div class="mission-item">
-                <div class="mission-icon">
-                  <i class="bi bi-star"></i>
-                </div>
-                <h4>Our Promise</h4>
-                <p>Every patient will receive the highest quality care in a comfortable, supportive environment where their health, dignity, and well-being are our top priorities.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Meet Our Team Section -->
-        <div class="team-section py-5" data-aos="fade-up" data-aos-delay="400">
-          <div class="row justify-content-center">
-            <div class="col-lg-8 text-center mb-5">
-              <h2 class="section-title">Meet Our Team</h2>
-              <p class="section-subtitle">Executive Officers</p>
-              <div class="section-title-underline"></div>
-            </div>
-          </div>
+        <!-- Right: The Story -->
+        <div class="col-lg-6" data-aos="fade-left">
+          <span class="section-tag">Our Heritage & Mission</span>
+          <h2 class="section-heading-lg">A Pillar of Health, Hope, and Healing in Ghana</h2>
           
-          <div class="row justify-content-center">
-            <!-- Team Member 1 -->
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-              <div class="team-member">
-                <div class="member-img">
-                  <img src="{% static 'assets/img/health/med-dir.jpeg' %}" class="img-fluid" alt="Team Member">
-                  <div class="social-links">
-                    <a href="#"><i class="bi bi-facebook"></i></a>
-                    <a href="#"><i class="bi bi-twitter"></i></a>
-                    <a href="#"><i class="bi bi-linkedin"></i></a>
-                  </div>
-                </div>
-                <div class="member-info">
-                  <h4>Dr. Kizito Kakra Vormawor</h4>
-                  <span>Medical Director</span>
-                </div>
+          <p class="text-muted" style="line-height: 1.8; font-size: 1.05rem;">
+            The Seventh-day Adventist Hospital in Asamang was founded in <strong>1984</strong> with a singular vision: to bring Christ-centered, high-quality medical care to the people of the Sekyere South District and surrounding communities.
+          </p>
+
+          <p class="text-muted" style="line-height: 1.8; font-size: 1.05rem;">
+            As an integral member of the <strong>Ghana Adventist Health Service (GAHS)</strong> operating under the <strong>Christian Health Association of Ghana (CHAG)</strong> and the Ministry of Health, we serve as the primary district referral hospital.
+          </p>
+
+          <div class="mt-4">
+            <div class="story-highlight-box">
+              <i class="bi bi-hospital"></i>
+              <div>
+                <h5>Primary Referral Facility</h5>
+                <p>Equipped with advanced diagnostic units, surgical theaters, and specialized clinics to handle complex medical conditions.</p>
               </div>
             </div>
-            
-            <!-- Team Member 2 -->
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-              <div class="team-member">
-                <div class="member-img">
-                  <img src="{% static 'assets/img/health/dr-1-speech.JPG' %}" class="img-fluid" alt="Team Member">
-                  <div class="social-links">
-                    <a href="#"><i class="bi bi-facebook"></i></a>
-                    <a href="#"><i class="bi bi-twitter"></i></a>
-                    <a href="#"><i class="bi bi-linkedin"></i></a>
-                  </div>
-                </div>
-                <div class="member-info">
-                  <h4>Dr. Jane Smith</h4>
-                  <span>Head of Nursing</span>
-                </div>
+
+            <div class="story-highlight-box">
+              <i class="bi bi-person-check"></i>
+              <div>
+                <h5>400+ Dedicated Professionals</h5>
+                <p>Over 300 clinical specialists, physicians, midwives, nurses, and 90+ supportive staff committed to your recovery.</p>
               </div>
             </div>
-            
-            <!-- Team Member 3 -->
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-              <div class="team-member">
-                <div class="member-img">
-                  <img src="{% static 'assets/img/health/admin-1.jpeg' %}" class="img-fluid" alt="Team Member">
-                  <div class="social-links">
-                    <a href="#"><i class="bi bi-facebook"></i></a>
-                    <a href="#"><i class="bi bi-twitter"></i></a>
-                    <a href="#"><i class="bi bi-linkedin"></i></a>
-                  </div>
-                </div>
-                <div class="member-info">
-                  <h4>Mr. Kofi Adu Gyamfi</h4>
-                  <span>Administrator</span>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Team Member 4 -->
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
-              <div class="team-member">
-                <div class="member-img">
-                  <img src="{% static 'assets/img/health/nurs-1.jpeg' %}" class="img-fluid" alt="Team Member">
-                  <div class="social-links">
-                    <a href="#"><i class="bi bi-facebook"></i></a>
-                    <a href="#"><i class="bi bi-twitter"></i></a>
-                    <a href="#"><i class="bi bi-linkedin"></i></a>
-                  </div>
-                </div>
-                <div class="member-info">
-                  <h4>Sarah Williams</h4>
-                  <span>Finance Director</span>
-                </div>
+
+            <div class="story-highlight-box">
+              <i class="bi bi-heart-pulse"></i>
+              <div>
+                <h5>Whole-Person Healing</h5>
+                <p>We treat the physical body while providing compassionate mental, emotional, and spiritual support.</p>
               </div>
             </div>
           </div>
         </div>
-        
-        <div class="specialties-section" data-aos="fade-up" data-aos-delay="500">
-          <div class="row">
-            <div class="col-lg-12 text-center">
-              <h3>Areas of Excellence</h3>
-              <p class="section-description">Our specialized departments work together to provide comprehensive care across multiple medical disciplines</p>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-2 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
-              <div class="specialty-item">
-                <i class="bi bi-activity"></i>
-                <span>Orthopedics</span>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="150">
-              <div class="specialty-item">
-                <i class="bi bi-capsule"></i>
-                <span>Pharmaceutical</span>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
-              <div class="specialty-item">
-                <i class="bi bi-person-hearts"></i>
-                <span>Pediatrics</span>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="250">
-              <div class="specialty-item">
-                <i class="bi bi-scissors"></i>
-                <span>Surgery</span>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="300">
-              <div class="specialty-item">
-                <i class="bi bi-file-medical"></i>
-                <span>Obs & Gynae</span>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="350">
-              <div class="specialty-item">
-                <i class="bi bi-clipboard2-pulse"></i>
-                <span>Emergency</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="accreditation-section" data-aos="fade-up" data-aos-delay="600">
-          <div class="row">
-            <div class="col-lg-12 text-center">
-              <h3>Recognized Excellence</h3>
-              <p class="section-description">Our commitment to quality is validated by prestigious healthcare organizations</p>
-            </div>
-          </div>
-
-          <div class="row justify-content-center">
-            <div class="col-lg-8">
-              <div class="accreditation-grid">
-                <div class="accreditation-item" data-aos="fade-up" data-aos-delay="100">
-                  <img src="{% static 'assets/img/clients/clients-6.webp' %}" class="img-fluid" alt="Healthcare accreditation">
-                </div>
-                <div class="accreditation-item" data-aos="fade-up" data-aos-delay="150">
-                  <img src="{% static 'assets/img/clients/clients-7.webp' %}" class="img-fluid" alt="Medical certification">
-                </div>
-                <div class="accreditation-item" data-aos="fade-up" data-aos-delay="200">
-                  <img src="{% static 'assets/img/clients/clients-8.webp' %}" class="img-fluid" alt="Quality assurance">
-                </div>
-                <div class="accreditation-item" data-aos="fade-up" data-aos-delay="250">
-                  <img src="{% static 'assets/img/clients/clients-9.webp' %}" class="img-fluid" alt="Healthcare excellence">
-                </div>
-                <div class="accreditation-item" data-aos="fade-up" data-aos-delay="300">
-                  <img src="{% static 'assets/img/clients/clients-10.webp' %}" class="img-fluid" alt="Medical standards">
-                </div>
-                <div class="accreditation-item" data-aos="fade-up" data-aos-delay="350">
-                  <img src="{% static 'assets/img/clients/clients-11.webp' %}" class="img-fluid" alt="Healthcare certification">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
-    </section><!-- /About Section -->
+      <!-- ==================== KEY IMPACT NUMBERS ==================== -->
+      <div class="metrics-strip mt-5" data-aos="fade-up">
+        <div class="row g-4">
+          <div class="col-6 col-md-3">
+            <div class="metric-card-item">
+              <div class="metric-val">60K+</div>
+              <div class="metric-title">Annual Patients</div>
+              <p class="metric-desc">Consulted & treated annually</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card-item">
+              <div class="metric-val">400+</div>
+              <div class="metric-title">Medical Staff</div>
+              <p class="metric-desc">Specialists, nurses & team</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card-item">
+              <div class="metric-val">1984</div>
+              <div class="metric-title">Year Founded</div>
+              <p class="metric-desc">4 Decades of healthcare</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card-item">
+              <div class="metric-val">24/7</div>
+              <div class="metric-title">Emergency Care</div>
+              <p class="metric-desc">Always open for your needs</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  </main>
+  <!-- ==================== MISSION, VISION & CORE VALUES ==================== -->
+  <section class="py-5 bg-light" id="mission-vision">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-5" data-aos="fade-up">
+        <div class="col-lg-8">
+          <span class="section-tag">Guided by Faith & Excellence</span>
+          <h2 class="section-heading-lg">Our Guiding Principles</h2>
+          <p class="text-muted" style="font-size: 1.1rem;">
+            Our daily work is grounded in Christian stewardship, clinical integrity, and a steadfast dedication to restoring health.
+          </p>
+        </div>
+      </div>
 
+      <div class="row g-4">
+        <!-- Mission -->
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="mvv-card mission-box">
+            <div class="mvv-icon-wrap">
+              <i class="bi bi-heart-pulse-fill"></i>
+            </div>
+            <h4>Our Mission</h4>
+            <p>
+              To use Christian principles and government health policies in providing holistic, compassionate healthcare services with dedicated professionals to ensure high efficiency, clinical effectiveness, and utmost client satisfaction.
+            </p>
+          </div>
+        </div>
+
+        <!-- Vision -->
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="mvv-card vision-box">
+            <div class="mvv-icon-wrap">
+              <i class="bi bi-eye-fill"></i>
+            </div>
+            <h4>Our Vision</h4>
+            <p>
+              With prudent management practices and state-of-the-art healthcare delivery, the hospital strives continuously to become the premier medical centre of excellence and the most trusted referral facility in Ghana.
+            </p>
+          </div>
+        </div>
+
+        <!-- Core Promise -->
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="mvv-card promise-box">
+            <div class="mvv-icon-wrap">
+              <i class="bi bi-award-fill"></i>
+            </div>
+            <h4>Our Commitment</h4>
+            <p>
+              Every patient will receive compassionate, individualized treatment in a clean, supportive environment where human dignity, clinical safety, transparency, and holistic wellness are held as our highest priorities.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CLINICAL EXCELLENCE & SPECIALTIES ==================== -->
+  <section class="py-5 my-4">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-5" data-aos="fade-up">
+        <div class="col-lg-8">
+          <span class="section-tag">Clinical Departments</span>
+          <h2 class="section-heading-lg">Comprehensive Specialized Care</h2>
+          <p class="text-muted" style="font-size: 1.1rem;">
+            From routine checkups to complex emergency surgical interventions, our specialized units are equipped to provide first-rate medical care.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-3 g-md-4">
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="100">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-eye"></i>
+            <span>Eye Care & Optical</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="150">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-emoji-smile"></i>
+            <span>Dental Clinic</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="200">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-ear"></i>
+            <span>ENT Services</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="250">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-scissors"></i>
+            <span>General Surgery</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="300">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-gender-female"></i>
+            <span>Maternity & RCH</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="350">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-person-hearts"></i>
+            <span>Pediatric Care</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="400">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-activity"></i>
+            <span>Orthopedics</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="450">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-file-earmark-medical"></i>
+            <span>Digital X-Ray</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="500">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-capsule"></i>
+            <span>Pharmacy</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="550">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-droplet"></i>
+            <span>Laboratory</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="600">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-headset"></i>
+            <span>Psychiatry</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="650">
+          <a href="{% url 'core:departments' %}" class="specialty-pill-card">
+            <i class="bi bi-truck"></i>
+            <span>24/7 Ambulance</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="text-center mt-4 pt-2">
+        <a href="{% url 'core:departments' %}" class="btn px-4 py-2 fw-medium" style="color: var(--heading-color); background: #f0f6f3; border-radius: 8px;">
+          View All Departments & Services <i class="bi bi-arrow-right ms-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== EXECUTIVE LEADERSHIP ==================== -->
+  <section class="py-5 bg-light" id="leadership">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-5" data-aos="fade-up">
+        <div class="col-lg-8">
+          <span class="section-tag">Hospital Leadership</span>
+          <h2 class="section-heading-lg">Executive Management Team</h2>
+          <p class="text-muted" style="font-size: 1.1rem;">
+            Guided by seasoned medical directors and health administrators dedicated to operational excellence and compassionate patient care.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <!-- Medical Director -->
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="leadership-card">
+            <div class="leadership-img-wrapper">
+              <img src="{% static 'assets/img/health/med-dir.jpeg' %}" alt="Dr. Kizito Kakra Vormawor - Medical Director">
+            </div>
+            <div class="leadership-body">
+              <h4>Dr. Kizito Kakra Vormawor</h4>
+              <span class="role-badge">Medical Director</span>
+              <div class="leadership-socials">
+                <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                <a href="#" title="Email"><i class="bi bi-envelope"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Head of Nursing -->
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="leadership-card">
+            <div class="leadership-img-wrapper">
+              <img src="{% static 'assets/img/health/dr-1-speech.JPG' %}" alt="Head of Nursing Services">
+            </div>
+            <div class="leadership-body">
+              <h4>Dr. Jane Smith</h4>
+              <span class="role-badge">Head of Nursing Services</span>
+              <div class="leadership-socials">
+                <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                <a href="#" title="Email"><i class="bi bi-envelope"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hospital Administrator -->
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="leadership-card">
+            <div class="leadership-img-wrapper">
+              <img src="{% static 'assets/img/health/admin-1.jpeg' %}" alt="Mr. Kofi Adu Gyamfi - Administrator">
+            </div>
+            <div class="leadership-body">
+              <h4>Mr. Kofi Adu Gyamfi</h4>
+              <span class="role-badge">Hospital Administrator</span>
+              <div class="leadership-socials">
+                <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                <a href="#" title="Email"><i class="bi bi-envelope"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Director of Finance -->
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="leadership-card">
+            <div class="leadership-img-wrapper">
+              <img src="{% static 'assets/img/health/nurs-1.jpeg' %}" alt="Sarah Williams - Finance Director">
+            </div>
+            <div class="leadership-body">
+              <h4>Sarah Williams</h4>
+              <span class="role-badge">Finance Director</span>
+              <div class="leadership-socials">
+                <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                <a href="#" title="Email"><i class="bi bi-envelope"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-5">
+        <a href="{% url 'core:doctors' %}" class="btn px-4 py-2 text-white fw-medium shadow-sm" style="background-color: var(--heading-color); border-radius: 8px;">
+          <i class="bi bi-people-fill me-2"></i>Explore Full Medical & Clinical Staff Directory
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ADVENTIST WELLNESS & PHILOSOPHY ==================== -->
+  <section class="py-5 my-4">
+    <div class="container">
+      <div class="wellness-card" data-aos="fade-up">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6">
+            <span class="section-tag">Adventist Health Philosophy</span>
+            <h3 class="fw-bold mb-3" style="color: var(--heading-color); font-size: 1.8rem; font-family: var(--heading-font);">
+              The NEWSTART® Principle to Holistic Health
+            </h3>
+            <p class="text-muted" style="line-height: 1.7; font-size: 1rem;">
+              As an Adventist healthcare institution, we believe in proactive, whole-person health that nurtures the physical, mental, emotional, and spiritual facets of life. We promote simple, effective natural laws of health to prevent illness and restore vitality.
+            </p>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="newstart-grid">
+              <div class="newstart-pill">
+                <span class="newstart-letter">N</span>
+                <span class="newstart-word">Nutrition</span>
+              </div>
+              <div class="newstart-pill">
+                <span class="newstart-letter">E</span>
+                <span class="newstart-word">Exercise</span>
+              </div>
+              <div class="newstart-pill">
+                <span class="newstart-letter">W</span>
+                <span class="newstart-word">Water</span>
+              </div>
+              <div class="newstart-pill">
+                <span class="newstart-letter">S</span>
+                <span class="newstart-word">Sunshine</span>
+              </div>
+              <div class="newstart-pill">
+                <span class="newstart-letter">T</span>
+                <span class="newstart-word">Temperance</span>
+              </div>
+              <div class="newstart-pill">
+                <span class="newstart-letter">A</span>
+                <span class="newstart-word">Air</span>
+              </div>
+              <div class="newstart-pill">
+                <span class="newstart-letter">R</span>
+                <span class="newstart-word">Rest</span>
+              </div>
+              <div class="newstart-pill">
+                <span class="newstart-letter">T</span>
+                <span class="newstart-word">Trust in God</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ACCREDITATIONS & PARTNERSHIPS ==================== -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-4" data-aos="fade-up">
+        <div class="col-lg-8">
+          <span class="section-tag">Governance & Trust</span>
+          <h2 class="section-heading-lg" style="font-size: 2rem;">Accreditations & Health Partners</h2>
+          <p class="text-muted">
+            Recognized and accredited by leading national and international healthcare bodies.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-3 justify-content-center">
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="partner-box">
+            <i class="bi bi-shield-check"></i>
+            <strong>CHAG</strong>
+            <span>Christian Health Assoc. of Ghana</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+          <div class="partner-box">
+            <i class="bi bi-building-check"></i>
+            <strong>Ministry of Health</strong>
+            <span>Republic of Ghana</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+          <div class="partner-box">
+            <i class="bi bi-hospital"></i>
+            <strong>GAHS</strong>
+            <span>Ghana Adventist Health Service</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+          <div class="partner-box">
+            <i class="bi bi-card-checklist"></i>
+            <strong>NHIS</strong>
+            <span>National Health Insurance Scheme</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CALL TO ACTION BANNER ==================== -->
+  <section class="py-5 my-4">
+    <div class="container">
+      <div class="about-cta-section" data-aos="zoom-in">
+        <div class="row align-items-center justify-content-between position-relative" style="z-index: 2;">
+          <div class="col-lg-8">
+            <h2 class="fw-bold mb-3 text-white" style="color: #ffffff !important; font-family: var(--heading-font); font-size: 2.2rem;">
+              Your Health & Well-being Are Our Sacred Mission
+            </h2>
+            <p class="mb-4 text-white-50" style="font-size: 1.1rem; line-height: 1.6; max-width: 650px;">
+              Whether you require a general health consultation, specialist care, or emergency support, our expert team is ready to serve you 24/7.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+              <a href="{% url 'core:appointment' %}" class="btn btn-lg px-4 text-white fw-bold shadow" style="background-color: var(--accent-color); border-radius: 10px;">
+                <i class="bi bi-calendar-plus me-2"></i>Book an Appointment
+              </a>
+              <a href="{% url 'core:contact' %}" class="btn btn-lg px-4 fw-bold text-white border" style="background-color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); border-radius: 10px;">
+                <i class="bi bi-telephone-inbound me-2"></i>Contact Our Hospital
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-3 text-lg-end mt-4 mt-lg-0">
+            <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15);">
+              <i class="bi bi-telephone-fill text-warning mb-2" style="font-size: 2rem; display: inline-block;"></i>
+              <div class="text-white fw-semibold small">24/7 Direct Emergency Line</div>
+              <a href="tel:+233531047199" class="text-white text-decoration-none fw-bold fs-5 d-block mt-1">+233 531 047 199</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
 {% endblock %}
 
 {% block extra_js %}
-<!-- Additional JavaScript specific to about page can go here -->
+<!-- PureCounter or AOS init if needed -->
 {% endblock %}

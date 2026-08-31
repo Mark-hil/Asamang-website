@@ -9,6 +9,7 @@ from django.http import HttpResponseForbidden
 from django import forms
 from tinymce.widgets import TinyMCE
 
+from django.db.models import Q
 from .models import BlogPost, BlogComment
 from .forms import CommentForm
 

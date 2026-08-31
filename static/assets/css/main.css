@@ -2756,7 +2756,7 @@ section,
   transform: scale(1.05);
 }
 
-.social-links {
+.team-member .social-links {
   position: absolute;
   bottom: -60px;
   left: 0;
@@ -2774,7 +2774,7 @@ section,
   bottom: 0;
 }
 
-.social-links a {
+.team-member .social-links a {
   color: #fff;
   font-size: 18px;
   width: 36px;
@@ -2787,7 +2787,7 @@ section,
   transition: all 0.3s ease;
 }
 
-.social-links a:hover {
+.team-member .social-links a:hover {
   background: #fff;
   color: var(--brand-yellow);
   transform: translateY(-3px);

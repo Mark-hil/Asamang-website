@@ -1,210 +1,312 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Privacy - Asamang SDA{% endblock %}
+{% block title %}Patient Privacy Policy & Data Protection | Asamang SDA Hospital{% endblock %}
+{% block meta_description %}Read Asamang SDA Hospital's privacy policy and patient data protection practices under the Data Protection Act 2012 (Act 843) of Ghana.{% endblock %}
+{% block meta_keywords %}privacy policy asamang sda hospital, patient confidentiality ghana, data protection act 843 ghana, medical records privacy asamang{% endblock %}
 
 {% block body_class %}privacy-page{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+<style>
+  .legal-hero {
+    background: linear-gradient(135deg, rgba(6, 102, 54, 0.04) 0%, rgba(233, 193, 10, 0.05) 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(6, 102, 54, 0.08);
+  }
 
-  <main class="main">
+  .badge-pill-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 1px solid rgba(6, 102, 54, 0.15);
+  }
 
-    <!-- Page Title -->
-    <div class="page-title">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1 class="heading-title">Privacy Policy</h1>
-              <p class="mb-0">
-                At Asamang SDA Hospital, your privacy and medical confidentiality are our highest priorities. This privacy policy explains how we collect, use, and protect your personal and medical information in accordance with healthcare standards.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="{% url 'core:home' %}">Home</a></li>
-            <li class="current">Privacy</li>
-          </ol>
-        </div>
-      </nav>
-    </div><!-- End Page Title -->
+  .section-heading-lg {
+    font-family: var(--heading-font);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
 
-    <!-- Privacy Section -->
-    <section id="privacy" class="privacy section">
+  .legal-content-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(6, 102, 54, 0.1);
+  }
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+  .legal-section-block {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
 
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
+  .legal-section-block:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 
-            <div class="privacy-content">
-              <div class="last-updated" data-aos="fade-up" data-aos-delay="200">
-                <p><strong>Last updated:</strong> February 27, 2025</p>
-              </div>
+  .legal-section-title {
+    color: var(--heading-color);
+    font-weight: 700;
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-              <div class="privacy-section" data-aos="fade-up" data-aos-delay="300">
-                <h3>Information We Collect</h3>
-                <p>As a healthcare provider, Asamang SDA Hospital collects both personal identification and medical data to ensure we can deliver the highest standard of care and maintain accurate hospital records.</p>
+  .legal-sidebar-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 1.75rem 1.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    position: sticky;
+    top: 100px;
+  }
 
-                <h4>Personal Information</h4>
-                <ul>
-                  <li>Full name, date of birth, and gender</li>
-                  <li>Contact details (phone number, email, and home address)</li>
-                  <li>Emergency contact information and next of kin</li>
-                  <li>National ID (Ghana Card) or passport details for verification</li>
-                </ul>
+  .toc-nav-list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: var(--default-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 4px;
+    transition: all 0.25s ease;
+    background: #f8faf9;
+  }
 
-                <h4>Medical Data</h4>
-                <p>During your visits, our medical professionals record your medical history, symptoms, diagnoses, treatment plans, prescriptions, and laboratory or imaging results. This information forms your confidential patient file.</p>
-              </div>
+  .toc-nav-list a:hover {
+    background: var(--heading-color);
+    color: #ffffff;
+    padding-left: 18px;
+  }
 
-              <div class="privacy-section" data-aos="fade-up" data-aos-delay="400">
-                <h3>How We Use Your Information</h3>
-                <p>Your information is primarily used to provide you with appropriate and effective medical treatment. We handle all data in strict compliance with the Data Protection Act, 2012 (Act 843) of Ghana.</p>
+  .security-feature-badge {
+    background: #f8faf9;
+    border: 1px solid rgba(6, 102, 54, 0.12);
+    border-radius: 12px;
+    padding: 1.25rem;
+    height: 100%;
+  }
 
-                <div class="info-box">
-                  <h4>Primary Uses</h4>
-                  <ol>
-                    <li>To diagnose health conditions and prescribe appropriate treatments</li>
-                    <li>To coordinate care among different departments (e.g., Doctors, Labs, Pharmacy)</li>
-                    <li>To process billing and interface with health insurance providers (e.g., NHIS)</li>
-                    <li>To contact you regarding appointment reminders or follow-up care</li>
-                  </ol>
-                </div>
-              </div>
-
-              <div class="privacy-section" data-aos="fade-up" data-aos-delay="500">
-                <h3>Information Sharing and Disclosure</h3>
-                <p>Medical confidentiality is a core principle at Asamang SDA Hospital. We do not disclose your medical records or personal data to unauthorized third parties without your explicit consent, except when required by law or medical emergency.</p>
-
-                <div class="highlight-box" data-aos="fade-up" data-aos-delay="600">
-                  <i class="bi bi-shield-check"></i>
-                  <h4>We Never Sell Your Data</h4>
-                  <p>We do not, and will never, sell or rent your personal information or medical records to marketers, pharmaceutical companies, or any other commercial entities.</p>
-                </div>
-              </div>
-
-              <div class="privacy-section" data-aos="fade-up" data-aos-delay="700">
-                <h3>Data Security</h3>
-                <p>We implement robust physical, electronic, and administrative safeguards to protect your personal information from unauthorized access, alteration, disclosure, or destruction.</p>
-
-                <div class="security-measures">
-                  <div class="row">
-                    <div class="col-md-6" data-aos="fade-right" data-aos-delay="800">
-                      <div class="measure-item">
-                        <i class="bi bi-lock-fill"></i>
-                        <h5>Restricted Access</h5>
-                        <p>Only authorized medical and administrative staff involved in your care have access to your patient file.</p>
-                      </div>
-                    </div>
-                    <div class="col-md-6" data-aos="fade-left" data-aos-delay="900">
-                      <div class="measure-item">
-                        <i class="bi bi-server"></i>
-                        <h5>Secure Storage</h5>
-                        <p>Digital records are stored on secure servers with encrypted backups, while physical files are kept in restricted archives.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="privacy-section" data-aos="fade-up" data-aos-delay="1000">
-                <h3>Your Rights</h3>
-                <p>Under Ghanaian data protection laws, you retain several rights regarding your personal and medical data held by Asamang SDA Hospital.</p>
-
-                <div class="rights-list">
-                  <div class="right-item">
-                    <i class="bi bi-eye"></i>
-                    <div>
-                      <h5>Right to Access</h5>
-                      <p>You have the right to request a copy of your medical records and personal information from our records department.</p>
-                    </div>
-                  </div>
-                  <div class="right-item">
-                    <i class="bi bi-pencil"></i>
-                    <div>
-                      <h5>Right to Rectification</h5>
-                      <p>You may request corrections to your personal details (like your address or phone number) if they are inaccurate.</p>
-                    </div>
-                  </div>
-                  <div class="right-item">
-                    <i class="bi bi-shield-lock"></i>
-                    <div>
-                      <h5>Right to Confidentiality</h5>
-                      <p>You have the right to expect that all discussions, examinations, and treatments will be conducted with respect for your privacy.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="privacy-section" data-aos="fade-up" data-aos-delay="1100">
-                <h3>Website Cookies and Tracking</h3>
-                <p>Our website uses minimal cookies necessary for the basic functioning of the site, such as keeping you logged in if you use our patient portal. We do not use intrusive tracking cookies for advertising purposes.</p>
-
-                <div class="cookie-types">
-                  <h4>Types of Cookies We Use</h4>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>Cookie Type</th>
-                          <th>Purpose</th>
-                          <th>Duration</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Essential</td>
-                          <td>Used for maintaining secure sessions during appointment booking or staff login.</td>
-                          <td>Session</td>
-                        </tr>
-                        <tr>
-                          <td>Analytics</td>
-                          <td>Anonymous data to help us understand which pages (like services) are most visited.</td>
-                          <td>1 Year</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-
-              <div class="contact-section" data-aos="fade-up" data-aos-delay="1300">
-                <h3>Contact Us</h3>
-                <p>If you have any concerns regarding your privacy, medical records, or this policy, please contact our Data Protection Officer or Hospital Administration.</p>
-
-                <div class="contact-info">
-                  <div class="contact-item">
-                    <i class="bi bi-envelope"></i>
-                    <span>info@asamangsda.com</span>
-                  </div>
-                  <div class="contact-item">
-                    <i class="bi bi-geo-alt"></i>
-                    <span>GhanaPost GPS: AA-254-5212, Asamang, Ashanti Region</span>
-                  </div>
-                  <div class="contact-item">
-                    <i class="bi bi-telephone"></i>
-                    <span>+233 (0) 531047199</span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-    </section><!-- /Privacy Section -->
-
-
+  .security-feature-badge i {
+    font-size: 1.8rem;
+    color: var(--heading-color);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+</style>
 {% endblock %}
 
-{% block extra_js %}
-<!-- Add any page-specific JavaScript here -->
+{% block content %}
+<main class="main">
+
+  <!-- ==================== HERO / HEADER ==================== -->
+  <section class="legal-hero">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-8" data-aos="fade-up">
+          <div class="badge-pill-custom mb-3">
+            <i class="bi bi-shield-lock-fill text-success"></i>
+            Ghana Data Protection Act (Act 843) Compliant
+          </div>
+          <h1 class="section-heading-lg mb-3">
+            Patient Privacy Policy
+          </h1>
+          <p class="lead text-muted mb-0" style="font-size: 1.15rem; line-height: 1.7;">
+            How Asamang SDA Hospital collects, handles, stores, and protects your confidential personal health records and digital appointment data.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
+          <span class="badge bg-light text-dark border p-2 px-3 rounded-pill">
+            <i class="bi bi-shield-check me-1 text-success"></i> Strict Confidentiality
+          </span>
+        </div>
+      </div>
+
+      <nav class="breadcrumbs mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+        <ol class="breadcrumb mb-0" style="font-size: 0.9rem;">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none text-muted"><i class="bi bi-house-door me-1"></i>Home</a></li>
+          <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Privacy Policy</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ==================== MAIN PRIVACY CONTENT ==================== -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-5">
+        
+        <!-- Left: Policy Content -->
+        <div class="col-lg-8" data-aos="fade-right">
+          <div class="legal-content-card">
+
+            <!-- Section 1 -->
+            <div id="commitment" class="legal-section-block">
+              <h3 class="legal-section-title">
+                <i class="bi bi-heart-fill text-danger"></i> 1. Our Commitment to Patient Privacy
+              </h3>
+              <p class="text-muted" style="line-height: 1.8;">
+                At Asamang Seventh-day Adventist Hospital, we regard medical confidentiality as sacred. We adhere strictly to ethical medical codes and the <strong>Data Protection Act, 2012 (Act 843)</strong> of the Republic of Ghana to ensure that your consultations, diagnosis, lab results, and personal identity remain secure.
+              </p>
+            </div>
+
+            <!-- Section 2 -->
+            <div id="information-collected" class="legal-section-block">
+              <h3 class="legal-section-title">
+                <i class="bi bi-folder-check text-success"></i> 2. Information We Collect
+              </h3>
+              <p class="text-muted" style="line-height: 1.8;">
+                To provide safe, comprehensive, and tailored clinical care, our healthcare professionals collect:
+              </p>
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <div class="p-3 bg-light rounded-3 border h-100">
+                    <h6 class="fw-bold text-success mb-1">Personal Identification</h6>
+                    <ul class="text-muted small mb-0 ps-3" style="line-height: 1.7;">
+                      <li>Full Legal Name & Date of Birth</li>
+                      <li>Ghana Card / Passport Number</li>
+                      <li>Contact Phone & Residential Address</li>
+                      <li>Next-of-Kin Emergency Contacts</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="p-3 bg-light rounded-3 border h-100">
+                    <h6 class="fw-bold text-success mb-1">Clinical & Health Data</h6>
+                    <ul class="text-muted small mb-0 ps-3" style="line-height: 1.7;">
+                      <li>Medical History & Allergies</li>
+                      <li>Physician Diagnostic Notes</li>
+                      <li>Lab & Imaging Results (X-Ray, Scans)</li>
+                      <li>Prescriptions & Surgical Records</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div id="how-we-use" class="legal-section-block">
+              <h3 class="legal-section-title">
+                <i class="bi bi-gear-wide-connected text-success"></i> 3. How We Use Your Information
+              </h3>
+              <p class="text-muted" style="line-height: 1.8;">
+                Your health data is used exclusively to facilitate your care journey:
+              </p>
+              <ul class="text-muted small" style="line-height: 1.8;">
+                <li><strong>Clinical Coordination:</strong> Enabling seamless collaboration between triage, doctors, laboratories, operating theaters, and pharmacy.</li>
+                <li><strong>Insurance Claims Processing:</strong> Verifying coverage and processing claims with the National Health Insurance Scheme (NHIS) or accredited private health insurers.</li>
+                <li><strong>Appointment Reminders:</strong> Notifying you of scheduled doctor visits, lab follow-ups, or prescription refills.</li>
+              </ul>
+            </div>
+
+            <!-- Section 4 -->
+            <div id="security" class="legal-section-block">
+              <h3 class="legal-section-title">
+                <i class="bi bi-shield-lock text-success"></i> 4. Data Security & Storage Safeguards
+              </h3>
+              <p class="text-muted" style="line-height: 1.8;">
+                We maintain multi-layered physical, technical, and administrative controls to protect patient folders and digital hospital databases against unauthorized access or loss.
+              </p>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="security-feature-badge">
+                    <i class="bi bi-key-fill"></i>
+                    <h6 class="fw-bold text-dark mb-1">Role-Based Access</h6>
+                    <p class="text-muted small mb-0">Only medical staff directly assigned to your care have permission to review your medical folder.</p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="security-feature-badge">
+                    <i class="bi bi-database-fill-lock"></i>
+                    <h6 class="fw-bold text-dark mb-1">Encrypted Infrastructure</h6>
+                    <p class="text-muted small mb-0">Digital records, appointment data, and backups are stored on encrypted, high-availability servers.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 5 -->
+            <div id="cookies" class="legal-section-block">
+              <h3 class="legal-section-title">
+                <i class="bi bi-cookie text-success"></i> 5. Website Cookies & Session Data
+              </h3>
+              <p class="text-muted" style="line-height: 1.8;">
+                Our website utilizes only standard session cookies strictly necessary to process online appointment submissions and maintain secure staff logins. We do not sell, rent, or trade patient data to third-party advertisers.
+              </p>
+            </div>
+
+            <!-- Section 6 -->
+            <div id="patient-rights" class="legal-section-block">
+              <h3 class="legal-section-title">
+                <i class="bi bi-person-check text-success"></i> 6. Your Rights Under Ghana Law
+              </h3>
+              <p class="text-muted" style="line-height: 1.8;">
+                Under Act 843, you have the right to request access to your medical history, update personal details, or request an official medical summary for specialist referral. Contact our Records Department with valid national identification to initiate a request.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Table of Contents & Hospital Help Desk -->
+        <div class="col-lg-4" data-aos="fade-left">
+          <div class="legal-sidebar-card mb-4">
+            <h5 class="fw-bold mb-3" style="color: var(--heading-color);">Policy Navigation</h5>
+            <div class="toc-nav-list">
+              <a href="#commitment"><span>1. Our Commitment</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="#information-collected"><span>2. Information Collected</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="#how-we-use"><span>3. How We Use Data</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="#security"><span>4. Security Safeguards</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="#cookies"><span>5. Cookies & Tracking</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="#patient-rights"><span>6. Your Legal Rights</span> <i class="bi bi-chevron-right"></i></a>
+            </div>
+
+            <hr class="my-4" style="opacity: 0.1;">
+
+            <h6 class="fw-bold mb-2 text-dark">Data Protection Inquiries</h6>
+            <p class="text-muted small mb-3">For medical records requests or confidentiality queries:</p>
+            <div class="small text-muted mb-3">
+              <p class="mb-1"><i class="bi bi-envelope text-success me-2"></i>info@asamangsda.com</p>
+              <p class="mb-0"><i class="bi bi-telephone text-success me-2"></i>+233 (0) 53 104 7199</p>
+            </div>
+            <a href="{% url 'core:contact' %}" class="btn btn-outline-success fw-bold w-100 py-2">
+              <i class="bi bi-headset me-1"></i> Contact Desk
+            </a>
+          </div>
+
+          <!-- Terms Link Card -->
+          <div class="p-3 rounded-4 bg-light border text-center">
+            <i class="bi bi-file-earmark-text-fill text-success fs-3 mb-1 d-block"></i>
+            <h6 class="fw-bold text-dark mb-1">Looking for Terms of Service?</h6>
+            <p class="text-muted small mb-3">Read our patient charter and hospital guidelines.</p>
+            <a href="{% url 'core:terms' %}" class="btn btn-sm btn-success fw-bold px-3">
+              View Terms of Service
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
 {% endblock %}

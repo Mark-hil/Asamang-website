@@ -1,485 +1,1135 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Medical Services & Departments | Asamang SDA Hospital{% endblock %}
-{% block meta_description %}Explore our comprehensive healthcare services at Asamang SDA Hospital, including 24/7 Emergency Care, General Surgery, Pediatrics, Diagnostics, and specialized clinics.{% endblock %}
-{% block meta_keywords %}medical services ghana, hospital services asamang, emergency care, surgery ghana, pediatric care, diagnostic imaging, laboratory services, specialty clinics{% endblock %}
+{% block title %}Medical Services & Specialized Clinics | Asamang SDA Hospital{% endblock %}
+{% block meta_description %}Explore comprehensive medical and surgical healthcare services at Asamang SDA Hospital in Sekyere South District, Ghana. 24/7 Emergency Care, General Surgery, Pediatrics, Diagnostics, Pharmacy, and specialized clinics.{% endblock %}
+{% block meta_keywords %}medical services ghana, hospital services asamang, emergency care, surgery ghana, pediatric care, diagnostic imaging, laboratory services, specialty clinics, maternity care asamang{% endblock %}
 
 {% block body_class %}services-page{% endblock %}
 
+{% block extra_css %}
+<style>
+  /* Services Page Custom Modern Styling */
+  .services-hero {
+    background: linear-gradient(135deg, rgba(6, 102, 54, 0.04) 0%, rgba(233, 193, 10, 0.05) 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(6, 102, 54, 0.08);
+  }
+
+  .badge-pill-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 1px solid rgba(6, 102, 54, 0.15);
+  }
+
+  .section-tag {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .section-heading-lg {
+    font-family: var(--heading-font);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Filter Navigation Tabs */
+  .service-filter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .service-filter-btn {
+    background: #ffffff;
+    border: 1px solid rgba(6, 102, 54, 0.15);
+    color: var(--default-color);
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .service-filter-btn:hover,
+  .service-filter-btn.active {
+    background: var(--heading-color);
+    color: #ffffff;
+    border-color: var(--heading-color);
+    box-shadow: 0 4px 15px rgba(6, 102, 54, 0.25);
+  }
+
+  /* Enhanced Service Cards */
+  .service-card-modern {
+    background: var(--surface-color);
+    border-radius: 18px;
+    padding: 2rem 1.75rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: transparent;
+    transition: background 0.3s ease;
+  }
+
+  .service-card-modern:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.09);
+    border-color: rgba(6, 102, 54, 0.25);
+  }
+
+  .service-card-modern:hover::before {
+    background: var(--heading-color);
+  }
+
+  .service-card-modern.emergency-card::before {
+    background: var(--accent-color);
+  }
+
+  .service-card-modern.emergency-card {
+    border-color: rgba(226, 12, 20, 0.2);
+  }
+
+  .service-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    transition: all 0.3s ease;
+  }
+
+  .emergency-card .service-icon-box {
+    background: rgba(226, 12, 20, 0.1);
+    color: var(--accent-color);
+  }
+
+  .service-card-modern:hover .service-icon-box {
+    transform: scale(1.1) rotate(5deg);
+    background: var(--heading-color);
+    color: #ffffff;
+  }
+
+  .emergency-card:hover .service-icon-box {
+    background: var(--accent-color);
+    color: #ffffff;
+  }
+
+  .service-cat-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: #f0f4f2;
+    color: var(--heading-color);
+  }
+
+  .emergency-badge-pulse {
+    background: rgba(226, 12, 20, 0.1);
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .emergency-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  .service-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 0.75rem;
+    font-family: var(--heading-font);
+  }
+
+  .service-card-desc {
+    font-size: 0.95rem;
+    color: var(--default-color);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .service-tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-tag-pill {
+    background: #f4f7f5;
+    color: #495057;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .service-card-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .service-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--heading-color);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+
+  .service-link-btn:hover {
+    color: var(--accent-color);
+  }
+
+  .service-action-btn {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Technology & Pillars of Excellence */
+  .capability-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+    height: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .capability-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(6, 102, 54, 0.08);
+    border-color: rgba(6, 102, 54, 0.2);
+  }
+
+  .capability-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .capability-box h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 0.6rem;
+    font-family: var(--heading-font);
+  }
+
+  .capability-box p {
+    font-size: 0.9rem;
+    color: #6c757d;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Patient Journey Steps */
+  .journey-step-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.75rem 1.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    text-align: center;
+    position: relative;
+    height: 100%;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+  }
+
+  .step-number-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--brand-gold);
+    color: #000000;
+    font-weight: 800;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .journey-step-card h5 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .journey-step-card p {
+    font-size: 0.85rem;
+    color: #6c757d;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Metrics Strip */
+  .metrics-strip-services {
+    background: linear-gradient(135deg, var(--heading-color) 0%, #03361d 100%);
+    border-radius: 20px;
+    padding: 40px 30px;
+    color: #ffffff;
+    box-shadow: 0 15px 40px rgba(6, 102, 54, 0.25);
+    margin: 50px 0;
+  }
+
+  .metric-card-item {
+    text-align: center;
+    padding: 15px;
+    position: relative;
+  }
+
+  .metric-card-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    .metric-card-item:not(:last-child)::after {
+      display: none;
+    }
+  }
+
+  .metric-val {
+    font-size: 2.6rem;
+    font-weight: 800;
+    font-family: var(--heading-font);
+    color: var(--brand-gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .metric-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .metric-desc {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+  }
+
+  /* CTA Banner */
+  .services-cta-banner {
+    background: linear-gradient(135deg, var(--heading-color) 0%, #022b17 100%);
+    border-radius: 24px;
+    padding: 50px 40px;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(6, 102, 54, 0.3);
+  }
+
+  .services-cta-banner h1,
+  .services-cta-banner h2,
+  .services-cta-banner h3,
+  .services-cta-banner h4 {
+    color: #ffffff !important;
+  }
+
+  .services-cta-banner p {
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
+<main class="main">
 
-  <main class="main">
+  <!-- ==================== HERO / PAGE TITLE ==================== -->
+  <section class="services-hero">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-7" data-aos="fade-up">
+          <div class="badge-pill-custom mb-3">
+            <i class="bi bi-hospital-fill text-success"></i>
+            Sekyere South District Primary Referral Hospital
+          </div>
+          <h1 class="section-heading-lg mb-3">
+            Comprehensive Medical & Specialized Healthcare Services
+          </h1>
+          <p class="lead text-muted mb-4" style="font-size: 1.15rem; line-height: 1.7;">
+            Delivering 24/7 acute trauma care, surgical specialties, maternity, pediatric health, and advanced diagnostic investigations with compassionate excellence.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="{% url 'core:appointment' %}" class="btn btn-lg px-4 py-2 text-white fw-medium shadow-sm" style="background-color: var(--accent-color); border-radius: 10px;">
+              <i class="bi bi-calendar-check me-2"></i>Book Consultation
+            </a>
+            <a href="tel:+233531047199" class="btn btn-lg px-4 py-2 fw-medium border" style="color: var(--heading-color); background-color: #ffffff; border-color: rgba(6, 102, 54, 0.3); border-radius: 10px;">
+              <i class="bi bi-telephone-fill text-danger me-2"></i>24/7 Emergency Line
+            </a>
+          </div>
+        </div>
 
-    <!-- Page Title -->
-    <div class="page-title">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1 class="heading-title">Services</h1>
-              <p class="mb-0">
-                Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo
-                odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum
-                debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat
-                ipsum dolorem.
-              </p>
-            </div>
+        <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-left" data-aos-delay="150">
+          <div class="card border-0 p-4 shadow-sm" style="background: #ffffff; border-radius: 16px; border-left: 5px solid var(--heading-color);">
+            <h5 class="fw-bold mb-3" style="color: var(--heading-color);"><i class="bi bi-shield-check text-success me-2"></i>Our Care Guarantee</h5>
+            <ul class="list-unstyled mb-0" style="font-size: 0.9rem; line-height: 1.8;">
+              <li><i class="bi bi-check-circle-fill text-success me-2"></i>NHIS & Private Insurance Accepted</li>
+              <li><i class="bi bi-check-circle-fill text-success me-2"></i>Continuous 24/7 Triage & Admission</li>
+              <li><i class="bi bi-check-circle-fill text-success me-2"></i>Certified Specialists & Surgeons</li>
+              <li><i class="bi bi-check-circle-fill text-success me-2"></i>Fully Digital Diagnostics & Lab</li>
+            </ul>
           </div>
         </div>
       </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Services</li>
-          </ol>
-        </div>
+
+      <nav class="breadcrumbs mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+        <ol class="breadcrumb mb-0" style="font-size: 0.9rem;">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none text-muted"><i class="bi bi-house-door me-1"></i>Home</a></li>
+          <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Medical Services</li>
+        </ol>
       </nav>
-    </div><!-- End Page Title -->
+    </div>
+  </section>
 
-    <!-- Services Section -->
-    <section id="services" class="services section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="services-grid">
-          <div class="row g-4">
-            <!-- General Clinic -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
-              <div class="service-card primary-care">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-clinic-medical"></i>
-                  </div>
-                  <span class="service-category">General Clinic</span>
-                </div>
-                <div class="service-body">
-                  <h4>General Family Medicine</h4>
-                  <p>Comprehensive healthcare services including general consultations and family medicine.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">General Family Medicine / OPD</span>
-                    <span class="feature-badge">Wound Care</span>
-                    <span class="feature-badge">Wellness Clinic</span>
-                    <span class="feature-badge">Corporate Clinic</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=1 %}" class="service-btn">
-                    Learn More
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Accident & Emergency -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="250">
-              <div class="service-card emergency featured">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-ambulance"></i>
-                  </div>
-                  <span class="service-category">Accident & Emergency</span>
-                  <div class="featured-badge">24/7 Service</div>
-                </div>
-                <div class="service-body">
-                  <h4>Emergency Services</h4>
-                  <p>Round-the-clock emergency care for all urgent medical needs.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">General Emergency</span>
-                    <span class="feature-badge">Obs & Gynae Triage</span>
-                    <span class="feature-badge">Paediatric Triage</span>
-                    <span class="feature-badge">Emergency Surgery</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="tel:+233531047199" class="service-btn emergency-btn">
-                    Call Emergency
-                    <i class="fas fa-phone"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Specialized Care -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
-              <div class="service-card specialty-care">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-stethoscope"></i>
-                  </div>
-                  <span class="service-category">Specialized Care</span>
-                </div>
-                <div class="service-body">
-                  <h4>Specialty Clinics</h4>
-                  <p>Comprehensive care for specific health conditions and chronic diseases.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">Diabetic & Hypertension Clinic</span>
-                    <span class="feature-badge">Endocrine Clinic</span>
-                    <span class="feature-badge">Cardiology Clinic</span>
-                    <span class="feature-badge">Gastro Intestinal Clinic</span>
-                    <span class="feature-badge">Dermatology Clinic</span>
-                    <span class="feature-badge">Hepatitis Clinic</span>
-                    <span class="feature-badge">Sickle Cell Clinic</span>
-                    <span class="feature-badge">Haemodialysis</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=2 %}" class="service-btn">
-                    View Specialties
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Public Health -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="350">
-              <div class="service-card public-health">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-users"></i>
-                  </div>
-                  <span class="service-category">Public Health</span>
-                </div>
-                <div class="service-body">
-                  <h4>Community Health</h4>
-                  <p>Services focused on community health and preventive care.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">Family Planning Clinic</span>
-                    <span class="feature-badge">STI/HIV Counseling Clinic</span>
-                    <span class="feature-badge">TB DOTS Center</span>
-                    <span class="feature-badge">Adolescent Clinic</span>
-                    <span class="feature-badge">Child Welfare Clinic</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=10 %}" class="service-btn">
-                    Learn More
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Rehabilitation -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="400">
-              <div class="service-card rehabilitation">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-wheelchair"></i>
-                  </div>
-                  <span class="service-category">Rehabilitation</span>
-                </div>
-                <div class="service-body">
-                  <h4>Therapy Services</h4>
-                  <p>Comprehensive rehabilitation and therapeutic services for recovery and wellness.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">Physiotherapy</span>
-                    <span class="feature-badge">Diet Therapy & Nutrition</span>
-                    <span class="feature-badge">Clinical Psychology</span>
-                    <span class="feature-badge">Speech Therapy</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=3 %}" class="service-btn">
-                    Our Therapies
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Surgical -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="450">
-              <div class="service-card surgical">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-scalpel"></i>
-                  </div>
-                  <span class="service-category">Surgical</span>
-                </div>
-                <div class="service-body">
-                  <h4>Surgical Services</h4>
-                  <p>Advanced surgical procedures performed by experienced specialists.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">General Surgery</span>
-                    <span class="feature-badge">Urology</span>
-                    <span class="feature-badge">Burns & Plastics</span>
-                    <span class="feature-badge">Trauma/Orthopedics</span>
-                    <span class="feature-badge">Paediatric Surgery</span>
-                    <span class="feature-badge">Neuro Surgery</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=11 %}" class="service-btn">
-                    View Services
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Allied Services -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="500">
-              <div class="service-card allied">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-teeth"></i>
-                  </div>
-                  <span class="service-category">Allied Services</span>
-                </div>
-                <div class="service-body">
-                  <h4>Specialty Clinics</h4>
-                  <p>Comprehensive care for specialized health needs.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">Dental & Maxillofacial</span>
-                    <span class="feature-badge">Eye Clinic</span>
-                    <span class="feature-badge">ENT Clinic</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=12 %}" class="service-btn">
-                    Learn More
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Obs & Gynae -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="550">
-              <div class="service-card obgyn">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-baby"></i>
-                  </div>
-                  <span class="service-category">Obs & Gynae</span>
-                </div>
-                <div class="service-body">
-                  <h4>Women's Health</h4>
-                  <p>Comprehensive care for women at all stages of life.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">O&G Emergency Care</span>
-                    <span class="feature-badge">Antenatal Clinic</span>
-                    <span class="feature-badge">Post-Natal Clinic</span>
-                    <span class="feature-badge">Gynaecology Clinic</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=9 %}" class="service-btn">
-                    Our Services
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Paediatric Services -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="600">
-              <div class="service-card paediatrics">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-baby-carriage"></i>
-                  </div>
-                  <span class="service-category">Paediatric Services</span>
-                </div>
-                <div class="service-body">
-                  <h4>Child Health Services</h4>
-                  <p>Specialized healthcare services for infants, children, and adolescents.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">General Paediatrics Clinic</span>
-                    <span class="feature-badge">Paediatrics Asthma</span>
-                    <span class="feature-badge">Paediatrics Neuro</span>
-                    <span class="feature-badge">Paediatrics Renal</span>
-                    <span class="feature-badge">Paediatrics Cardio</span>
-                    <span class="feature-badge">NICU</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=5 %}" class="service-btn">
-                    Child Health
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Imaging -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="650">
-              <div class="service-card imaging">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-x-ray"></i>
-                  </div>
-                  <span class="service-category">Imaging</span>
-                </div>
-                <div class="service-body">
-                  <h4>Diagnostic Imaging</h4>
-                  <p>Advanced imaging services for accurate diagnosis and treatment planning.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">X-Ray</span>
-                    <span class="feature-badge">CT Scan</span>
-                    <span class="feature-badge">Fluoroscopy</span>
-                    <span class="feature-badge">Mammography</span>
-                    <span class="feature-badge">Ultra Sound</span>
-                    <span class="feature-badge">Echo Cardiography</span>
-                    <span class="feature-badge">Electro Cardiography</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=13 %}" class="service-btn">
-                    View Services
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Laboratory Services -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="700">
-              <div class="service-card laboratory">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-microscope"></i>
-                  </div>
-                  <span class="service-category">Laboratory</span>
-                </div>
-                <div class="service-body">
-                  <h4>Laboratory Services</h4>
-                  <p>Comprehensive diagnostic testing and analysis.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">Haematology</span>
-                    <span class="feature-badge">Serology & Immunology</span>
-                    <span class="feature-badge">Pathology</span>
-                    <span class="feature-badge">Biochemistry</span>
-                    <span class="feature-badge">Blood Banking</span>
-                    <span class="feature-badge">Parasitology</span>
-                    <span class="feature-badge">Microbiology</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=6 %}" class="service-btn">
-                    Lab Services
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pharmaceutical -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="750">
-              <div class="service-card pharmaceutical">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-pills"></i>
-                  </div>
-                  <span class="service-category">Pharmaceutical</span>
-                </div>
-                <div class="service-body">
-                  <h4>Pharmacy Services</h4>
-                  <p>Comprehensive medication management and pharmaceutical care.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">Medicine Production</span>
-                    <span class="feature-badge">Dispensary</span>
-                    <span class="feature-badge">Pharmaceutical Support</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=7 %}" class="service-btn">
-                    Pharmacy Info
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Other Services -->
-            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="800">
-              <div class="service-card other-services">
-                <div class="service-header">
-                  <div class="service-icon">
-                    <i class="fas fa-ellipsis-h"></i>
-                  </div>
-                  <span class="service-category">Other Services</span>
-                </div>
-                <div class="service-body">
-                  <h4>Additional Services</h4>
-                  <p>Support services to enhance patient care and comfort.</p>
-                  <div class="service-features">
-                    <span class="feature-badge">Catering</span>
-                    <span class="feature-badge">Mortuary</span>
-                  </div>
-                </div>
-                <div class="service-footer">
-                  <a href="{% url 'core:service_detail' pk=8 %}" class="service-btn">
-                    More Info
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-          </div>
+  <!-- ==================== MAIN SERVICES DIRECTORY ==================== -->
+  <section class="py-5" id="services-grid">
+    <div class="container">
+      
+      <div class="row justify-content-center text-center mb-4" data-aos="fade-up">
+        <div class="col-lg-8">
+          <span class="section-tag">Clinical Departments & Specialties</span>
+          <h2 class="section-heading-lg">Dedicated Units for Every Medical Need</h2>
+          <p class="text-muted" style="font-size: 1.1rem;">
+            Select from our specialized clinical wings staffed by experienced healthcare professionals.
+          </p>
         </div>
+      </div>
 
-        <div class="services-stats" data-aos="fade-up" data-aos-delay="800">
-          <div class="row">
-            <div class="col-lg-3 col-md-6">
-              <div class="stat-item">
-                <div class="stat-number" data-purecounter-start="0" data-purecounter-end="25000" data-purecounter-duration="2"></div>
-                <div class="stat-label">Patients Served</div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-              <div class="stat-item">
-                <div class="stat-number" data-purecounter-start="0" data-purecounter-end="150" data-purecounter-duration="2"></div>
-                <div class="stat-label">Medical Experts</div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-              <div class="stat-item">
-                <div class="stat-number" data-purecounter-start="0" data-purecounter-end="18" data-purecounter-duration="2"></div>
-                <div class="stat-label">Specializations</div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-              <div class="stat-item">
-                <div class="stat-number" data-purecounter-start="0" data-purecounter-end="24" data-purecounter-duration="2"></div>
-                <div class="stat-label">Hours Service</div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Filter Navigation Tabs -->
+      <div class="service-filter-nav" data-aos="fade-up" data-aos-delay="100">
+        <button class="service-filter-btn active" data-filter="all">All Services</button>
+        <button class="service-filter-btn" data-filter="emergency">Emergency & Acute Care</button>
+        <button class="service-filter-btn" data-filter="primary">Primary & OPD</button>
+        <button class="service-filter-btn" data-filter="surgical">Surgical Specialties</button>
+        <button class="service-filter-btn" data-filter="maternal">Maternal & Child Health</button>
+        <button class="service-filter-btn" data-filter="specialty">Specialty Clinics</button>
+        <button class="service-filter-btn" data-filter="diagnostics">Diagnostics & Lab</button>
+        <button class="service-filter-btn" data-filter="allied">Therapy & Support</button>
+      </div>
 
-        <div class="appointment-banner" data-aos="fade-up" data-aos-delay="900">
-          <div class="banner-content">
-            <div class="banner-text">
-              <h3>Need Medical Attention?</h3>
-              <p>Book your appointment with our qualified healthcare professionals and get the care you deserve.</p>
+      <!-- Services Cards Grid -->
+      <div class="row g-4" id="services-container">
+
+        <!-- 1. Accident & Emergency -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="emergency" data-aos="fade-up" data-aos-delay="100">
+          <div class="service-card-modern emergency-card">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-truck-front-fill"></i>
+              </div>
+              <div class="emergency-badge-pulse">
+                <span class="emergency-dot"></span> 24/7 Continuous
+              </div>
             </div>
-            <div class="banner-actions">
-              <a href="{% url 'core:appointment' %}" class="btn-primary">Book Appointment</a>
-              <a href="tel:+233531047199" class="btn-secondary">
-                <i class="fas fa-phone"></i>
-                Call Now
+            <h3 class="service-card-title">Accident & Emergency (A&E)</h3>
+            <p class="service-card-desc">
+              Round-the-clock emergency medical response, trauma stabilization, acute resuscitation, and ambulance transfer services.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">Trauma & Resuscitation</span>
+              <span class="service-tag-pill">24/7 Ambulance</span>
+              <span class="service-tag-pill">Emergency Surgery</span>
+              <span class="service-tag-pill">Obs/Gynae Triage</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="tel:+233531047199" class="btn btn-sm text-white fw-bold px-3 py-2" style="background-color: var(--accent-color); border-radius: 8px;">
+                <i class="bi bi-telephone-fill me-1"></i> Call Emergency
+              </a>
+              <a href="{% url 'core:appointment' %}?department=Emergency" class="service-link-btn">
+                Book Slot <i class="bi bi-arrow-right"></i>
               </a>
             </div>
           </div>
         </div>
 
+        <!-- 2. General OPD & Family Medicine -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="primary" data-aos="fade-up" data-aos-delay="150">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-hospital"></i>
+              </div>
+              <span class="service-cat-badge">Primary Care</span>
+            </div>
+            <h3 class="service-card-title">General Outpatient (OPD) & Family Medicine</h3>
+            <p class="service-card-desc">
+              First-contact clinical evaluations, routine health examinations, preventive screenings, and management of acute medical conditions.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">General Consultation</span>
+              <span class="service-tag-pill">Wound Dressing</span>
+              <span class="service-tag-pill">Wellness Screenings</span>
+              <span class="service-tag-pill">Corporate Health</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:appointment' %}?department=General" class="service-link-btn">
+                Book Consultation <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="badge bg-success-subtle text-success">Mon - Sun</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. General & Specialized Surgery -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="surgical" data-aos="fade-up" data-aos-delay="200">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-scissors"></i>
+              </div>
+              <span class="service-cat-badge">Surgical Wing</span>
+            </div>
+            <h3 class="service-card-title">General & Specialized Surgery</h3>
+            <p class="service-card-desc">
+              State-of-the-art sterile operating theaters offering major and minor elective surgeries, laparoscopic procedures, and postoperative care.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">General Surgery</span>
+              <span class="service-tag-pill">Urology</span>
+              <span class="service-tag-pill">Burns & Plastics</span>
+              <span class="service-tag-pill">Orthopedic Surgery</span>
+              <span class="service-tag-pill">Paediatric Surgery</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:appointment' %}?department=Surgery" class="service-link-btn">
+                Consult Surgeon <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="text-muted small"><i class="bi bi-shield-check me-1 text-success"></i>Specialist-Led</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Obstetrics & Gynaecology -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="maternal" data-aos="fade-up" data-aos-delay="250">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-gender-female"></i>
+              </div>
+              <span class="service-cat-badge">Women's Health</span>
+            </div>
+            <h3 class="service-card-title">Obstetrics & Gynaecology (Maternity)</h3>
+            <p class="service-card-desc">
+              Dedicated maternal care spanning antenatal clinics, safe labor and delivery suites, high-risk pregnancy management, and gynecological surgeries.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">Antenatal Care (ANC)</span>
+              <span class="service-tag-pill">Postnatal Care (PNC)</span>
+              <span class="service-tag-pill">Delivery Suites</span>
+              <span class="service-tag-pill">Gynae Surgeries</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:appointment' %}?department=Gynecology" class="service-link-btn">
+                Book Maternity Care <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="badge bg-primary-subtle text-primary">24/7 Delivery</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Paediatrics & Child Health -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="maternal" data-aos="fade-up" data-aos-delay="300">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-person-hearts"></i>
+              </div>
+              <span class="service-cat-badge">Child Health</span>
+            </div>
+            <h3 class="service-card-title">Paediatrics & Neonatal Care (NICU)</h3>
+            <p class="service-card-desc">
+              Holistic healthcare for newborns, infants, children, and adolescents, featuring an advanced Neonatal Intensive Care Unit (NICU).
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">General Paediatrics</span>
+              <span class="service-tag-pill">NICU Incubators</span>
+              <span class="service-tag-pill">Child Welfare & Immunization</span>
+              <span class="service-tag-pill">Asthma & Neuro Clinics</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:appointment' %}?department=Pediatrics" class="service-link-btn">
+                Book Paediatrician <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="text-muted small">Specialist Clinic</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Ophthalmology & Eye Care -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="specialty" data-aos="fade-up" data-aos-delay="350">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-eye-fill"></i>
+              </div>
+              <span class="service-cat-badge">Specialized Eye Care</span>
+            </div>
+            <h3 class="service-card-title">Eye Clinic & Ophthalmology</h3>
+            <p class="service-card-desc">
+              Comprehensive vision care including cataract evaluations, glaucoma management, visual acuity refraction testing, and prescription optical lenses.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">Cataract Screening</span>
+              <span class="service-tag-pill">Glaucoma Care</span>
+              <span class="service-tag-pill">Optical Dispensing</span>
+              <span class="service-tag-pill">Refraction Exams</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:appointment' %}?department=Ophthalmology" class="service-link-btn">
+                Book Eye Exam <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="badge bg-light text-dark border">Optical Unit</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Dental & Maxillofacial Care -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="specialty" data-aos="fade-up" data-aos-delay="400">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-emoji-smile-fill"></i>
+              </div>
+              <span class="service-cat-badge">Oral Health</span>
+            </div>
+            <h3 class="service-card-title">Dental Clinic & Oral Surgery</h3>
+            <p class="service-card-desc">
+              Preventative, restorative, and surgical dental treatments for patients of all ages, including scaling, extractions, root canals, and oral hygiene education.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">Teeth Cleaning & Scaling</span>
+              <span class="service-tag-pill">Surgical Extractions</span>
+              <span class="service-tag-pill">Root Canal Therapy</span>
+              <span class="service-tag-pill">Dental Fillings</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:appointment' %}?department=Dental" class="service-link-btn">
+                Book Dental Slot <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="text-muted small">Modern Dental Suite</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. ENT (Ear, Nose & Throat) -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="specialty" data-aos="fade-up" data-aos-delay="450">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-ear-fill"></i>
+              </div>
+              <span class="service-cat-badge">Otolaryngology</span>
+            </div>
+            <h3 class="service-card-title">Ear, Nose & Throat (ENT) Care</h3>
+            <p class="service-card-desc">
+              Specialized diagnosis and treatment of auditory disorders, sinus complications, throat infections, speech impairments, and nasal blockages.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">Hearing Assessments</span>
+              <span class="service-tag-pill">Sinusitis Treatment</span>
+              <span class="service-tag-pill">Tonsil Care</span>
+              <span class="service-tag-pill">Foreign Body Removal</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:appointment' %}?department=ENT" class="service-link-btn">
+                Consult ENT Specialist <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="badge bg-light text-dark border">Specialist Care</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. Chronic Disease & Specialty Clinics -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="specialty" data-aos="fade-up" data-aos-delay="500">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-heart-pulse-fill"></i>
+              </div>
+              <span class="service-cat-badge">Internal Medicine</span>
+            </div>
+            <h3 class="service-card-title">Chronic Disease & Specialty Clinics</h3>
+            <p class="service-card-desc">
+              Targeted outpatient clinics for hypertension, diabetes, sickle cell disease, dermatology, gastrointestinal health, and hepatitis management.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">Diabetes & Hypertension</span>
+              <span class="service-tag-pill">Cardiology Clinic</span>
+              <span class="service-tag-pill">Sickle Cell Clinic</span>
+              <span class="service-tag-pill">Dermatology</span>
+              <span class="service-tag-pill">Hepatitis Center</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:appointment' %}?department=Cardiology" class="service-link-btn">
+                Book Specialty Clinic <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="badge bg-warning-subtle text-dark">Special Schedule</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. Diagnostic Imaging (X-Ray & Ultrasound) -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="diagnostics" data-aos="fade-up" data-aos-delay="550">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-file-earmark-medical-fill"></i>
+              </div>
+              <span class="service-cat-badge">Radiology</span>
+            </div>
+            <h3 class="service-card-title">Diagnostic Imaging & Radiology</h3>
+            <p class="service-card-desc">
+              High-resolution digital X-rays, 3D/4D obstetric and abdominal ultrasounds, ECG, and echocardiography for prompt and accurate clinical diagnoses.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">Digital X-Ray</span>
+              <span class="service-tag-pill">Ultrasound Scanning</span>
+              <span class="service-tag-pill">Electrocardiogram (ECG)</span>
+              <span class="service-tag-pill">Echocardiography (Echo)</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:appointment' %}?department=Diagnostics" class="service-link-btn">
+                Request Scan <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="badge bg-success-subtle text-success">Same-Day Results</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. Laboratory & Blood Bank -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="diagnostics" data-aos="fade-up" data-aos-delay="600">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-droplet-fill"></i>
+              </div>
+              <span class="service-cat-badge">Pathology</span>
+            </div>
+            <h3 class="service-card-title">Clinical Laboratory & Blood Bank</h3>
+            <p class="service-card-desc">
+              Accredited automated medical laboratory providing clinical biochemistry, hematology, microbiology, serology, and certified blood banking.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">Hematology</span>
+              <span class="service-tag-pill">Biochemistry Profiles</span>
+              <span class="service-tag-pill">Blood Transfusion Bank</span>
+              <span class="service-tag-pill">Microbiology & Culture</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:appointment' %}?department=Lab" class="service-link-btn">
+                Lab Inquiries <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="badge bg-info-subtle text-info">24/7 Lab Services</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12. Pharmacy & Dispensary -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="allied" data-aos="fade-up" data-aos-delay="650">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-capsule"></i>
+              </div>
+              <span class="service-cat-badge">Pharmaceuticals</span>
+            </div>
+            <h3 class="service-card-title">Pharmacy & Medication Therapy</h3>
+            <p class="service-card-desc">
+              Fully stocked licensed dispensary offering genuine prescription medicines, patient counseling, compounding support, and NHIS medication dispensing.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">24/7 Dispensary</span>
+              <span class="service-tag-pill">NHIS Medicines</span>
+              <span class="service-tag-pill">Pharmacist Counseling</span>
+              <span class="service-tag-pill">Emergency Meds</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:contact' %}" class="service-link-btn">
+                Contact Pharmacy <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="badge bg-success-subtle text-success">24/7 Open</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13. Physiotherapy & Rehabilitation -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="allied" data-aos="fade-up" data-aos-delay="700">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-activity"></i>
+              </div>
+              <span class="service-cat-badge">Rehabilitation</span>
+            </div>
+            <h3 class="service-card-title">Physiotherapy & Rehabilitation</h3>
+            <p class="service-card-desc">
+              Physical rehabilitation, post-stroke recovery, musculoskeletal injury therapy, clinical nutrition counseling, and psychological counseling.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">Physiotherapy</span>
+              <span class="service-tag-pill">Stroke Rehabilitation</span>
+              <span class="service-tag-pill">Diet & Nutrition Therapy</span>
+              <span class="service-tag-pill">Clinical Psychology</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:appointment' %}?department=Rehabilitation" class="service-link-btn">
+                Book Therapy <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="text-muted small">Specialist Unit</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14. Public & Community Health -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="primary" data-aos="fade-up" data-aos-delay="750">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-people-fill"></i>
+              </div>
+              <span class="service-cat-badge">Public Health</span>
+            </div>
+            <h3 class="service-card-title">Public Health & Community Outreach</h3>
+            <p class="service-card-desc">
+              Preventative community outreach, family planning clinics, TB DOTS center, adolescent health, and infectious disease surveillance.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">Family Planning</span>
+              <span class="service-tag-pill">TB DOTS Center</span>
+              <span class="service-tag-pill">HIV/STI Counseling</span>
+              <span class="service-tag-pill">Community Outreaches</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:contact' %}" class="service-link-btn">
+                Outreach Info <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="badge bg-light text-dark border">Community Wing</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 15. Mortuary & Funeral Services -->
+        <div class="col-lg-4 col-md-6 service-item" data-category="allied" data-aos="fade-up" data-aos-delay="800">
+          <div class="service-card-modern">
+            <div class="service-card-header">
+              <div class="service-icon-box">
+                <i class="bi bi-building"></i>
+              </div>
+              <span class="service-cat-badge">Support Services</span>
+            </div>
+            <h3 class="service-card-title">Mortuary & Preservation Services</h3>
+            <p class="service-card-desc">
+              Modern cold-room preservation, hygienic body preparation, and compassionate family support services operating in full compliance with sanitary regulations.
+            </p>
+            <div class="service-tags-wrapper">
+              <span class="service-tag-pill">Modern Cold Storage</span>
+              <span class="service-tag-pill">Hygienic Preparation</span>
+              <span class="service-tag-pill">Dignified Care</span>
+              <span class="service-tag-pill">Administrative Assistance</span>
+            </div>
+            <div class="service-card-footer">
+              <a href="{% url 'core:contact' %}" class="service-link-btn">
+                Inquire Services <i class="bi bi-arrow-right"></i>
+              </a>
+              <span class="text-muted small">24/7 Reception</span>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-    </section><!-- /Services Section -->
+    </div>
+  </section>
 
-  </main>
+  <!-- ==================== PILLARS OF CLINICAL EXCELLENCE ==================== -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-5" data-aos="fade-up">
+        <div class="col-lg-8">
+          <span class="section-tag">Quality Standards</span>
+          <h2 class="section-heading-lg">Why Families Trust Asamang SDA Hospital</h2>
+          <p class="text-muted" style="font-size: 1.1rem;">
+            We combine high clinical standards, seasoned medical specialists, and compassionate Christian values to ensure optimal outcomes for our patients.
+          </p>
+        </div>
+      </div>
 
-  </div>
-</section><!-- /Services Section -->
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="capability-box">
+            <div class="capability-icon">
+              <i class="bi bi-heart-pulse-fill"></i>
+            </div>
+            <h4>24/7 Immediate Triage</h4>
+            <p>Non-stop emergency response with ready surgical teams, obstetrics triage, and direct ambulance dispatch.</p>
+          </div>
+        </div>
 
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="capability-box">
+            <div class="capability-icon">
+              <i class="bi bi-award-fill"></i>
+            </div>
+            <h4>Qualified Specialists</h4>
+            <p>Experienced consultants in surgery, pediatrics, obstetrics, ophthalmology, and family medicine.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="capability-box">
+            <div class="capability-icon">
+              <i class="bi bi-display"></i>
+            </div>
+            <h4>Advanced Diagnostics</h4>
+            <p>Digital X-ray imaging, ultrasound diagnostics, ECG, and automated lab tests with fast turnarounds.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="capability-box">
+            <div class="capability-icon">
+              <i class="bi bi-shield-fill-check"></i>
+            </div>
+            <h4>CHAG & NHIS Accredited</h4>
+            <p>Full accreditation supporting National Health Insurance Scheme and private health coverage plans.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== HOW PATIENTS RECEIVE CARE ==================== -->
+  <section class="py-5 my-3">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-5" data-aos="fade-up">
+        <div class="col-lg-8">
+          <span class="section-tag">Patient Experience</span>
+          <h2 class="section-heading-lg">Your Care Journey with Us</h2>
+          <p class="text-muted">
+            Simple, transparent, and dignified medical care from arrival to full recovery.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="journey-step-card">
+            <div class="step-number-badge">1</div>
+            <h5>Check-in & Registration</h5>
+            <p>Quick reception processing with NHIS verification or private card creation.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="journey-step-card">
+            <div class="step-number-badge">2</div>
+            <h5>Triage & Consultation</h5>
+            <p>Vital signs evaluation followed by thorough specialist or physician consultation.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="journey-step-card">
+            <div class="step-number-badge">3</div>
+            <h5>Diagnostics & Testing</h5>
+            <p>On-site laboratory sampling and digital imaging for rapid clinical insights.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="journey-step-card">
+            <div class="step-number-badge">4</div>
+            <h5>Treatment & Recovery</h5>
+            <p>Prescription dispensing, surgical care, admission, or scheduled follow-up visits.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Impact Metrics -->
+      <div class="metrics-strip-services" data-aos="fade-up">
+        <div class="row g-4">
+          <div class="col-6 col-md-3">
+            <div class="metric-card-item">
+              <div class="metric-val">60K+</div>
+              <div class="metric-title">Patients Treated</div>
+              <p class="metric-desc">Annual outpatient & emergency care</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card-item">
+              <div class="metric-val">400+</div>
+              <div class="metric-title">Medical Staff</div>
+              <p class="metric-desc">Specialists, midwives & nurses</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card-item">
+              <div class="metric-val">18+</div>
+              <div class="metric-title">Specialty Clinics</div>
+              <p class="metric-desc">Comprehensive medical wings</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="metric-card-item">
+              <div class="metric-val">24/7</div>
+              <div class="metric-title">Care Availability</div>
+              <p class="metric-desc">Always on duty for emergencies</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CALL TO ACTION BANNER ==================== -->
+  <section class="py-5 my-4">
+    <div class="container">
+      <div class="services-cta-banner" data-aos="zoom-in">
+        <div class="row align-items-center justify-content-between position-relative" style="z-index: 2;">
+          <div class="col-lg-8">
+            <h2 class="fw-bold mb-3" style="font-family: var(--heading-font); font-size: 2.2rem;">
+              Need Immediate Medical Attention or a Consultation?
+            </h2>
+            <p class="mb-4 text-white-50" style="font-size: 1.1rem; line-height: 1.6; max-width: 650px;">
+              Our clinical specialists and outpatient teams are available to provide you and your loved ones with world-class healthcare.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+              <a href="{% url 'core:appointment' %}" class="btn btn-lg px-4 text-white fw-bold shadow" style="background-color: var(--accent-color); border-radius: 10px;">
+                <i class="bi bi-calendar-plus me-2"></i>Book an Appointment Online
+              </a>
+              <a href="{% url 'core:doctors' %}" class="btn btn-lg px-4 fw-bold text-white border" style="background-color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); border-radius: 10px;">
+                <i class="bi bi-person-badge me-2"></i>Meet Our Medical Specialists
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-3 text-lg-end mt-4 mt-lg-0">
+            <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15);">
+              <i class="bi bi-telephone-fill text-warning mb-2" style="font-size: 2rem; display: inline-block;"></i>
+              <div class="text-white fw-semibold small">24/7 Direct Emergency Line</div>
+              <a href="tel:+233531047199" class="text-white text-decoration-none fw-bold fs-5 d-block mt-1">+233 531 047 199</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
 {% endblock %}
 
 {% block extra_js %}
-<!-- Additional JavaScript specific to services page can go here -->
+<script>
+  // Service category interactive filtering
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.service-filter-btn');
+    const serviceItems = document.querySelectorAll('.service-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Toggle active class
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        const filterValue = this.getAttribute('data-filter');
+
+        serviceItems.forEach(item => {
+          const category = item.getAttribute('data-category');
+          if (filterValue === 'all' || category === filterValue) {
+            item.style.display = '';
+            item.style.opacity = '1';
+            item.style.transform = 'scale(1)';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>
 {% endblock %}

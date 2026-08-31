@@ -1,130 +1,269 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}FAQ - Asamang SDA{% endblock %}
+{% block title %}Frequently Asked Questions (FAQ) | Asamang SDA Hospital{% endblock %}
+{% block meta_description %}Get quick answers to common questions about Asamang SDA Hospital visiting hours, NHIS and insurance, specialist appointments, and emergency services.{% endblock %}
+{% block meta_keywords %}hospital faq ghana, asamang hospital visiting hours, nhis hospital asamang, appointment guidelines ghana{% endblock %}
 
 {% block body_class %}faq-page{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+<style>
+  .faq-hero {
+    background: linear-gradient(135deg, rgba(6, 102, 54, 0.04) 0%, rgba(233, 193, 10, 0.05) 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(6, 102, 54, 0.08);
+  }
 
-  <main class="main">
+  .badge-pill-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 1px solid rgba(6, 102, 54, 0.15);
+  }
 
-    <!-- Page Title -->
-    <div class="page-title">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1 class="heading-title">Frequently Asked Questions</h1>
-              <p class="mb-0">Find answers to the most common questions about Asamang SDA Hospital's services, appointments, and facilities. We are here to make your experience as smooth as possible.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="{% url 'core:home' %}">Home</a></li>
-            <li class="current">FAQ</li>
-          </ol>
-        </div>
-      </nav>
-    </div><!-- End Page Title -->
+  .section-tag {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    display: block;
+  }
 
-    <!-- Faq Section -->
-    <section id="faq" class="faq section">
+  .section-heading-lg {
+    font-family: var(--heading-font);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
 
-      <div class="container">
+  /* Accordion Custom Styling */
+  .accordion-custom .accordion-item {
+    border: 1px solid rgba(6, 102, 54, 0.1);
+    border-radius: 14px !important;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+  }
 
-        <div class="row justify-content-center">
+  .accordion-custom .accordion-item:hover {
+    border-color: rgba(6, 102, 54, 0.25);
+    box-shadow: 0 8px 25px rgba(6, 102, 54, 0.08);
+  }
 
-          <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+  .accordion-custom .accordion-button {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--heading-color);
+    background-color: #ffffff;
+    padding: 1.25rem 1.5rem;
+    border: none;
+    box-shadow: none;
+  }
 
-            <div class="faq-container">
+  .accordion-custom .accordion-button:not(.collapsed) {
+    background-color: #f8faf9;
+    color: var(--heading-color);
+  }
 
-              <div class="faq-item faq-active">
-                <h3>What are the visiting hours for the hospital?</h3>
-                <div class="faq-content">
-                  <p>Our standard visiting hours are from 6:00 AM to 8:00 AM in the morning, 12:00 PM to 2:00 PM in the afternoon, and 5:00 PM to 8:00 PM in the evening. However, exceptions can be made for critically ill patients or those in special care units with prior approval from the ward manager.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
+  .accordion-custom .accordion-body {
+    padding: 1.25rem 1.5rem;
+    color: #495057;
+    line-height: 1.75;
+    font-size: 0.95rem;
+    background-color: #f8faf9;
+  }
 
-              <div class="faq-item">
-                <h3>Do I need to book an appointment before visiting?</h3>
-                <div class="faq-content">
-                  <p>For emergencies, you do not need an appointment; our Emergency Department is open 24/7. However, for general consultations and specialized services (such as Dental, Eye, or Surgery), we highly recommend booking an appointment online or via phone to reduce your waiting time.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item">
-                <h3>Does the hospital accept my health insurance?</h3>
-                <div class="faq-content">
-                  <p>Yes, Asamang SDA Hospital accepts the National Health Insurance Scheme (NHIS) along with several private health insurance providers. Please bring your valid insurance card and a form of identification when visiting. For specific private insurance inquiries, kindly contact our billing department.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item">
-                <h3>What should I bring for my first consultation?</h3>
-                <div class="faq-content">
-                  <p>For your first visit, please bring a valid national ID (Ghana Card), your health insurance card (if applicable), any previous medical records, x-rays, or test results related to your condition, and a list of your current medications. This helps our doctors provide the most accurate care.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item">
-                <h3>How can I access my medical records?</h3>
-                <div class="faq-content">
-                  <p>Your medical records are highly confidential. To request a copy of your records, you must visit the hospital's records department in person with a valid ID and submit a formal request form. Records are typically processed and made available within 3 to 5 business days.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item">
-                <h3>What emergency services do you provide?</h3>
-                <div class="faq-content">
-                  <p>Our Emergency Department provides 24-hour trauma and urgent care, including resuscitation, minor surgeries, orthopedic stabilization, and maternity emergencies. Our facility is equipped with a standby ambulance service and a dedicated emergency response team ready at all times.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-            </div>
-
-          </div><!-- End Faq Column-->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Faq Section -->
-
-  </main>
+  /* Contact Help Box */
+  .help-card-box {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(6, 102, 54, 0.1);
+  }
+</style>
 {% endblock %}
 
-{% block extra_js %}
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize FAQ toggles
-      const faqItems = document.querySelectorAll('.faq-item');
-      
-      faqItems.forEach(item => {
-        const toggle = item.querySelector('.faq-toggle');
-        const content = item.querySelector('.faq-content');
+{% block content %}
+<main class="main">
+
+  <!-- ==================== HERO / HEADER ==================== -->
+  <section class="faq-hero">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-8" data-aos="fade-up">
+          <div class="badge-pill-custom mb-3">
+            <i class="bi bi-question-circle-fill text-success"></i>
+            Patient & Visitor Support
+          </div>
+          <h1 class="section-heading-lg mb-3">
+            Frequently Asked Questions
+          </h1>
+          <p class="lead text-muted mb-0" style="font-size: 1.15rem; line-height: 1.7;">
+            Find quick answers about hospital visiting hours, insurance acceptance, outpatient consultations, medical records, and 24/7 emergency response.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
+          <a href="{% url 'core:contact' %}" class="btn btn-lg text-white fw-bold px-4 py-2" style="background-color: var(--accent-color); border-radius: 10px;">
+            <i class="bi bi-headset me-2"></i>Contact Hospital Desk
+          </a>
+        </div>
+      </div>
+
+      <nav class="breadcrumbs mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+        <ol class="breadcrumb mb-0" style="font-size: 0.9rem;">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none text-muted"><i class="bi bi-house-door me-1"></i>Home</a></li>
+          <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">FAQ</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ACCORDION & SIDEBAR ==================== -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-5">
         
-        toggle.addEventListener('click', () => {
-          // Toggle active class on the clicked item
-          item.classList.toggle('faq-active');
+        <!-- Left: Accordion Questions -->
+        <div class="col-lg-8" data-aos="fade-right">
           
-          // Close other open items
-          faqItems.forEach(otherItem => {
-            if (otherItem !== item && otherItem.classList.contains('faq-active')) {
-              otherItem.classList.remove('faq-active');
-            }
-          });
-        });
-      });
-    });
-  </script>
-  {% endblock %}
+          <div class="accordion accordion-custom" id="hospitalFaqAccordion">
+
+            <!-- Item 1 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faqHeading1">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
+                  <i class="bi bi-clock-history me-2 text-success"></i> What are the hospital's visiting hours?
+                </button>
+              </h2>
+              <div id="faqCollapse1" class="accordion-collapse collapse show" aria-labelledby="faqHeading1" data-bs-parent="#hospitalFaqAccordion">
+                <div class="accordion-body">
+                  Our standard inpatient visiting hours are divided into three daily sessions:
+                  <ul class="mt-2 mb-0">
+                    <li><strong>Morning:</strong> 6:00 AM – 8:00 AM</li>
+                    <li><strong>Afternoon:</strong> 12:00 PM – 2:00 PM</li>
+                    <li><strong>Evening:</strong> 5:00 PM – 8:00 PM</li>
+                  </ul>
+                  Exceptions can be arranged for critically ill patients or pediatric wards under the guidance of the attending nursing in-charge.
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faqHeading2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                  <i class="bi bi-shield-check me-2 text-success"></i> Does Asamang SDA Hospital accept NHIS and private health insurance?
+                </button>
+              </h2>
+              <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#hospitalFaqAccordion">
+                <div class="accordion-body">
+                  Yes, Asamang SDA Hospital is fully accredited under CHAG and accepts the <strong>National Health Insurance Scheme (NHIS)</strong> for consultations, diagnostics, medications, and surgical procedures covered by the benefit package. We also partner with leading private health insurance plans in Ghana.
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faqHeading3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                  <i class="bi bi-calendar-check me-2 text-success"></i> Do I need an appointment before coming to the hospital?
+                </button>
+              </h2>
+              <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#hospitalFaqAccordion">
+                <div class="accordion-body">
+                  For emergency and urgent care, no appointment is required — our Accident & Emergency triage is open 24/7 without pause. For specialized clinics (Cardiology, Surgery, ENT, Eye, Dental, and OB/GYN), we encourage you to book online or call in advance to ensure specialist availability and minimal waiting time.
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faqHeading4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+                  <i class="bi bi-file-earmark-medical me-2 text-success"></i> What should I bring for my first consultation?
+                </button>
+              </h2>
+              <div id="faqCollapse4" class="accordion-collapse collapse" aria-labelledby="faqHeading4" data-bs-parent="#hospitalFaqAccordion">
+                <div class="accordion-body">
+                  Please bring a valid national identification (Ghana Card), your active NHIS card or private health insurance card, any previous medical documents, laboratory reports, or X-rays, and your current prescription medications.
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faqHeading5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
+                  <i class="bi bi-truck-front me-2 text-success"></i> How does the emergency ambulance dispatch work?
+                </button>
+              </h2>
+              <div id="faqCollapse5" class="accordion-collapse collapse" aria-labelledby="faqHeading5" data-bs-parent="#hospitalFaqAccordion">
+                <div class="accordion-body">
+                  Our standby ambulance is equipped with resuscitation gear and trauma support. To request emergency ambulance transport, dial our 24/7 emergency hotline at <a href="tel:+233531047199" class="fw-bold text-danger text-decoration-none">+233 531 047 199</a>.
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faqHeading6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse6" aria-expanded="false" aria-controls="faqCollapse6">
+                  <i class="bi bi-capsule me-2 text-success"></i> Is the hospital pharmacy open 24 hours?
+                </button>
+              </h2>
+              <div id="faqCollapse6" class="accordion-collapse collapse" aria-labelledby="faqHeading6" data-bs-parent="#hospitalFaqAccordion">
+                <div class="accordion-body">
+                  Yes, our licensed hospital pharmacy and dispensary operate 24 hours a day, 7 days a week, ensuring immediate availability of essential and emergency medications.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Right: Help Sidebar -->
+        <div class="col-lg-4" data-aos="fade-left">
+          <div class="help-card-box mb-4">
+            <h4 class="fw-bold mb-3" style="color: var(--heading-color);">Still Have Questions?</h4>
+            <p class="text-muted small mb-4">
+              If your question isn't answered above, our reception staff and clinical customer care desk are ready to assist you directly.
+            </p>
+            <a href="{% url 'core:contact' %}" class="btn btn-success fw-bold w-100 py-2 mb-2">
+              <i class="bi bi-envelope me-1"></i> Send a Message
+            </a>
+            <a href="{% url 'core:appointment' %}" class="btn btn-outline-success fw-bold w-100 py-2">
+              <i class="bi bi-calendar-plus me-1"></i> Book Appointment
+            </a>
+          </div>
+
+          <!-- Emergency Card -->
+          <div class="help-card-box text-center text-white" style="background: linear-gradient(135deg, var(--heading-color) 0%, #03361d 100%);">
+            <i class="bi bi-telephone-fill text-warning mb-2" style="font-size: 2rem; display: inline-block;"></i>
+            <h5 class="fw-bold text-white mb-1">Direct Help Desk</h5>
+            <p class="text-white-50 small mb-3">Speak with our hospital support representative.</p>
+            <a href="tel:+233531047199" class="btn btn-warning text-dark fw-bold w-100 py-2">
+              +233 531 047 199
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+{% endblock %}

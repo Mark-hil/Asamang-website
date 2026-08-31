@@ -1,552 +1,509 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Blog - Asamang SDA{% endblock %}
+{% block title %}Health Blog & Medical News | Asamang SDA Hospital{% endblock %}
+{% block meta_description %}Read the latest health tips, medical advice, preventative care guidelines, and hospital news from the clinical team at Asamang SDA Hospital in Ghana.{% endblock %}
+{% block meta_keywords %}health blog ghana, medical news asamang, wellness tips ashanti region, hospital updates, preventative medicine ghana{% endblock %}
 
 {% block body_class %}blog-page{% endblock %}
 
-{% block content %}
-  <main class="main">
-    <!-- Page Title -->
-    <div class="page-title">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1 class="heading-title">Our Blog</h1>
-              <p class="mb-0">
-                Stay updated with the latest health tips, news, and updates from Asamang SDA.
-                Our blog covers a wide range of health topics to help you live a healthier life.
-              </p>
-              {% if user.is_staff %}
-                <div class="mt-3">
-                  <a href="{% url 'core:blog_create' %}" class="btn btn-primary">
-                    <i class="bi bi-plus-lg me-1"></i> New Blog Post
-                  </a>
-                </div>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="{% url 'core:home' %}">Home</a></li>
-            <li class="current">Blog</li>
-          </ol>
-        </div>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <!-- Blog Section -->
-    <section id="blog" class="blog section">
-      <div class="container" data-aos="fade-up">
-        <div class="row">
-          <!-- Main Content -->
-          <div class="col-lg-8">
-            {% if posts %}
-              <div class="row">
-                {% for post in posts %}
-                <div class="col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
-                  <div class="blog-card">
-                    <div class="post-img">
-                      {% if post.featured_image %}
-                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="img-fluid">
-                      {% else %}
-                        <img src="{% static 'img/blog/blog-placeholder.jpg' %}" alt="{{ post.title }}" class="img-fluid">
-                      {% endif %}
-                      {% if user.is_staff %}
-                        <div class="admin-actions mt-2">
-                          <a href="{% url 'core:blog_update' post.slug %}" class="btn btn-sm btn-warning me-1">
-                            <i class="bi bi-pencil"></i> Edit
-                          </a>
-                          <a href="{% url 'core:blog_delete' post.slug %}" class="btn btn-sm btn-danger">
-                            <i class="bi bi-trash"></i> Delete
-                          </a>
-                        </div>
-                      {% endif %}
-                    </div>
-                    <div class="post-content">
-                      <div class="post-meta">
-                        <span class="post-date"><i class="bi bi-calendar"></i> {{ post.published_date|date:"F j, Y" }}</span>
-                        <span class="post-comments"><i class="bi bi-chat"></i> {{ post.comments.count }} Comments</span>
-                      </div>
-                      <h3 class="post-title"><a href="{% url 'core:blog_detail' post.slug %}">{{ post.title }}</a></h3>
-                      <div class="post-category">
-                        <i class="bi bi-folder"></i> {{ post.category }}
-                      </div>
-                      <p>{{ post.excerpt|truncatewords:30 }}</p>
-                      <a href="{% url 'core:blog_detail' post.slug %}" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
-                      
-                      {% if post.tags %}
-                        <div class="post-tags mt-2">
-                          {% for tag in post.get_tags %}
-                            <span class="badge bg-light text-dark">{{ tag }}</span>
-                          {% endfor %}
-                        </div>
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-
-              <!-- Pagination -->
-              {% if is_paginated %}
-                <div class="blog-pagination" data-aos="fade-up" data-aos-delay="500">
-                  <ul class="pagination justify-content-center">
-                    {% if page_obj.has_previous %}
-                      <li class="page-item">
-                        <a class="page-link" href="?page=1" aria-label="First">
-                          <span aria-hidden="true">&laquo;&laquo;</span>
-                        </a>
-                      </li>
-                      <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                          <span aria-hidden="true">&laquo;</span>
-                        </a>
-                      </li>
-                    {% endif %}
-                    
-                    {% for num in page_obj.paginator.page_range %}
-                      {% if page_obj.number == num %}
-                        <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-                      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-                      {% endif %}
-                    {% endfor %}
-                    
-                    {% if page_obj.has_next %}
-                      <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                          <span aria-hidden="true">&raquo;</span>
-                        </a>
-                      </li>
-                      <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
-                          <span aria-hidden="true">&raquo;&raquo;</span>
-                        </a>
-                      </li>
-                    {% endif %}
-                  </ul>
-                </div>
-              {% endif %}
-            {% else %}
-              <div class="alert alert-info" role="alert">
-                No blog posts found. {% if user.is_staff %}<a href="{% url 'core:blog_create' %}">Create your first post</a>{% endif %}
-              </div>
-            {% endif %}
-          </div>
-
-          <!-- Sidebar -->
-          <div class="col-lg-4">
-            <!-- Search Widget -->
-            <div class="sidebar-widget search-widget" data-aos="fade-up" data-aos-delay="100">
-              <h4 class="widget-title">Search</h4>
-              <form method="get" action="{% url 'core:blog' %}" class="search-form">
-                <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search..." class="form-control">
-                <button type="submit" class="search-btn"><i class="bi bi-search"></i></button>
-              </form>
-            </div>
-
-            <!-- Categories Widget -->
-            {% if categories %}
-            <div class="sidebar-widget categories-widget" data-aos="fade-up" data-aos-delay="200">
-              <h4 class="widget-title">Categories</h4>
-              <ul>
-                <li><a href="?" class="{% if not request.GET.category %}active{% endif %}">All {% if total_posts %}<span>({{ total_posts }})</span>{% endif %}</a></li>
-                {% for category in categories %}
-                <li>
-                  <a href="?category={{ category|urlencode }}" class="{% if request.GET.category == category %}active{% endif %}">
-                    {{ category }} {% if category.post_count %}<span>({{ category.post_count }})</span>{% endif %}
-                  </a>
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% endif %}
-
-            <!-- Recent Posts Widget -->
-            {% if recent_posts %}
-            <div class="sidebar-widget recent-posts" data-aos="fade-up" data-aos-delay="300">
-              <h4 class="widget-title">Recent Posts</h4>
-              {% for post in recent_posts %}
-              <div class="post-item">
-                <div class="post-img">
-                  {% if post.featured_image %}
-                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
-                  {% else %}
-                    <img src="{% static 'img/blog/blog-placeholder.jpg' %}" alt="{{ post.title }}">
-                  {% endif %}
-                </div>
-                <div>
-                  <h5><a href="{% url 'core:blog_detail' post.slug %}">{{ post.title|truncatewords:6 }}</a></h5>
-                  <time datetime="{{ post.published_date|date:'Y-m-d' }}">{{ post.published_date|date:"F j, Y" }}</time>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-            {% endif %}
-
-            <!-- Popular Posts Widget -->
-            {% if popular_posts %}
-            <div class="sidebar-widget popular-posts" data-aos="fade-up" data-aos-delay="350">
-              <h4 class="widget-title">Popular Posts</h4>
-              {% for post in popular_posts %}
-              <div class="post-item">
-                <div class="post-img">
-                  {% if post.featured_image %}
-                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
-                  {% else %}
-                    <img src="{% static 'img/blog/blog-placeholder.jpg' %}" alt="{{ post.title }}">
-                  {% endif %}
-                </div>
-                <div>
-                  <h5><a href="{% url 'core:blog_detail' post.slug %}">{{ post.title|truncatewords:6 }}</a></h5>
-                  <div class="post-views"><i class="bi bi-eye"></i> {{ post.view_count }} views</div>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-            {% endif %}
-
-            <!-- Tags Widget -->
-            {% if tags %}
-            <div class="sidebar-widget tags-widget" data-aos="fade-up" data-aos-delay="400">
-              <h4 class="widget-title">Tags</h4>
-              <div class="tags">
-                {% for tag in tags %}
-                <a href="?q={{ tag|urlencode }}" class="{% if tag in request.GET.q %}active{% endif %}">{{ tag }}</a>
-                {% endfor %}
-              </div>
-            </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </section><!-- /Blog Section -->
-
-  </main>
-
-{% endblock %}
-
 {% block extra_css %}
 <style>
-  /* Blog Page Styles */
-  :root {
-    --primary-color: #066636;    /* Dark Green */
-    --secondary-color: #e9c10a; /* Yellow */
-    --accent-color: #e20c14;    /* Red */
+  .blog-hero {
+    background: linear-gradient(135deg, rgba(6, 102, 54, 0.04) 0%, rgba(233, 193, 10, 0.05) 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(6, 102, 54, 0.08);
   }
-  .blog-page .blog-card {
-    background: #fff;
-    border-radius: 10px;
+
+  .badge-pill-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 1px solid rgba(6, 102, 54, 0.15);
+  }
+
+  .section-tag {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .section-heading-lg {
+    font-family: var(--heading-font);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Blog Card Modern */
+  .blog-card-modern {
+    background: #ffffff;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    margin-bottom: 30px;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(6, 102, 54, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.35s ease;
   }
-  
-  .blog-page .blog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    border-color: var(--secondary-color);
+
+  .blog-card-modern:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 16px 35px rgba(6, 102, 54, 0.12);
+    border-color: rgba(6, 102, 54, 0.25);
   }
-  
-  .blog-page .post-img {
+
+  .blog-img-box {
+    position: relative;
+    width: 100%;
+    height: 230px;
+    background: #f1f5f3;
     overflow: hidden;
-    height: 200px;
   }
-  
-  .blog-page .post-img img {
+
+  .blog-img-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: all 0.5s ease;
+    transition: transform 0.5s ease;
   }
-  
-  .blog-page .blog-card:hover .post-img img {
-    transform: scale(1.05);
+
+  .blog-card-modern:hover .blog-img-box img {
+    transform: scale(1.06);
   }
-  
-  .blog-page .post-content {
-    padding: 20px;
-    border-top: 3px solid var(--primary-color);
-  }
-  
-  .blog-page .post-meta {
-    font-size: 14px;
-    color: #6c757d;
-    margin-bottom: 10px;
-  }
-  
-  .blog-page .post-meta i {
-    margin-right: 5px;
-    color: #066636;
-  }
-  
-  .blog-page .post-meta .post-comments {
-    margin-left: 15px;
-  }
-  
-  .blog-page .post-title {
-    font-size: 20px;
+
+  .blog-category-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(6, 102, 54, 0.9);
+    color: #ffffff;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
     font-weight: 700;
-    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   }
-  
-  .blog-page .post-title a {
-    color: var(--primary-color);
+
+  .blog-content-box {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .blog-meta-strip {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.82rem;
+    color: #6c757d;
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-meta-strip i {
+    color: var(--heading-color);
+  }
+
+  .blog-post-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    font-family: var(--heading-font);
+  }
+
+  .blog-post-title a {
+    color: var(--heading-color);
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: color 0.25s ease;
   }
-  
-  .blog-page .post-title a:hover {
+
+  .blog-post-title a:hover {
     color: var(--accent-color);
   }
-  
-  .blog-page .read-more {
+
+  .blog-post-excerpt {
+    font-size: 0.92rem;
+    color: #555555;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-card-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .read-article-link {
     display: inline-flex;
     align-items: center;
-    color: var(--accent-color);
-    font-weight: 500;
-    margin-top: 15px;
-  }
-  
-  .blog-page .read-more i {
-    margin-left: 5px;
-    transition: 0.3s;
-  }
-  
-  .blog-page .read-more:hover {
-    color: var(--accent-color);
-    transform: translateX(5px);
-  }
-  
-  .blog-page .post-category {
-    color: var(--accent-color);
-    font-size: 14px;
-    margin: 5px 0 10px;
-    display: inline-block;
-    font-weight: 500;
-  }
-  
-  /* Sidebar Styles */
-  .sidebar-widget {
-    background: #fff;
-    border-radius: 10px;
-    padding: 25px;
-    margin-bottom: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  }
-  
-  .widget-title {
-    color: var(--primary-color);
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    position: relative;
-    border-bottom: 2px solid var(--secondary-color);
-  }
-  
-  /* Search Widget */
-  .search-form {
-    position: relative;
-  }
-  
-  .search-form .form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.25rem rgba(6, 102, 54, 0.25);
-  }
-  
-  .search-form .search-btn {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-  }
-  
-  .search-form .search-btn:hover {
-    background: var(--accent-color);
-  }
-  
-  .search-form input {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #e0e6ed;
-    border-radius: 5px;
-    outline: none;
-  }
-  
-  .search-form .search-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    background: transparent;
-    border: none;
-    padding: 0 15px;
-    color: #066636;
-  }
-  
-  /* Categories Widget */
-  .categories-widget ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .categories-widget li {
-    padding: 8px 0;
-    border-bottom: 1px dashed #e0e6ed;
-  }
-  
-  .categories-widget li:last-child {
-    border-bottom: none;
-  }
-  
-  .categories-widget a {
-    display: flex;
-    justify-content: space-between;
-    color: var(--primary-color);
-    transition: 0.3s;
-  }
-  
-  .categories-widget a:hover {
-    color: var(--accent-color);
-    padding-left: 15px;
+    gap: 6px;
+    font-size: 0.9rem;
     font-weight: 600;
+    color: var(--heading-color);
+    text-decoration: none;
+    transition: all 0.25s ease;
   }
-  
-  /* Recent Posts Widget */
-  .post-item {
+
+  .read-article-link:hover {
+    color: var(--accent-color);
+    transform: translateX(4px);
+  }
+
+  /* Sidebar Modern Widgets */
+  .blog-sidebar-box {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 1.75rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    margin-bottom: 2rem;
+  }
+
+  .widget-heading {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--brand-gold);
+    font-family: var(--heading-font);
+  }
+
+  .category-link-item {
     display: flex;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(6, 102, 54, 0.1);
-    transition: all 0.3s ease;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: var(--default-color);
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 6px;
+    background: #f8faf9;
+    transition: all 0.25s ease;
   }
-  
-  .post-item:hover {
-    transform: translateX(5px);
+
+  .category-link-item:hover,
+  .category-link-item.active {
+    background: var(--heading-color);
+    color: #ffffff;
+    padding-left: 18px;
   }
-  
-  .post-item:last-child {
+
+  .recent-post-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s ease;
+  }
+
+  .recent-post-row:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
     border-bottom: none;
   }
-  
-  .post-item .post-img {
-    width: 80px;
-    height: 60px;
-    margin-right: 15px;
-    border-radius: 5px;
-    overflow: hidden;
+
+  .recent-post-row:hover {
+    transform: translateX(4px);
   }
-  
-  .post-item .post-img img {
+
+  .recent-post-thumb {
+    width: 70px;
+    height: 60px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #f1f5f3;
+  }
+
+  .recent-post-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  
-  .post-item h5 {
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
-  
-  .post-item h5 a {
-    color: var(--primary-color);
-    font-size: 15px;
+
+  .recent-post-title {
+    font-size: 0.88rem;
     font-weight: 600;
-    transition: all 0.3s ease;
+    color: var(--heading-color);
+    line-height: 1.35;
+    margin-bottom: 4px;
   }
-  
-  .post-item h5 a:hover {
-    color: var(--accent-color);
-  }
-  
-  .post-item time {
-    display: block;
-    font-size: 12px;
+
+  .recent-post-date {
+    font-size: 0.75rem;
     color: #6c757d;
   }
-  
-  /* Tags Widget */
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -3px;
-  }
-  
-  .tags a {
-    display: inline-block;
-    padding: 5px 12px;
-    margin: 3px;
-    font-size: 13px;
-    color: var(--primary-color);
-    background: #f0f4f8;
-    border-radius: 3px;
-    transition: 0.3s;
-  }
-  
-  .tags a:hover {
-    background: var(--accent-color);
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  /* Pagination */
-  .blog-pagination {
-    margin-top: 30px;
-  }
-  
-  .pagination .page-link {
-    color: var(--primary-color);
-    border: 1px solid #dee2e6;
-    margin: 0 3px;
-    border-radius: 4px !important;
-    font-weight: 500;
-  }
-  
-  .pagination .page-item.active .page-link {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-  }
-  
-  .pagination .page-link:hover {
-    background-color: #f0f4f8;
-  }
-  
-  .pagination .page-item.active .page-link:hover {
-    background-color: #066636;
-  }
-  
-  /* Responsive Styles */
-  @media (max-width: 991.98px) {
-    .blog-page .post-img {
-      height: 250px;
-    }
-  }
-  
-  @media (max-width: 767.98px) {
-    .blog-page .post-img {
-      height: 200px;
-    }
-  }
-  
-  @media (max-width: 575.98px) {
-    .blog-page .post-img {
-      height: 180px;
-    }
-    
-    .post-item .post-img {
-      width: 60px;
-      height: 50px;
-    }
-  }
 </style>
+{% endblock %}
+
+{% block content %}
+<main class="main">
+
+  <!-- ==================== HERO / PAGE TITLE ==================== -->
+  <section class="blog-hero">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-8" data-aos="fade-up">
+          <div class="badge-pill-custom mb-3">
+            <i class="bi bi-journal-medical text-success"></i>
+            Health & Wellness Insights
+          </div>
+          <h1 class="section-heading-lg mb-3">
+            Medical News, Health Tips & Community Updates
+          </h1>
+          <p class="lead text-muted mb-0" style="font-size: 1.15rem; line-height: 1.7;">
+            Stay informed with expert health advice, clinical updates, disease prevention guides, and lifestyle tips from the medical staff at Asamang SDA Hospital.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
+          {% if user.is_staff %}
+            <a href="{% url 'core:blog_create' %}" class="btn btn-success px-4 py-2 fw-semibold shadow-sm me-2">
+              <i class="bi bi-pencil-square me-1"></i> New Post
+            </a>
+          {% endif %}
+          <a href="{% url 'core:appointment' %}" class="btn text-white px-4 py-2 fw-semibold shadow-sm" style="background-color: var(--accent-color); border-radius: 10px;">
+            <i class="bi bi-calendar-check me-1"></i> Book Appointment
+          </a>
+        </div>
+      </div>
+
+      <nav class="breadcrumbs mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+        <ol class="breadcrumb mb-0" style="font-size: 0.9rem;">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none text-muted"><i class="bi bi-house-door me-1"></i>Home</a></li>
+          <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Health Blog</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ==================== BLOG MAIN CONTENT ==================== -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-5">
+        
+        <!-- Left: Blog Posts Stream -->
+        <div class="col-lg-8" data-aos="fade-up">
+          
+          {% if request.GET.q or request.GET.category %}
+            <div class="d-flex align-items-center justify-content-between p-3 rounded-3 bg-light border mb-4">
+              <div>
+                {% if request.GET.q %}
+                  <span class="text-muted">Search results for: </span> <strong>"{{ request.GET.q }}"</strong>
+                {% elif request.GET.category %}
+                  <span class="text-muted">Category: </span> <strong>"{{ request.GET.category }}"</strong>
+                {% endif %}
+              </div>
+              <a href="{% url 'core:blog' %}" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-x-circle me-1"></i> Clear Filter
+              </a>
+            </div>
+          {% endif %}
+
+          {% if posts %}
+            <div class="row g-4">
+              {% for post in posts %}
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|default:1 }}00">
+                  <article class="blog-card-modern">
+                    <div class="blog-img-box">
+                      {% if post.featured_image %}
+                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" loading="lazy" onerror="this.onerror=null; this.src='{% static 'assets/img/health/staff-gr-1.JPG' %}'">
+                      {% else %}
+                        <img src="{% static 'assets/img/health/staff-gr-1.JPG' %}" alt="{{ post.title }}" loading="lazy">
+                      {% endif %}
+                      <span class="blog-category-badge">{{ post.category|default:"Health" }}</span>
+                    </div>
+
+                    <div class="blog-content-box">
+                      <div class="blog-meta-strip">
+                        <span><i class="bi bi-calendar3"></i> {{ post.published_date|date:"M j, Y" }}</span>
+                        <span><i class="bi bi-person"></i> {{ post.author.get_full_name|default:post.author.username }}</span>
+                      </div>
+
+                      <h3 class="blog-post-title">
+                        <a href="{% url 'core:blog_detail' post.slug %}">{{ post.title }}</a>
+                      </h3>
+
+                      <p class="blog-post-excerpt">
+                        {{ post.excerpt|truncatewords:18|default:post.content|striptags|truncatewords:18 }}
+                      </p>
+
+                      <div class="blog-card-footer">
+                        <a href="{% url 'core:blog_detail' post.slug %}" class="read-article-link">
+                          Read Article <i class="bi bi-arrow-right"></i>
+                        </a>
+
+                        {% if user.is_staff %}
+                          <div class="btn-group btn-group-sm">
+                            <a href="{% url 'core:blog_update' post.slug %}" class="btn btn-outline-warning py-1 px-2" title="Edit Post">
+                              <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'core:blog_delete' post.slug %}" class="btn btn-outline-danger py-1 px-2" title="Delete Post">
+                              <i class="bi bi-trash"></i>
+                            </a>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+              <nav class="d-flex justify-content-center mt-5" aria-label="Blog pagination">
+                <ul class="pagination">
+                  {% if page_obj.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">
+                        <i class="bi bi-chevron-left"></i> Previous
+                      </a>
+                    </li>
+                  {% endif %}
+
+                  {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                      <li class="page-item active"><span class="page-link bg-success border-success">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">
+                          {{ num }}
+                        </a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+
+                  {% if page_obj.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">
+                        Next <i class="bi bi-chevron-right"></i>
+                      </a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            {% endif %}
+
+          {% else %}
+            <div class="card border-0 p-5 text-center shadow-sm rounded-4">
+              <i class="bi bi-journal-x text-muted mb-3" style="font-size: 3rem;"></i>
+              <h4 class="fw-bold mb-2">No Articles Found</h4>
+              <p class="text-muted mb-4">No published articles matched your search or category filter.</p>
+              <div class="d-flex justify-content-center gap-2">
+                <a href="{% url 'core:blog' %}" class="btn btn-success fw-bold">
+                  <i class="bi bi-arrow-clockwise me-1"></i> View All Articles
+                </a>
+                {% if user.is_staff %}
+                  <a href="{% url 'core:blog_create' %}" class="btn btn-outline-success">
+                    <i class="bi bi-plus-lg me-1"></i> Create Post
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+        </div>
+
+        <!-- Right: Sidebar Widgets -->
+        <div class="col-lg-4" data-aos="fade-left">
+          
+          <!-- Search Widget -->
+          <div class="blog-sidebar-box">
+            <h4 class="widget-heading"><i class="bi bi-search me-2"></i>Search Articles</h4>
+            <form method="get" action="{% url 'core:blog' %}">
+              <div class="input-group">
+                <input type="text" name="q" value="{{ request.GET.q|default:'' }}" placeholder="Search health topics..." class="form-control">
+                <button type="submit" class="btn btn-success"><i class="bi bi-search"></i></button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Categories Widget -->
+          {% if categories %}
+            <div class="blog-sidebar-box">
+              <h4 class="widget-heading"><i class="bi bi-folder2-open me-2"></i>Categories</h4>
+              <div class="category-list">
+                <a href="{% url 'core:blog' %}" class="category-link-item {% if not request.GET.category %}active{% endif %}">
+                  <span>All Categories</span>
+                  <i class="bi bi-chevron-right"></i>
+                </a>
+                {% for category in categories %}
+                  <a href="{% url 'core:blog' %}?category={{ category|urlencode }}" class="category-link-item {% if request.GET.category == category %}active{% endif %}">
+                    <span>{{ category }}</span>
+                    <i class="bi bi-chevron-right"></i>
+                  </a>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Recent Posts Widget -->
+          {% if recent_posts %}
+            <div class="blog-sidebar-box">
+              <h4 class="widget-heading"><i class="bi bi-clock-history me-2"></i>Recent Posts</h4>
+              <div>
+                {% for post in recent_posts %}
+                  <a href="{% url 'core:blog_detail' post.slug %}" class="recent-post-row">
+                    <div class="recent-post-thumb">
+                      {% if post.featured_image %}
+                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" onerror="this.onerror=null; this.src='{% static 'assets/img/health/staff-1.webp' %}'">
+                      {% else %}
+                        <img src="{% static 'assets/img/health/staff-1.webp' %}" alt="{{ post.title }}">
+                      {% endif %}
+                    </div>
+                    <div>
+                      <div class="recent-post-title">{{ post.title|truncatewords:8 }}</div>
+                      <div class="recent-post-date"><i class="bi bi-calendar3 me-1"></i>{{ post.published_date|date:"M j, Y" }}</div>
+                    </div>
+                  </a>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Emergency Banner Widget -->
+          <div class="blog-sidebar-box text-center text-white" style="background: linear-gradient(135deg, var(--heading-color) 0%, #03361d 100%);">
+            <i class="bi bi-telephone-fill text-warning mb-2" style="font-size: 2.2rem; display: inline-block;"></i>
+            <h5 class="fw-bold text-white mb-1">Need Urgent Care?</h5>
+            <p class="text-white-50 small mb-3">Our 24/7 emergency trauma wing and hospital triage is always open.</p>
+            <a href="tel:+233531047199" class="btn btn-warning text-dark fw-bold w-100 py-2">
+              <i class="bi bi-phone me-1"></i> +233 531 047 199
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
 {% endblock %}

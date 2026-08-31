@@ -1,257 +1,498 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Departments - Asamang SDA{% endblock %}
+{% block title %}Clinical Departments & Medical Centers | Asamang SDA Hospital{% endblock %}
+{% block meta_description %}Explore our clinical departments and specialized medical wings at Asamang SDA Hospital, including Accident & Emergency, General Surgery, Maternity, Pediatrics, Diagnostics, and more.{% endblock %}
+{% block meta_keywords %}hospital departments ghana, asamang sda hospital departments, maternity ward ashanti, pediatric clinic asamang, surgery department ghana{% endblock %}
 
 {% block body_class %}departments-page{% endblock %}
 
+{% block extra_css %}
+<style>
+  .departments-hero {
+    background: linear-gradient(135deg, rgba(6, 102, 54, 0.04) 0%, rgba(233, 193, 10, 0.05) 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(6, 102, 54, 0.08);
+  }
+
+  .badge-pill-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 1px solid rgba(6, 102, 54, 0.15);
+  }
+
+  .section-tag {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .section-heading-lg {
+    font-family: var(--heading-font);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Department Modern Card */
+  .dept-card-modern {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.35s ease;
+  }
+
+  .dept-card-modern:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 35px rgba(6, 102, 54, 0.12);
+    border-color: rgba(6, 102, 54, 0.25);
+  }
+
+  .dept-img-box {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    background: #f1f5f3;
+    overflow: hidden;
+  }
+
+  .dept-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .dept-card-modern:hover .dept-img-box img {
+    transform: scale(1.06);
+  }
+
+  .dept-tag-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(6, 102, 54, 0.9);
+    color: #ffffff;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .dept-icon-floater {
+    position: absolute;
+    bottom: -22px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: var(--heading-color);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    border: 3px solid #ffffff;
+    transition: all 0.3s ease;
+  }
+
+  .dept-card-modern:hover .dept-icon-floater {
+    background: var(--accent-color);
+    transform: rotate(10deg);
+  }
+
+  .dept-body-wrap {
+    padding: 2rem 1.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .dept-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 0.5rem;
+    font-family: var(--heading-font);
+  }
+
+  .dept-desc {
+    font-size: 0.92rem;
+    color: #555555;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .dept-features-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1.5rem;
+  }
+
+  .dept-pill {
+    background: #f0f5f2;
+    color: var(--heading-color);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 8px;
+  }
+
+  .dept-footer-bar {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
+<main class="main">
 
-  <main class="main">
+  <!-- ==================== HERO / PAGE TITLE ==================== -->
+  <section class="departments-hero">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-8" data-aos="fade-up">
+          <div class="badge-pill-custom mb-3">
+            <i class="bi bi-diagram-3-fill text-success"></i>
+            Clinical Wings & Specialized Centers
+          </div>
+          <h1 class="section-heading-lg mb-3">
+            Specialized Clinical Departments & Centers
+          </h1>
+          <p class="lead text-muted mb-0" style="font-size: 1.15rem; line-height: 1.7;">
+            Our medical departments are equipped with modern diagnostic and therapeutic infrastructure, managed by skilled clinicians dedicated to patient recovery.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
+          <a href="{% url 'core:appointment' %}" class="btn btn-lg text-white fw-bold px-4 py-2" style="background-color: var(--accent-color); border-radius: 10px;">
+            <i class="bi bi-calendar-check me-2"></i>Book Consultation
+          </a>
+        </div>
+      </div>
 
-    <!-- Page Title -->
-    <div class="page-title">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1 class="heading-title">Departments</h1>
-              <p class="mb-0">
-                We are committed to delivering high-quality, patient-centered healthcare through experienced professionals, advanced medical technology, and compassionate service you can rely on.
+      <nav class="breadcrumbs mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+        <ol class="breadcrumb mb-0" style="font-size: 0.9rem;">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none text-muted"><i class="bi bi-house-door me-1"></i>Home</a></li>
+          <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Departments</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ==================== DEPARTMENTS DIRECTORY GRID ==================== -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4">
+
+        <!-- 1. Accident & Emergency -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="dept-card-modern">
+            <div class="dept-img-box">
+              <img src="{% static 'assets/img/health/emergency-1.JPG' %}" alt="Accident and Emergency" onerror="this.onerror=null; this.src='{% static 'assets/img/health/emergency-3.webp' %}'">
+              <span class="dept-tag-badge">Acute Care</span>
+              <div class="dept-icon-floater"><i class="bi bi-truck-front"></i></div>
+            </div>
+            <div class="dept-body-wrap">
+              <h3 class="dept-title">Accident & Emergency (A&E)</h3>
+              <p class="dept-desc">
+                24/7 immediate trauma stabilization, acute resuscitation, triage evaluation, and rapid response ambulance services.
               </p>
+              <div class="dept-features-list">
+                <span class="dept-pill">24/7 Triage</span>
+                <span class="dept-pill">Ambulance Service</span>
+                <span class="dept-pill">Trauma Resuscitation</span>
+              </div>
+              <div class="dept-footer-bar">
+                <a href="tel:+233531047199" class="btn btn-sm text-white fw-bold px-3 py-1" style="background-color: var(--accent-color); border-radius: 8px;">
+                  <i class="bi bi-telephone-fill me-1"></i> Emergency
+                </a>
+                <a href="{% url 'core:appointment' %}?department=Emergency" class="text-decoration-none fw-semibold small text-success">
+                  Book Slot <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- 2. General OPD -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
+          <div class="dept-card-modern">
+            <div class="dept-img-box">
+              <img src="{% static 'assets/img/health/consultation-3.webp' %}" alt="Outpatient Department">
+              <span class="dept-tag-badge">Primary Care</span>
+              <div class="dept-icon-floater"><i class="bi bi-hospital"></i></div>
+            </div>
+            <div class="dept-body-wrap">
+              <h3 class="dept-title">Outpatient Department (OPD)</h3>
+              <p class="dept-desc">
+                General consultations, routine clinical examinations, chronic illness tracking, and preventive family healthcare.
+              </p>
+              <div class="dept-features-list">
+                <span class="dept-pill">General Medicine</span>
+                <span class="dept-pill">Wound Care</span>
+                <span class="dept-pill">Corporate Health</span>
+              </div>
+              <div class="dept-footer-bar">
+                <a href="{% url 'core:appointment' %}?department=General" class="btn btn-sm btn-success fw-bold px-3 py-1" style="border-radius: 8px;">
+                  Book OPD
+                </a>
+                <span class="badge bg-success-subtle text-success">Open Mon - Sun</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Surgical Department -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="dept-card-modern">
+            <div class="dept-img-box">
+              <img src="{% static 'assets/img/health/surg-1.JPG' %}" alt="Surgery Department" onerror="this.onerror=null; this.src='{% static 'assets/img/health/surgery-2.webp' %}'">
+              <span class="dept-tag-badge">Theaters</span>
+              <div class="dept-icon-floater"><i class="bi bi-scissors"></i></div>
+            </div>
+            <div class="dept-body-wrap">
+              <h3 class="dept-title">Surgical & Operating Theaters</h3>
+              <p class="dept-desc">
+                Modern sterile surgical suites performing general, orthopedic, urological, and pediatric surgeries.
+              </p>
+              <div class="dept-features-list">
+                <span class="dept-pill">General Surgery</span>
+                <span class="dept-pill">Urology</span>
+                <span class="dept-pill">Orthopedics</span>
+                <span class="dept-pill">Laparoscopy</span>
+              </div>
+              <div class="dept-footer-bar">
+                <a href="{% url 'core:appointment' %}?department=Surgery" class="btn btn-sm btn-success fw-bold px-3 py-1" style="border-radius: 8px;">
+                  Consult Surgeon
+                </a>
+                <span class="text-muted small">Elective & Emergency</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Obstetrics & Gynaecology -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="250">
+          <div class="dept-card-modern">
+            <div class="dept-img-box">
+              <img src="{% static 'assets/img/health/staff-3.JPG' %}" alt="Obstetrics & Gynaecology" onerror="this.onerror=null; this.src='{% static 'assets/img/health/staff-3.webp' %}'">
+              <span class="dept-tag-badge">Women's Health</span>
+              <div class="dept-icon-floater"><i class="bi bi-gender-female"></i></div>
+            </div>
+            <div class="dept-body-wrap">
+              <h3 class="dept-title">Obstetrics & Gynaecology (Maternity)</h3>
+              <p class="dept-desc">
+                Complete antenatal care, comfortable labor suites, high-risk pregnancy monitoring, and gynecological surgery.
+              </p>
+              <div class="dept-features-list">
+                <span class="dept-pill">Antenatal Care</span>
+                <span class="dept-pill">Labor & Delivery</span>
+                <span class="dept-pill">Postnatal Care</span>
+              </div>
+              <div class="dept-footer-bar">
+                <a href="{% url 'core:appointment' %}?department=Gynecology" class="btn btn-sm btn-success fw-bold px-3 py-1" style="border-radius: 8px;">
+                  Book Maternity
+                </a>
+                <span class="badge bg-primary-subtle text-primary">24/7 Delivery</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Paediatrics & Child Health -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="dept-card-modern">
+            <div class="dept-img-box">
+              <img src="{% static 'assets/img/health/pediatrics-2.webp' %}" alt="Paediatrics Department">
+              <span class="dept-tag-badge">Child Health</span>
+              <div class="dept-icon-floater"><i class="bi bi-person-hearts"></i></div>
+            </div>
+            <div class="dept-body-wrap">
+              <h3 class="dept-title">Paediatrics & Neonatal Care (NICU)</h3>
+              <p class="dept-desc">
+                Specialized medical care for newborns, infants, children, and teens with fully equipped NICU incubators.
+              </p>
+              <div class="dept-features-list">
+                <span class="dept-pill">NICU Incubators</span>
+                <span class="dept-pill">Immunization</span>
+                <span class="dept-pill">Child Welfare</span>
+              </div>
+              <div class="dept-footer-bar">
+                <a href="{% url 'core:appointment' %}?department=Pediatrics" class="btn btn-sm btn-success fw-bold px-3 py-1" style="border-radius: 8px;">
+                  Book Pediatrician
+                </a>
+                <span class="text-muted small">Specialist Clinic</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Diagnostic Imaging & Radiology -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="350">
+          <div class="dept-card-modern">
+            <div class="dept-img-box">
+              <img src="{% static 'assets/img/health/facilities-3.webp' %}" alt="Radiology Department">
+              <span class="dept-tag-badge">Radiology</span>
+              <div class="dept-icon-floater"><i class="bi bi-file-earmark-medical"></i></div>
+            </div>
+            <div class="dept-body-wrap">
+              <h3 class="dept-title">Diagnostic Imaging & Radiology</h3>
+              <p class="dept-desc">
+                High-resolution digital X-rays, 3D/4D ultrasound scanning, ECG, and echocardiography for prompt diagnostics.
+              </p>
+              <div class="dept-features-list">
+                <span class="dept-pill">Digital X-Ray</span>
+                <span class="dept-pill">Ultrasound</span>
+                <span class="dept-pill">ECG & Echo</span>
+              </div>
+              <div class="dept-footer-bar">
+                <a href="{% url 'core:appointment' %}?department=Diagnostics" class="btn btn-sm btn-success fw-bold px-3 py-1" style="border-radius: 8px;">
+                  Request Scan
+                </a>
+                <span class="badge bg-success-subtle text-success">Same-Day Results</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Laboratory & Blood Bank -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="dept-card-modern">
+            <div class="dept-img-box">
+              <img src="{% static 'assets/img/health/laboratory-3.webp' %}" alt="Clinical Laboratory">
+              <span class="dept-tag-badge">Pathology</span>
+              <div class="dept-icon-floater"><i class="bi bi-droplet"></i></div>
+            </div>
+            <div class="dept-body-wrap">
+              <h3 class="dept-title">Clinical Laboratory & Blood Bank</h3>
+              <p class="dept-desc">
+                Automated clinical testing spanning hematology, biochemistry, microbiology, serology, and blood banking.
+              </p>
+              <div class="dept-features-list">
+                <span class="dept-pill">Hematology</span>
+                <span class="dept-pill">Blood Bank</span>
+                <span class="dept-pill">Biochemistry</span>
+              </div>
+              <div class="dept-footer-bar">
+                <a href="{% url 'core:appointment' %}?department=Lab" class="btn btn-sm btn-success fw-bold px-3 py-1" style="border-radius: 8px;">
+                  Lab Booking
+                </a>
+                <span class="badge bg-info-subtle text-info">24/7 Testing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Ophthalmology & Eye Clinic -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="450">
+          <div class="dept-card-modern">
+            <div class="dept-img-box">
+              <img src="{% static 'assets/img/health/consultation-4.webp' %}" alt="Eye Clinic">
+              <span class="dept-tag-badge">Eye Care</span>
+              <div class="dept-icon-floater"><i class="bi bi-eye"></i></div>
+            </div>
+            <div class="dept-body-wrap">
+              <h3 class="dept-title">Eye Clinic & Ophthalmology</h3>
+              <p class="dept-desc">
+                Cataract evaluation, glaucoma management, visual acuity refraction testing, and optical dispensing.
+              </p>
+              <div class="dept-features-list">
+                <span class="dept-pill">Cataract Care</span>
+                <span class="dept-pill">Glaucoma Screening</span>
+                <span class="dept-pill">Optical Lenses</span>
+              </div>
+              <div class="dept-footer-bar">
+                <a href="{% url 'core:appointment' %}?department=Ophthalmology" class="btn btn-sm btn-success fw-bold px-3 py-1" style="border-radius: 8px;">
+                  Book Eye Exam
+                </a>
+                <span class="text-muted small">Specialist Wing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. Dental Clinic -->
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+          <div class="dept-card-modern">
+            <div class="dept-img-box">
+              <img src="{% static 'assets/img/health/facilities-6.webp' %}" alt="Dental Clinic">
+              <span class="dept-tag-badge">Oral Health</span>
+              <div class="dept-icon-floater"><i class="bi bi-emoji-smile"></i></div>
+            </div>
+            <div class="dept-body-wrap">
+              <h3 class="dept-title">Dental Clinic & Oral Surgery</h3>
+              <p class="dept-desc">
+                Preventive and surgical dental procedures, scaling, extractions, root canals, and oral health hygiene education.
+              </p>
+              <div class="dept-features-list">
+                <span class="dept-pill">Teeth Cleaning</span>
+                <span class="dept-pill">Extractions</span>
+                <span class="dept-pill">Root Canal</span>
+              </div>
+              <div class="dept-footer-bar">
+                <a href="{% url 'core:appointment' %}?department=Dental" class="btn btn-sm btn-success fw-bold px-3 py-1" style="border-radius: 8px;">
+                  Book Dental
+                </a>
+                <span class="text-muted small">Modern Suite</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Departments</li>
-          </ol>
+    </div>
+  </section>
+
+  <!-- ==================== CTA STRIP ==================== -->
+  <section class="py-5 bg-light border-top">
+    <div class="container">
+      <div class="row align-items-center justify-content-between p-4 p-md-5 rounded-4" style="background: linear-gradient(135deg, var(--heading-color) 0%, #03361d 100%); color: #ffffff;">
+        <div class="col-lg-8">
+          <h2 class="fw-bold mb-2 text-white" style="font-family: var(--heading-font); font-size: 2rem;">
+            Need Assistance Choosing a Department?
+          </h2>
+          <p class="text-white-50 mb-0" style="font-size: 1.05rem;">
+            Our front-desk team and outpatient triage clinicians can guide you to the right specialist wing.
+          </p>
         </div>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <!-- Departments Section -->
-    <section id="departments" class="departments section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <!-- Department Item -->
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
-            <div class="department-item">
-              <div class="department-content">
-                <div class="department-header">
-                  <div class="department-icon">
-                    <i class="fas fa-heartbeat"></i>
-                  </div>
-                  <div class="department-info">
-                    <h3>Cardiology</h3>
-                    <span class="department-category">Heart &amp; Vascular</span>
-                  </div>
-                </div>
-                <p>We are committed to delivering high-quality, patient-centered healthcare through experienced professionals, advanced medical technology, and compassionate service you can rely on.</p>
-                <div class="department-features">
-                  <span class="feature-badge">24/7 Emergency</span>
-                  <span class="feature-badge">Advanced Diagnostics</span>
-                </div>
-              </div>
-              <div class="department-image">
-                <img src="{% static 'assets/img/health/cardiology-2.webp' %}" alt="Cardiology Department" class="img-fluid">
-                <div class="department-overlay">
-                  <a href="#" class="department-link">
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Department Item -->
-
-          <!-- Department Item -->
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="200">
-            <div class="department-item">
-              <div class="department-content">
-                <div class="department-header">
-                  <div class="department-icon">
-                    <i class="fas fa-capsule"></i>
-                  </div>
-                  <div class="department-info">
-                    <h3>Pharmaceutical</h3>
-                    <span class="department-category">Brain &amp; Nervous System</span>
-                  </div>
-                </div>
-                <p>We are committed to delivering high-quality, patient-centered healthcare through experienced professionals, advanced medical technology, and compassionate service you can rely on.</p>
-                <div class="department-features">
-                  <span class="feature-badge">MRI Available</span>
-                  <span class="feature-badge">Specialist Team</span>
-                </div>
-              </div>
-              <div class="department-image">
-                <img src="{% static 'assets/img/health/neurology-3.webp' %}" alt="Neurology Department" class="img-fluid">
-                <div class="department-overlay">
-                  <a href="#" class="department-link">
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Department Item -->
-
-          <!-- Department Item -->
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="300">
-            <div class="department-item">
-              <div class="department-content">
-                <div class="department-header">
-                  <div class="department-icon">
-                    <i class="fas fa-bone"></i>
-                  </div>
-                  <div class="department-info">
-                    <h3>Orthopedics</h3>
-                    <span class="department-category">Bones &amp; Joints</span>
-                  </div>
-                </div>
-                <p>We are committed to delivering high-quality, patient-centered healthcare through experienced professionals, advanced medical technology, and compassionate service you can rely on.</p>
-                <div class="department-features">
-                  <span class="feature-badge">Sports Medicine</span>
-                  <span class="feature-badge">Joint Replacement</span>
-                </div>
-              </div>
-              <div class="department-image">
-                <img src="{% static 'assets/img/health/orthopedics-4.webp' %}" alt="Orthopedics Department" class="img-fluid">
-                <div class="department-overlay">
-                  <a href="#" class="department-link">
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Department Item -->
-
-          <!-- Department Item -->
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="400">
-            <div class="department-item">
-              <div class="department-content">
-                <div class="department-header">
-                  <div class="department-icon">
-                    <i class="fas fa-baby"></i>
-                  </div>
-                  <div class="department-info">
-                    <h3>Pediatrics</h3>
-                    <span class="department-category">Children's Health</span>
-                  </div>
-                </div>
-                <p>We are committed to delivering high-quality, patient-centered healthcare through experienced professionals, advanced medical technology, and compassionate service you can rely on.</p>
-                <div class="department-features">
-                  <span class="feature-badge">Child-Friendly</span>
-                  <span class="feature-badge">Vaccination Center</span>
-                </div>
-              </div>
-              <div class="department-image">
-                <img src="{% static 'assets/img/health/pediatrics-2.webp' %}" alt="Pediatrics Department" class="img-fluid">
-                <div class="department-overlay">
-                  <a href="#" class="department-link">
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Department Item -->
-
-          <!-- Department Item -->
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="500">
-            <div class="department-item">
-              <div class="department-content">
-                <div class="department-header">
-                  <div class="department-icon">
-                    <i class="fas fa-microscope"></i>
-                  </div>
-                  <div class="department-info">
-                    <h3>Laboratory</h3>
-                    <span class="department-category">Diagnostic Services</span>
-                  </div>
-                </div>
-                <p>We are committed to delivering high-quality, patient-centered healthcare through experienced professionals, advanced medical technology, and compassionate service you can rely on.</p>
-                <div class="department-features">
-                  <span class="feature-badge">Quick Results</span>
-                  <span class="feature-badge">Digital Reports</span>
-                </div>
-              </div>
-              <div class="department-image">
-                <img src="{% static 'assets/img/health/laboratory-3.webp' %}" alt="Laboratory Department" class="img-fluid">
-                <div class="department-overlay">
-                  <a href="#" class="department-link">
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Department Item -->
-
-          <!-- Department Item -->
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="600">
-            <div class="department-item">
-              <div class="department-content">
-                <div class="department-header">
-                  <div class="department-icon">
-                    <i class="fas fa-heartbeat"></i>
-                  </div>
-                  <div class="department-info">
-                    <h3>Emergency</h3>
-                    <span class="department-category">24/7 Critical Care</span>
-                  </div>
-                </div>
-                <p>We are committed to delivering high-quality, patient-centered healthcare through experienced professionals, advanced medical technology, and compassionate service you can rely on.</p>
-                <div class="department-features">
-                  <span class="feature-badge">Round-the-Clock</span>
-                  <span class="feature-badge">Trauma Center</span>
-                </div>
-              </div>
-              <div class="department-image">
-                <img src="{% static 'assets/img/health/emergency-4.webp' %} " alt="Emergency Department" class="img-fluid">
-                <div class="department-overlay">
-                  <a href="#" class="department-link">
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Department Item -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Departments Section -->
-
-  </main>
-
-        <!-- </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
-        </div>
-
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Obs and Gynaecology</a></li>
-            <li><a href="#">Orthopedics</a></li>
-            <li><a href="#">Paediatrics</a>  
-          </ul> -->
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+          <a href="{% url 'core:appointment' %}" class="btn btn-warning text-dark fw-bold px-4 py-2 me-2">
+            <i class="bi bi-calendar-plus me-1"></i> Book Appointment
+          </a>
+          <a href="tel:+233531047199" class="btn btn-outline-light px-3 py-2">
+            <i class="bi bi-telephone-fill me-1"></i> +233 531 047 199
+          </a>
         </div>
       </div>
     </div>
-{% endblock %}
+  </section>
 
-{% block extra_js %}
-<!-- Additional JavaScript specific to departments page can go here -->
+</main>
 {% endblock %}

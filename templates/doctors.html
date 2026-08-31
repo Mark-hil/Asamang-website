@@ -1,421 +1,504 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Our Expert Doctors | Asamang SDA Hospital{% endblock %}
-{% block meta_description %}Meet our team of experienced and dedicated doctors at Asamang SDA Hospital. View profiles, check specializations, and book appointments online.{% endblock %}
-{% block meta_keywords %}doctors asamang sda hospital, medical specialists ghana, book doctor appointment ashanti region, top doctors ghana, surgeons asamang{% endblock %}
+{% block title %}Our Medical Doctors & Specialist Consultants | Asamang SDA Hospital{% endblock %}
+{% block meta_description %}Meet our team of licensed physicians, surgeons, pediatricians, obstetricians, and clinical specialists at Asamang SDA Hospital in Sekyere South District, Ashanti Region.{% endblock %}
+{% block meta_keywords %}doctors asamang sda hospital, medical specialists ghana, book doctor appointment ashanti region, top doctors ghana, surgeons asamang, pediatricians ghana{% endblock %}
 
 {% block body_class %}doctors-page{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+<style>
+  .doctors-hero {
+    background: linear-gradient(135deg, rgba(6, 102, 54, 0.04) 0%, rgba(233, 193, 10, 0.05) 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(6, 102, 54, 0.08);
+  }
 
-  <main class="main">
-    <!-- Page Title -->
-    <div class="page-title">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1 class="heading-title">Our Expert Doctors</h1>
-              <p class="mb-0">
-                Our doctors are committed to providing the highest quality care to our patients.
-              </p>
-              <div class="section-header d-flex justify-content-between align-items-center">
-                {% if user.is_staff %}
-                  <a href="{% url 'core:doctor_create' %}" class="btn btn-primary">
-                    <i class="bi bi-plus-lg me-1"></i> Add New Doctor
-                  </a>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="{% url 'core:home' %}">Home</a></li>
-            <li class="current">Doctors</li>
-          </ol>
-        </div>
-      </nav>
-    </div><!-- End Page Title -->
+  .badge-pill-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 1px solid rgba(6, 102, 54, 0.15);
+  }
 
-    <!-- Doctors Section -->
-    <section id="doctors" class="doctors section">
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <!-- Filterable Doctor Directory -->
-        <div class="doctor-directory mb-5">
-          <div class="directory-bar p-3 p-md-4 rounded-3">
-            <form method="get" action="{% url 'core:doctors' %}" class="row g-3 align-items-center">
-              <div class="col-lg-4">
-                <label for="search" class="form-label mb-1">Search Doctors</label>
-                <div class="position-relative">
-                  <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                  <input type="text" 
-                         id="search" 
-                         name="search" 
-                         class="form-control ps-4" 
-                         placeholder="Search by name or specialization..."
-                         value="{{ request.GET.search|default:'' }}">
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <label for="specialization" class="form-label mb-1">Specialization</label>
-                <select class="form-select" id="specialization" name="specialization">
-                  <option value="">All Specializations</option>
-                  {% for value, label in specializations %}
-                    <option value="{{ value }}" {% if request.GET.specialization == value|stringformat:'s' %}selected{% endif %}>
-                      {{ label }}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="col-lg-3 d-flex align-items-end">
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="availability" name="available" value="true" {% if request.GET.available == 'true' %}checked{% endif %}>
-                  <label class="form-check-label" for="availability">Show Available Only</label>
-                </div>
-              </div>
-              <div class="col-lg-2 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary w-100">
-                  <i class="bi bi-funnel me-2"></i>Filter
-                </button>
-              </div>
-            </form>
-          </div>
+  .section-tag {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    display: block;
+  }
 
-          <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-            <ul class="directory-filters isotope-filters" data-aos="fade-up" data-aos-delay="200">
-              <li data-filter="*" class="filter-active">All</li>
-              {% for value, label in specializations %}
-                <li data-filter=".filter-{{ value|lower }}">{{ label }}</li>
-              {% endfor %}
-            </ul><!-- End Directory Filters -->
+  .section-heading-lg {
+    font-family: var(--heading-font);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
 
-            <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="300">
-              {% for doctor in doctors %}
-                <div class="col-lg-3 col-md-6 doctor-item isotope-item filter-{{ doctor.specialization|lower }}">
-                  <article class="doctor-card h-100">
-                    <figure class="doctor-media">
-                      {% if doctor.image %}
-                        <img src="{{ doctor.image.url }}" class="img-fluid" alt="{{ doctor.name }}" loading="lazy" onerror="this.onerror=null; this.src='{% static 'assets/img/health/staff-1.webp' %}'">
-                      {% else %}
-                        <img src="{% static 'assets/img/health/staff-1.webp' %}" class="img-fluid" alt="{{ doctor.name }}" loading="lazy">
-                      {% endif %}
-                      {% if doctor.experience >= 10 %}
-                        <span class="tag">Senior Consultant</span>
-                      {% elif doctor.experience < 3 %}
-                        <span class="tag alt">New</span>
-                      {% endif %}
-                    </figure>
-                    <div class="doctor-content">
-                      <h3 class="doctor-name">Dr. {{ doctor.name }}</h3>
-                      <p class="doctor-title">{{ doctor.specialization }} • {{ doctor.qualifications }}</p>
-                      <p class="doctor-desc">{{ doctor.bio|truncatewords:15|default:"No bio available." }}</p>
-                      <div class="doctor-meta">
-                        <span class="badge dept">{{ doctor.specialization }}</span>
-                        <span class="badge ms-2 {% if doctor.is_available %}bg-success{% else %}bg-secondary{% endif %}">
-                          {% if doctor.is_available %}Available{% else %}Not Available{% endif %}
-                        </span>
-                      </div>
-                      <div class="doctor-actions mt-3">
-                        {% if user.is_staff %}
-                          <div class="admin-actions mb-2">
-                            <a href="{% url 'core:doctor_update' slug=doctor.slug %}" class="btn btn-sm btn-warning me-1">
-                              <i class="bi bi-pencil"></i> Edit
-                            </a>
-                            <a href="{% url 'core:doctor_delete' slug=doctor.slug %}" class="btn btn-sm btn-danger">
-                              <i class="bi bi-trash"></i> Delete
-                            </a>
-                          </div>
-                        {% endif %}
-                        <div class="user-actions d-flex flex-wrap gap-2">
-                          <a href="{% url 'core:appointment' %}?doctor={{ doctor.id }}" class="btn btn-sm btn-appointment flex-grow-1 text-nowrap">
-                            <i class="bi bi-calendar-plus"></i> Book Appointment
-                          </a>
-                          <a href="{% url 'core:doctor_detail' slug=doctor.slug %}" class="btn btn-sm btn-outline-primary flex-grow-1 text-nowrap">
-                            <i class="bi bi-person-lines-fill"></i> View Profile
-                          </a>
-                        </div>
-                      </div>
-                      <!-- {% if doctor.consultation_fee > 0 %}
-                        <div class="consultation-fee mt-2">
-                          <small class="text-muted">Consultation: GHC {{ doctor.consultation_fee }}</small>
-                        </div>
-                      {% endif %} -->
-                      <div class="doctor-schedule mt-2">
-                        <small class="text-muted">
-                          <i class="bi bi-calendar-week me-1"></i> {{ doctor.available_days }}
-                        </small><br>
-                        <small class="text-muted">
-                          <i class="bi bi-clock me-1"></i> {{ doctor.available_time }}
-                        </small>
-                      </div>
-                    </div>
-                  </article>
-                </div><!-- End Directory Item -->
-              {% empty %}
-                <div class="col-12 text-center py-5">
-                  <div class="alert alert-info">
-                    <i class="bi bi-info-circle me-2"></i> No doctors found matching your criteria.
-                  </div>
-                  <a href="{% url 'core:doctors' %}" class="btn btn-outline-primary mt-3">
-                    Clear Filters
-                  </a>
-                </div>
-              {% endfor %}
-            </div><!-- End Directory Items Container -->
+  /* Doctor Search & Filter Card */
+  .doctor-filter-box {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 1.75rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(6, 102, 54, 0.1);
+    margin-bottom: 2.5rem;
+  }
 
-            <!-- Pagination -->
-            {% if is_paginated %}
-            <div class="pagination justify-content-center mt-5">
-              <ul class="pagination">
-                {% if page_obj.has_previous %}
-                  <li class="page-item">
-                    <a class="page-link" href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.specialization %}&specialization={{ request.GET.specialization }}{% endif %}{% if request.GET.available %}&available={{ request.GET.available }}{% endif %}">
-                      &laquo; First
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.specialization %}&specialization={{ request.GET.specialization }}{% endif %}{% if request.GET.available %}&available={{ request.GET.available }}{% endif %}">
-                      Previous
-                    </a>
-                  </li>
-                {% endif %}
+  /* Doctor Profile Card */
+  .doctor-card-modern {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.35s ease;
+    position: relative;
+  }
 
-                {% for num in page_obj.paginator.page_range %}
-                  {% if page_obj.number == num %}
-                    <li class="page-item active">
-                      <span class="page-link">{{ num }}</span>
-                    </li>
-                  {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                    <li class="page-item">
-                      <a class="page-link" href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.specialization %}&specialization={{ request.GET.specialization }}{% endif %}{% if request.GET.available %}&available={{ request.GET.available }}{% endif %}">
-                        {{ num }}
-                      </a>
-                    </li>
-                  {% endif %}
-                {% endfor %}
+  .doctor-card-modern:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgba(6, 102, 54, 0.12);
+    border-color: rgba(6, 102, 54, 0.25);
+  }
 
-                {% if page_obj.has_next %}
-                  <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.specialization %}&specialization={{ request.GET.specialization }}{% endif %}{% if request.GET.available %}&available={{ request.GET.available }}{% endif %}">
-                      Next
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.specialization %}&specialization={{ request.GET.specialization }}{% endif %}{% if request.GET.available %}&available={{ request.GET.available }}{% endif %}">
-                      Last &raquo;
-                    </a>
-                  </li>
-                {% endif %}
-              </ul>
-            </div>
-            {% endif %}
-          </div>
-        </div><!-- End Filterable Doctor Directory -->
+  .doctor-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 290px;
+    background: #f1f5f3;
+    overflow: hidden;
+  }
 
-        <!-- Single Doctor Profile -->
-        <div class="single-profile mt-5">
-          <div class="row align-items-center g-4">
-            <div class="col-lg-5" data-aos="fade-right" data-aos-delay="150">
-              <div class="profile-media">
-                <img src="{% static 'assets/img/health/staff-12.webp' %}" class="img-fluid" alt="Dr. Natalia Rivera">
-                <div class="availability">
-                  <i class="bi bi-circle-fill me-1"></i> Available this week
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-7" data-aos="fade-left" data-aos-delay="200">
-              <div class="profile-content">
-                <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
-                  <span class="badge role">Chief Surgeon</span>
-                  <span class="badge years">12+ Years Experience</span>
-                  <span class="badge cert">Board Certified</span>
-                </div>
-                <h3 class="name mb-1">Dr. Natalia Rivera</h3>
-                <p class="title mb-3">General Surgery • MD, FACS</p>
-                <p class="bio mb-3">Commodo incididunt aliqua minim, eiusmod in laboris nulla. Amet do occaecat quis, excepteur in magna id dolore incididunt. Tempor in aute ullamco, irure officia aliqua nostrud.</p>
-                <ul class="list-unstyled highlights mb-4">
-                  <li><i class="bi bi-mortarboard"></i> Residency: St. Mary’s Medical Center</li>
-                  <li><i class="bi bi-hospital"></i> Fellowship: Advanced Laparoscopy</li>
-                  <li><i class="bi bi-award"></i> Publications: 14 peer-reviewed articles</li>
-                </ul>
-                <!-- <div class="d-flex flex-wrap gap-2">
-                  <a href="#" class="btn btn-appointment"><i class="bi bi-calendar2-check me-1"></i> Book Appointment</a>
-                  <a href="#" class="btn btn-soft"><i class="bi bi-file-earmark-text me-1"></i> View CV</a>
-                </div> -->
-              </div>
-            </div>
-          </div>
-        </div><!-- End Single Doctor Profile -->
+  .doctor-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.4s ease;
+  }
 
-        <!-- Minimal Card / Compact View -->
-        <div class="compact-view mt-5">
-          <div class="row g-3">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="100">
-              <div class="minimal-card text-center">
-                <img src="{% static 'assets/img/health/staff-2.webp' %}" alt="Dr. Oliver Hayes" class="avatar img-fluid" loading="lazy">
-                <div class="info">
-                  <h4 class="mb-0">Dr. Oliver Hayes</h4>
-                  <small> Pediatrics </small>
-                </div>
-              </div>
-            </div><!-- End Minimal Item -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="150">
-              <div class="minimal-card text-center">
-                <img src="{% static 'assets/img/health/staff-7.webp' %}" alt="Dr. Noah Turner" class="avatar img-fluid" loading="lazy">
-                <div class="info">
-                  <h4 class="mb-0">Dr. Noah Turner</h4>
-                  <small> Pediatrics </small>
-                </div>
-              </div>
-            </div><!-- End Minimal Item -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="200">
-              <div class="minimal-card text-center">
-                <img src="{% static 'assets/img/health/staff-6.webp' %}" alt="Dr. Liam Carter" class="avatar img-fluid" loading="lazy">
-                <div class="info">
-                  <h4 class="mb-0">Dr. Liam Carter</h4>
-                  <small> Orthopedics </small>
-                </div>
-              </div>
-            </div><!-- End Minimal Item -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="250">
-              <div class="minimal-card text-center">
-                <img src="{% static 'assets/img/health/staff-3.webp' %}" alt="Dr. Amelia Brooks" class="avatar img-fluid" loading="lazy">
-                <div class="info">
-                  <h4 class="mb-0">Dr. Amelia Brooks</h4>
-                  <small> Cardiology </small>
-                </div>
-              </div>
-            </div><!-- End Minimal Item -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="300">
-              <div class="minimal-card text-center">
-                <img src="{% static 'assets/img/health/staff-9.webp' %}" alt="Dr. Harper Lane" class="avatar img-fluid" loading="lazy">
-                <div class="info">
-                  <h4 class="mb-0">Dr. Harper Lane</h4>
-                  <small> Dermatology </small>
-                </div>
-              </div>
-            </div><!-- End Minimal Item -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="350">
-              <div class="minimal-card text-center">
-                <img src="{% static 'assets/img/health/staff-11.webp' %}" alt="Dr. Lucas Grant" class="avatar img-fluid" loading="lazy">
-                <div class="info">
-                  <h4 class="mb-0">Dr. Lucas Grant</h4>
-                  <small> Pulmonology </small>
-                </div>
-              </div>
-            </div><!-- End Minimal Item -->
-          </div>
-        </div><!-- End Minimal / Compact -->
+  .doctor-card-modern:hover .doctor-img-wrap img {
+    transform: scale(1.04);
+  }
 
-        <!-- Doctor Profile with Tabs -->
-        <div class="profile-tabs mt-5">
-          <div class="row g-4">
-            <div class="col-lg-4" data-aos="fade-right" data-aos-delay="150">
-              <div class="tab-profile-card">
-                <img src="{% static 'assets/img/health/staff-4.webp' %}" class="img-fluid rounded-3" alt="Dr. Henry James" loading="lazy">
-                <div class="pt-3">
-                  <h3 class="mb-1">Dr. Henry James</h3>
-                  <p class="mb-2">Oncology • MBBS, MD</p>
-                  <div class="d-flex gap-2">
-                    <span class="badge cert">Board Certified</span>
-                    <span class="badge years">8 Years</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-8" data-aos="fade-left" data-aos-delay="200">
-              <ul class="nav nav-pills mb-3" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#health-doctors-3-tab-1" type="button" role="tab" aria-controls="health-doctors-3-tab-1" aria-selected="true">Bio</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#health-doctors-3-tab-2" type="button" role="tab" aria-controls="health-doctors-3-tab-2" aria-selected="false">Schedule</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#health-doctors-3-tab-3" type="button" role="tab" aria-controls="health-doctors-3-tab-3" aria-selected="false">Reviews</button>
-                </li>
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane fade show active" id="health-doctors-3-tab-1" role="tabpanel">
-                  <p>Fugiat proident aliqua laboris, excepteur sunt ad pariatur occaecat. Veniam minim eu laboris, magna irure velit anim excepteur exercitation.</p>
-                  <ul class="list-unstyled mb-0">
-                    <li><i class="bi bi-check2-circle me-1"></i> Special interest in immunotherapy</li>
-                    <li><i class="bi bi-check2-circle me-1"></i> Member of ASCO</li>
-                    <li><i class="bi bi-check2-circle me-1"></i> Community outreach programs</li>
-                  </ul>
-                </div>
-                <div class="tab-pane fade" id="health-doctors-3-tab-2" role="tabpanel">
-                  <div class="schedule-grid">
-                    <div class="row g-2">
-                      <div class="col-6">
-                        <div class="slot">
-                          <strong>Mon</strong>
-                          <span>9:00 AM - 1:00 PM</span>
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="slot">
-                          <strong>Tue</strong>
-                          <span>12:00 PM - 6:00 PM</span>
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="slot">
-                          <strong>Wed</strong>
-                          <span>9:00 AM - 3:00 PM</span>
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="slot">
-                          <strong>Thu</strong>
-                          <span>10:00 AM - 4:00 PM</span>
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="slot">
-                          <strong>Fri</strong>
-                          <span>Closed</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mt-3">
-                    <a href="#" class="btn btn-appointment"><i class="bi bi-calendar-event me-1"></i> Reserve a Slot</a>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="health-doctors-3-tab-3" role="tabpanel">
-                  <div class="review">
-                    <div class="d-flex align-items-center mb-2">
-                      <div class="stars text-warning me-2">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-half"></i>
-                      </div>
-                      <small>4.5/5 • 32 reviews</small>
-                    </div>
-                    <p class="mb-0">Id magna consequat minim in, lorem dolore fugiat. Officia irure ex anim, velit nulla cupidatat laboris enim.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div><!-- End Doctor Profile with Tabs -->
+  .doctor-status-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+  }
 
-      </div>
+  .doctor-status-badge.available {
+    background: rgba(255, 255, 255, 0.95);
+    color: #198754;
+    border: 1px solid #198754;
+  }
 
-    </section><!-- /Doctors Section -->
+  .doctor-status-badge.unavailable {
+    background: rgba(255, 255, 255, 0.95);
+    color: #6c757d;
+    border: 1px solid #ced4da;
+  }
 
-  </main>
+  .status-pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #198754;
+    display: inline-block;
+    animation: pulse 1.5s infinite;
+  }
 
+  .doctor-exp-badge {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    background: rgba(6, 102, 54, 0.9);
+    color: #ffffff;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .doctor-info-wrap {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .doctor-specialty-pill {
+    align-self: flex-start;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+  }
+
+  .doctor-card-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 0.35rem;
+    font-family: var(--heading-font);
+  }
+
+  .doctor-qualifications {
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .doctor-short-bio {
+    font-size: 0.9rem;
+    color: #555555;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+
+  .doctor-schedule-box {
+    background: #f8faf9;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    margin-bottom: 1.25rem;
+    font-size: 0.82rem;
+    color: #555555;
+  }
+
+  .doctor-card-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-book-doc {
+    background: var(--heading-color);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-grow: 1;
+    transition: all 0.3s ease;
+  }
+
+  .btn-book-doc:hover {
+    background: var(--accent-color);
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  .btn-profile-doc {
+    background: transparent;
+    color: var(--heading-color);
+    border: 1px solid rgba(6, 102, 54, 0.3);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .btn-profile-doc:hover {
+    background: rgba(6, 102, 54, 0.06);
+    color: var(--heading-color);
+  }
+
+  /* Admin Action Buttons */
+  .doc-admin-bar {
+    padding: 8px 14px;
+    background: #fff8e1;
+    border-top: 1px solid #ffe082;
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+</style>
 {% endblock %}
 
-{% block extra_js %}
-<!-- Additional JavaScript specific to doctors page can go here -->
-<script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+{% block content %}
+<main class="main">
+
+  <!-- ==================== HERO / PAGE TITLE ==================== -->
+  <section class="doctors-hero">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-8" data-aos="fade-up">
+          <div class="badge-pill-custom mb-3">
+            <i class="bi bi-people-fill text-success"></i>
+            Multidisciplinary Medical Specialists & Consultants
+          </div>
+          <h1 class="section-heading-lg mb-3">
+            Our Qualified Doctors & Clinical Specialists
+          </h1>
+          <p class="lead text-muted mb-0" style="font-size: 1.15rem; line-height: 1.7;">
+            Our board-certified physicians, surgeons, pediatricians, obstetricians, and family medical doctors provide patient-first clinical care at Asamang SDA Hospital.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
+          {% if user.is_staff %}
+            <a href="{% url 'core:doctor_create' %}" class="btn btn-success px-4 py-2 fw-semibold shadow-sm me-2">
+              <i class="bi bi-person-plus-fill me-1"></i> Add Doctor
+            </a>
+          {% endif %}
+          <a href="{% url 'core:appointment' %}" class="btn text-white px-4 py-2 fw-semibold shadow-sm" style="background-color: var(--accent-color); border-radius: 10px;">
+            <i class="bi bi-calendar-check me-1"></i> Book Appointment
+          </a>
+        </div>
+      </div>
+
+      <nav class="breadcrumbs mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+        <ol class="breadcrumb mb-0" style="font-size: 0.9rem;">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none text-muted"><i class="bi bi-house-door me-1"></i>Home</a></li>
+          <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Our Doctors</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ==================== DOCTOR SEARCH & DIRECTORY ==================== -->
+  <section class="py-5">
+    <div class="container">
+      
+      <!-- Filter Bar -->
+      <div class="doctor-filter-box" data-aos="fade-up">
+        <form method="get" action="{% url 'core:doctors' %}" class="row g-3 align-items-center">
+          <div class="col-lg-4 col-md-6">
+            <label for="search" class="form-label small fw-bold text-muted mb-1">Search Doctor / Specialty</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+              <input type="text" 
+                     id="search" 
+                     name="search" 
+                     class="form-control border-start-0 ps-0" 
+                     placeholder="Search by doctor name or qualification..."
+                     value="{{ request.GET.search|default:'' }}">
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <label for="specialization" class="form-label small fw-bold text-muted mb-1">Clinical Department</label>
+            <select class="form-select" id="specialization" name="specialization">
+              <option value="">All Specializations</option>
+              {% for value, label in specializations %}
+                <option value="{{ value }}" {% if request.GET.specialization == value|stringformat:'s' %}selected{% endif %}>
+                  {{ label }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-lg-2 col-md-6">
+            <label class="form-label small fw-bold text-muted mb-1 d-block">Duty Status</label>
+            <div class="form-check form-switch pt-1">
+              <input class="form-check-input" type="checkbox" id="availability" name="available" value="true" {% if request.GET.available == 'true' %}checked{% endif %}>
+              <label class="form-check-label small fw-semibold" for="availability">Available Only</label>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 d-flex gap-2">
+            <button type="submit" class="btn btn-success fw-bold flex-grow-1" style="border-radius: 8px;">
+              <i class="bi bi-funnel me-1"></i> Filter
+            </button>
+            {% if request.GET.search or request.GET.specialization or request.GET.available %}
+              <a href="{% url 'core:doctors' %}" class="btn btn-outline-secondary" title="Clear Filters">
+                <i class="bi bi-x-circle"></i>
+              </a>
+            {% endif %}
+          </div>
+        </form>
+      </div>
+
+      <!-- Doctors Grid -->
+      <div class="row g-4" id="doctors-container">
+        {% for doctor in doctors %}
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|default:1 }}00">
+            <article class="doctor-card-modern">
+              <div class="doctor-img-wrap">
+                {% if doctor.image %}
+                  <img src="{{ doctor.image.url }}" alt="{{ doctor.name }}" loading="lazy" onerror="this.onerror=null; this.src='{% static 'assets/img/health/staff-1.webp' %}'">
+                {% else %}
+                  <img src="{% static 'assets/img/health/staff-1.webp' %}" alt="{{ doctor.name }}" loading="lazy">
+                {% endif %}
+
+                <!-- Availability Badge -->
+                {% if doctor.is_available %}
+                  <div class="doctor-status-badge available">
+                    <span class="status-pulse-dot"></span> On Duty
+                  </div>
+                {% else %}
+                  <div class="doctor-status-badge unavailable">
+                    <i class="bi bi-clock"></i> By Schedule
+                  </div>
+                {% endif %}
+
+                <!-- Experience Badge -->
+                {% if doctor.experience %}
+                  <div class="doctor-exp-badge">
+                    <i class="bi bi-award-fill me-1"></i> {{ doctor.experience }}+ Years Exp.
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="doctor-info-wrap">
+                <span class="doctor-specialty-pill">{{ doctor.get_specialization_display|default:doctor.specialization }}</span>
+                <h3 class="doctor-card-name">Dr. {{ doctor.name }}</h3>
+                <p class="doctor-qualifications">{{ doctor.qualifications|default:"Physician Specialist" }}</p>
+                <p class="doctor-short-bio">
+                  {{ doctor.bio|truncatewords:14|default:"Dedicated specialist offering comprehensive patient consultation and care at Asamang SDA Hospital." }}
+                </p>
+
+                <!-- Schedule Details -->
+                <div class="doctor-schedule-box">
+                  <div class="d-flex align-items-center mb-1">
+                    <i class="bi bi-calendar3 me-2 text-success"></i>
+                    <span><strong>Days:</strong> {{ doctor.available_days|default:"Monday - Friday" }}</span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-clock me-2 text-success"></i>
+                    <span><strong>Hours:</strong> {{ doctor.available_time|default:"8:00 AM - 4:00 PM" }}</span>
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="doctor-card-actions">
+                  <a href="{% url 'core:appointment' %}?doctor={{ doctor.id }}" class="btn-book-doc">
+                    <i class="bi bi-calendar-plus"></i> Book Consultation
+                  </a>
+                  <a href="{% url 'core:doctor_detail' slug=doctor.slug %}" class="btn-profile-doc" title="View Full Profile">
+                    <i class="bi bi-person-lines-fill"></i>
+                  </a>
+                </div>
+              </div>
+
+              {% if user.is_staff %}
+                <div class="doc-admin-bar">
+                  <a href="{% url 'core:doctor_update' slug=doctor.slug %}" class="btn btn-sm btn-outline-warning py-1 px-2">
+                    <i class="bi bi-pencil"></i> Edit
+                  </a>
+                  <a href="{% url 'core:doctor_delete' slug=doctor.slug %}" class="btn btn-sm btn-outline-danger py-1 px-2">
+                    <i class="bi bi-trash"></i> Delete
+                  </a>
+                </div>
+              {% endif %}
+            </article>
+          </div>
+        {% empty %}
+          <div class="col-12 text-center py-5">
+            <div class="card border-0 p-5 shadow-sm rounded-4 mx-auto" style="max-width: 500px;">
+              <i class="bi bi-people text-muted mb-3" style="font-size: 3rem;"></i>
+              <h4 class="fw-bold mb-2">No Doctors Found</h4>
+              <p class="text-muted mb-4">We could not find any doctors matching your search filters.</p>
+              <a href="{% url 'core:doctors' %}" class="btn btn-success fw-bold">
+                <i class="bi bi-arrow-clockwise me-1"></i> Reset All Filters
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Pagination -->
+      {% if is_paginated %}
+        <nav class="d-flex justify-content-center mt-5" aria-label="Doctors pagination">
+          <ul class="pagination">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.specialization %}&specialization={{ request.GET.specialization }}{% endif %}{% if request.GET.available %}&available={{ request.GET.available }}{% endif %}">
+                  <i class="bi bi-chevron-left"></i> Previous
+                </a>
+              </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                <li class="page-item active"><span class="page-link bg-success border-success">{{ num }}</span></li>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.specialization %}&specialization={{ request.GET.specialization }}{% endif %}{% if request.GET.available %}&available={{ request.GET.available }}{% endif %}">
+                    {{ num }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.specialization %}&specialization={{ request.GET.specialization }}{% endif %}{% if request.GET.available %}&available={{ request.GET.available }}{% endif %}">
+                  Next <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+
+    </div>
+  </section>
+
+  <!-- ==================== JOIN OUR CLINICAL TEAM BANNER ==================== -->
+  <section class="py-5 bg-light border-top">
+    <div class="container">
+      <div class="row align-items-center justify-content-between p-4 p-md-5 rounded-4" style="background: linear-gradient(135deg, var(--heading-color) 0%, #03361d 100%); color: #ffffff;">
+        <div class="col-lg-8">
+          <h2 class="fw-bold mb-2 text-white" style="font-family: var(--heading-font); font-size: 2rem;">
+            Seeking a Specialist Consultation?
+          </h2>
+          <p class="text-white-50 mb-0" style="font-size: 1.05rem;">
+            Appointments can be pre-booked online with your preferred physician or walk-in through our 24/7 Outpatient Department (OPD).
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+          <a href="{% url 'core:appointment' %}" class="btn btn-warning text-dark fw-bold px-4 py-2 me-2">
+            <i class="bi bi-calendar-plus me-1"></i> Book Visit
+          </a>
+          <a href="tel:+233531047199" class="btn btn-outline-light px-3 py-2">
+            <i class="bi bi-telephone-fill me-1"></i> Call Clinic
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
 {% endblock %}

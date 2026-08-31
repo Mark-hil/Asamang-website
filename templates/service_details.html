@@ -1,193 +1,219 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Service Details - Asamang SDA{% endblock %}
+{% block title %}Clinical Service Details | Asamang SDA Hospital{% endblock %}
+{% block meta_description %}Explore specialized clinical care, diagnostics, surgeries, and treatments at Asamang SDA Hospital in Sekyere South District, Ghana.{% endblock %}
 
 {% block body_class %}service-details-page{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+<style>
+  .service-detail-hero {
+    background: linear-gradient(135deg, rgba(6, 102, 54, 0.04) 0%, rgba(233, 193, 10, 0.05) 100%);
+    padding: 50px 0 35px;
+    border-bottom: 1px solid rgba(6, 102, 54, 0.08);
+  }
 
-  <main class="main">
+  .service-detail-img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  }
 
-    <!-- Page Title -->
-    <div class="page-title">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1 class="heading-title">Service Details</h1>
-              <p class="mb-0">
-                Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo
-                odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum
-                debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat
-                ipsum dolorem.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Service Details</li>
-          </ol>
-        </div>
-      </nav>
-    </div><!-- End Page Title -->
+  .service-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
 
-    <!-- Service Details 2 Section -->
-    <section id="service-details-2" class="service-details-2 section">
+  .service-feature-item i {
+    color: var(--heading-color);
+    font-size: 1.2rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+  .service-sidebar-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
 
-        <div class="row gy-5">
+  .service-nav-list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-radius: 10px;
+    color: var(--default-color);
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 6px;
+    transition: all 0.25s ease;
+    background: #f8faf9;
+  }
 
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="200">
-            <div class="service-image">
-              <img src="{% static 'assets/img/health/cardiology-3.webp' %}" alt="Cardiology Services" class="img-fluid">
-              <div class="service-tag">
-                <span>Specialized Care</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
-            <div class="service-content">
-              <h2>Comprehensive Cardiology Services</h2>
-              <p class="service-tagline">Advanced heart care with cutting-edge technology and compassionate expertise</p>
-
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-              <div class="service-features">
-                <h4>Our Services Include:</h4>
-                <ul>
-                  <li><i class="bi bi-check-circle"></i> Comprehensive cardiac examinations</li>
-                  <li><i class="bi bi-check-circle"></i> Advanced diagnostic imaging</li>
-                  <li><i class="bi bi-check-circle"></i> Preventive heart screening programs</li>
-                  <li><i class="bi bi-check-circle"></i> Cardiac rehabilitation therapy</li>
-                  <li><i class="bi bi-check-circle"></i> Emergency cardiac intervention</li>
-                  <li><i class="bi bi-check-circle"></i> Post-operative care and monitoring</li>
-                </ul>
-              </div>
-
-              <div class="service-actions">
-                <a href="#" class="btn-primary">Schedule Consultation</a>
-                <a href="#" class="btn-secondary">Learn More</a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row mt-5">
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-card">
-              <div class="card-icon">
-                <i class="bi bi-heart-pulse"></i>
-              </div>
-              <h4>Diagnostic Testing</h4>
-              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-              <a href="#" class="card-link">
-                <span>Book Now</span>
-                <i class="bi bi-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-card">
-              <div class="card-icon">
-                <i class="bi bi-hospital"></i>
-              </div>
-              <h4>Surgical Procedures</h4>
-              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque.</p>
-              <a href="#" class="card-link">
-                <span>Schedule Surgery</span>
-                <i class="bi bi-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-card">
-              <div class="card-icon">
-                <i class="bi bi-shield-check"></i>
-              </div>
-              <h4>Preventive Care</h4>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              <a href="#" class="card-link">
-                <span>Get Screened</span>
-                <i class="bi bi-arrow-right"></i>
-              </a>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row mt-5">
-
-          <div class="col-lg-8" data-aos="fade-right" data-aos-delay="100">
-            <div class="booking-section">
-              <h3>Ready to Schedule Your Appointment?</h3>
-              <p>Our cardiology specialists are available for consultations Monday through Friday. Same-day appointments available for urgent cases.</p>
-
-              <div class="availability-info">
-                <div class="info-item">
-                  <i class="bi bi-clock"></i>
-                  <div>
-                    <strong>Office Hours</strong>
-                    <span>Mon-Fri: 8:00 AM - 6:00 PM</span>
-                  </div>
-                </div>
-                <div class="info-item">
-                  <i class="bi bi-telephone"></i>
-                  <div>
-                    <strong>Emergency Line</strong>
-                    <span>+1 +233 531 047 199 </span>
-                  </div>
-                </div>
-                <div class="info-item">
-                  <i class="bi bi-geo-alt"></i>
-                  <div>
-                    <strong>Location</strong>
-                    <span>123 Medical Center Dr, Boston, MA 02101</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4" data-aos="fade-left" data-aos-delay="200">
-            <div class="appointment-card">
-              <h4>Book Your Visit</h4>
-              <p>Quick and easy online scheduling</p>
-              <a href="appointment.html" class="btn-appointment">Book Appointment</a>
-              <div class="contact-alternative">
-                <span>Or call us at</span>
-                <a href="tel:+233 531 047 199 ">+1 +233 531 047 199 </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section><!-- /Service Details 2 Section -->
-
-  </main>
-
-  
-  </section>
-
-  </main>
-
+  .service-nav-list a:hover,
+  .service-nav-list a.active {
+    background: var(--heading-color);
+    color: #ffffff;
+    padding-left: 20px;
+  }
+</style>
 {% endblock %}
 
-{% block extra_js %}
-<!-- Additional JavaScript specific to service details page can go here -->
+{% block content %}
+<main class="main">
+
+  <!-- ==================== HERO / PAGE TITLE ==================== -->
+  <section class="service-detail-hero">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-8" data-aos="fade-up">
+          <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill mb-2">
+            <i class="bi bi-hospital me-1"></i> Asamang SDA Hospital Specialty Care
+          </span>
+          <h1 class="fw-bold mb-2" style="color: var(--heading-color); font-family: var(--heading-font); font-size: 2.3rem;">
+            Specialized Clinical Services
+          </h1>
+          <p class="text-muted mb-0" style="font-size: 1.1rem;">
+            Delivering advanced clinical expertise, modern diagnostic tools, and compassionate patient-centered healthcare.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0" data-aos="fade-left">
+          <a href="{% url 'core:appointment' %}" class="btn btn-lg text-white fw-bold px-4 py-2" style="background-color: var(--accent-color); border-radius: 10px;">
+            <i class="bi bi-calendar-check me-2"></i>Book Consultation
+          </a>
+        </div>
+      </div>
+
+      <nav class="breadcrumbs mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+        <ol class="breadcrumb mb-0" style="font-size: 0.9rem;">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none text-muted"><i class="bi bi-house-door me-1"></i>Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'core:services' %}" class="text-decoration-none text-muted">Services</a></li>
+          <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Clinical Details</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ==================== DETAILS SECTION ==================== -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-5">
+        
+        <!-- Main Content -->
+        <div class="col-lg-8" data-aos="fade-right">
+          <img src="{% static 'assets/img/health/staff-gr-1.JPG' %}" alt="Asamang Healthcare Services" class="service-detail-img mb-4">
+          
+          <h2 class="fw-bold mb-3" style="color: var(--heading-color); font-family: var(--heading-font);">
+            Specialist-Led Healthcare in Sekyere South
+          </h2>
+
+          <p class="text-muted" style="line-height: 1.8; font-size: 1.05rem;">
+            At Asamang Seventh-day Adventist Hospital, our medical disciplines are structured to deliver complete holistic care — integrating preventive health, accurate diagnostic testing, modern surgical interventions, and dedicated follow-up care.
+          </p>
+
+          <div class="row g-4 my-3">
+            <div class="col-md-6">
+              <div class="p-3 rounded-3 bg-light border">
+                <h5 class="fw-bold text-success mb-2"><i class="bi bi-shield-fill-check me-2"></i>NHIS & Private Insurance</h5>
+                <p class="text-muted small mb-0">We accept national health insurance and leading private health plans for seamless consultations and prescriptions.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="p-3 rounded-3 bg-light border">
+                <h5 class="fw-bold text-danger mb-2"><i class="bi bi-clock-history me-2"></i>24/7 Emergency & ICU</h5>
+                <p class="text-muted small mb-0">Continuous round-the-clock admission, trauma stabilization, and emergency surgical theater capability.</p>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="fw-bold mt-4 mb-3" style="color: var(--heading-color);">What We Offer</h4>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <div class="service-feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <div>
+                  <strong>Comprehensive Physician Consultations</strong>
+                  <p class="text-muted small mb-0">Thorough patient assessment by general practitioners and specialist consultants.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="service-feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <div>
+                  <strong>Digital Imaging & Radiology</strong>
+                  <p class="text-muted small mb-0">Digital X-Ray, 3D/4D Ultrasound scanning, and Electrocardiogram (ECG) on-site.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="service-feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <div>
+                  <strong>Specialized Surgical Theaters</strong>
+                  <p class="text-muted small mb-0">Equipped for general, urological, orthopedic, pediatric, and emergency surgical procedures.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="service-feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <div>
+                  <strong>Maternity & Neonatal Intensive Care</strong>
+                  <p class="text-muted small mb-0">Complete antenatal, postnatal care, labor suites, and NICU incubators for newborns.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-4 text-white my-4" style="background: linear-gradient(135deg, var(--heading-color) 0%, #03361d 100%);">
+            <h4 class="fw-bold text-white mb-2">Need to see a Doctor or Specialist?</h4>
+            <p class="text-white-50 mb-3">Book your appointment online or contact our reception desk for schedule inquiries.</p>
+            <div class="d-flex flex-wrap gap-2">
+              <a href="{% url 'core:appointment' %}" class="btn btn-warning text-dark fw-bold px-4">Book Consultation</a>
+              <a href="{% url 'core:doctors' %}" class="btn btn-outline-light px-3">Meet Doctors</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4" data-aos="fade-left">
+          <div class="service-sidebar-card mb-4">
+            <h5 class="fw-bold mb-3" style="color: var(--heading-color);">Explore Other Departments</h5>
+            <div class="service-nav-list">
+              <a href="{% url 'core:services' %}"><span>General Medicine (OPD)</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="{% url 'core:services' %}"><span>Accident & Emergency (A&E)</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="{% url 'core:services' %}"><span>Surgery & Theaters</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="{% url 'core:services' %}"><span>Maternity & Child Health</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="{% url 'core:services' %}"><span>Eye Clinic & Ophthalmology</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="{% url 'core:services' %}"><span>Dental & Maxillofacial</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="{% url 'core:services' %}"><span>Digital X-Ray & Imaging</span> <i class="bi bi-chevron-right"></i></a>
+              <a href="{% url 'core:services' %}"><span>Laboratory & Blood Bank</span> <i class="bi bi-chevron-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Emergency Direct Box -->
+          <div class="service-sidebar-card text-center" style="background: #fff5f5; border-color: rgba(226, 12, 20, 0.2);">
+            <i class="bi bi-telephone-fill text-danger mb-2" style="font-size: 2.2rem; display: inline-block;"></i>
+            <h5 class="fw-bold text-danger mb-1">24/7 Emergency Line</h5>
+            <p class="text-muted small mb-3">Direct hotline for immediate ambulance dispatch & trauma response.</p>
+            <a href="tel:+233531047199" class="btn btn-danger text-white fw-bold w-100 py-2">
+              <i class="bi bi-phone me-1"></i> +233 531 047 199
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
 {% endblock %}

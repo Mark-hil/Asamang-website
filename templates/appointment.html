@@ -1,480 +1,393 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Appointment - Asamang SDA{% endblock %}
+{% block title %}Book an Appointment | Asamang SDA Hospital{% endblock %}
+{% block meta_description %}Schedule an outpatient or specialist doctor appointment at Asamang SDA Hospital in Sekyere South District, Ashanti Region. Fast, reliable healthcare booking.{% endblock %}
+{% block meta_keywords %}book hospital appointment ghana, doctor appointment asamang, schedule visit ashanti hospital, outpatient booking asamang{% endblock %}
 
 {% block body_class %}appointment-page{% endblock %}
 
-{% block content %}
-  <main class="main">
-    <!-- Page Title -->
-    <div class="page-title">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1 class="heading-title">Book an Appointment</h1>
-              <p class="mb-0">
-                Schedule your visit with our healthcare professionals. Fill out the form below to book your appointment.
-                Our team will get back to you shortly to confirm your booking.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="{% url 'core:home' %}">Home</a></li>
-            <li class="current">Appointment</li>
-          </ol>
-        </div>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <!-- Appointment Section -->
-    <section id="appointment" class="appointment section">
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        {% if messages %}
-          <div class="row justify-content-center mb-4">
-            <div class="col-lg-10">
-              {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                  <i class="bi {% if message.tags == 'success' %}bi-check-circle-fill{% else %}bi-exclamation-triangle-fill{% endif %} me-2"></i>
-                  {{ message }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-              {% endfor %}
-            </div>
-          </div>
-        {% endif %}
-
-        <div class="row justify-content-center">
-          <!-- Main Form Column -->
-          <div class="col-lg-8">
-            <div class="card shadow-sm border-0">
-              <div class="card-header bg-white py-3 border-bottom">
-                <h4 class="mb-0"><i class="bi bi-calendar-plus text-primary me-2"></i>Book Your Appointment</h4>
-                <p class="text-muted mb-0">Fill out the form below to schedule your visit</p>
-              </div>
-              <div class="card-body p-4">
-                <form method="post" id="appointmentForm" class="needs-validation" novalidate>
-                  {% csrf_token %}
-                  
-                  {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                      <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                      {% for error in form.non_field_errors %}
-                        {{ error }}
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-
-                  <div class="row g-3">
-                    <!-- Personal Information -->
-                    <div class="col-12">
-                      <h6 class="text-uppercase text-muted mb-3">Personal Information</h6>
-                    </div>
-                    
-                    <div class="col-md-6">
-                      <div class="form-floating">
-                        {{ form.name }}
-                        <label for="{{ form.name.id_for_label }}"><i class="bi bi-person me-2"></i>Full Name</label>
-                        {% if form.name.errors %}
-                          <div class="invalid-feedback d-block">{{ form.name.errors.0 }}</div>
-                        {% endif %}
-                      </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                      <div class="form-floating">
-                        {{ form.email }}
-                        <label for="{{ form.email.id_for_label }}"><i class="bi bi-envelope me-2"></i>Email Address</label>
-                        {% if form.email.errors %}
-                          <div class="invalid-feedback d-block">{{ form.email.errors.0 }}</div>
-                        {% endif %}
-                      </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                      <div class="form-floating">
-                        {{ form.phone }}
-                        <label for="{{ form.phone.id_for_label }}"><i class="bi bi-telephone me-2"></i>Phone Number</label>
-                        {% if form.phone.errors %}
-                          <div class="invalid-feedback d-block">{{ form.phone.errors.0 }}</div>
-                        {% endif %}
-                      </div>
-                    </div>
-
-                    <!-- Appointment Details -->
-                    <div class="col-12 mt-4">
-                      <h6 class="text-uppercase text-muted mb-3">Appointment Details</h6>
-                    </div>
-                    
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="{{ form.department.id_for_label }}" class="form-label">
-                          <i class="bi bi-building me-2"></i>Department
-                        </label>
-                        {{ form.department }}
-                        {% if form.department.errors %}
-                          <div class="invalid-feedback d-block">{{ form.department.errors.0 }}</div>
-                        {% endif %}
-                      </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="{{ form.doctor.id_for_label }}" class="form-label">
-                          <i class="bi bi-person-badge me-2"></i>Preferred Doctor
-                        </label>
-                        {{ form.doctor }}
-                        {% if form.doctor.errors %}
-                          <div class="invalid-feedback d-block">{{ form.doctor.errors.0 }}</div>
-                        {% endif %}
-                      </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="{{ form.appointment_date.id_for_label }}" class="form-label">
-                          <i class="bi bi-calendar-date me-2"></i>Appointment Date
-                        </label>
-                        {{ form.appointment_date }}
-                        {% if form.appointment_date.errors %}
-                          <div class="invalid-feedback d-block">{{ form.appointment_date.errors.0 }}</div>
-                        {% endif %}
-                      </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="{{ form.appointment_time.id_for_label }}" class="form-label">
-                          <i class="bi bi-clock me-2"></i>Preferred Time
-                        </label>
-                        {{ form.appointment_time }}
-                        {% if form.appointment_time.errors %}
-                          <div class="invalid-feedback d-block">{{ form.appointment_time.errors.0 }}</div>
-                        {% endif %}
-                      </div>
-                    </div>
-                    
-                    <div class="col-12">
-                      <div class="form-group">
-                        <label for="{{ form.message.id_for_label }}" class="form-label">
-                          <i class="bi bi-chat-square-text me-2"></i>Additional Notes
-                        </label>
-                        {{ form.message }}
-                        {% if form.message.errors %}
-                          <div class="invalid-feedback d-block">{{ form.message.errors.0 }}</div>
-                        {% endif %}
-                      </div>
-                    </div>
-                    
-                    <div class="col-12 mt-4">
-                      <button type="submit" class="btn btn-primary btn-lg w-100">
-                        <i class="bi bi-send-check me-2"></i>Book Appointment Now
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Sidebar Column -->
-          <div class="col-lg-4 mt-4 mt-lg-0">
-            <div class="card shadow-sm border-0 h-100">
-              <div class="card-body p-4">
-                <h5 class="mb-4"><i class="bi bi-info-circle text-primary me-2"></i>Appointment Information</h5>
-                
-                <div class="d-flex mb-4">
-                  <div class="icon-box bg-light rounded-circle p-3 me-3">
-                    <i class="bi bi-clock text-primary"></i>
-                  </div>
-                  <div>
-                    <h6 class="mb-1">Working Hours</h6>
-                    <p class="mb-0 text-muted small">Monday - Friday: 8:00 AM - 8:00 PM<br>Saturday: 9:00 AM - 5:00 PM</p>
-                  </div>
-                </div>
-                
-                <div class="d-flex mb-4">
-                  <div class="icon-box bg-light rounded-circle p-3 me-3">
-                    <i class="bi bi-telephone text-primary"></i>
-                  </div>
-                  <div>
-                    <h6 class="mb-1">Emergency</h6>
-                    <p class="mb-0 text-muted small">+233 24 123 4567<br>Available 24/7</p>
-                  </div>
-                </div>
-                
-                <div class="d-flex mb-4">
-                  <div class="icon-box bg-light rounded-circle p-3 me-3">
-                    <i class="bi bi-envelope text-primary"></i>
-                  </div>
-                  <div>
-                    <h6 class="mb-1">Email Us</h6>
-                    <p class="mb-0 text-muted small">appointments@asamanghospital.com<br>We'll respond within 24 hours</p>
-                  </div>
-                </div>
-                
-                <div class="alert alert-light border mt-4">
-                  <h6><i class="bi bi-shield-check text-success me-2"></i>Secure & Confidential</h6>
-                  <p class="small mb-0">Your information is protected and will not be shared with any third parties.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="process-steps mt-5" data-aos="fade-up" data-aos-delay="300">
-        <div class="row text-center gy-4">
-          <div class="col-lg-3 col-md-6">
-            <div class="step-item">
-              <div class="step-number">1</div>
-              <h4>Select Department</h4>
-              <p>Choose the medical department that matches your needs.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="step-item">
-              <div class="step-number">2</div>
-              <h4>Choose Doctor</h4>
-              <p>Select from our team of experienced healthcare professionals.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="step-item">
-              <div class="step-number">3</div>
-              <h4>Pick a Time</h4>
-              <p>Select a convenient date and time for your appointment.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="step-item">
-              <div class="step-number">4</div>
-              <h4>Get Confirmation</h4>
-              <p>Receive instant confirmation of your appointment.</p>
-            </div>
-          </div>
-        </div>
-      </div><!-- End Process Steps -->
-    </section><!-- End Appointment Section -->
-  </main>
-{% endblock %}
-
 {% block extra_css %}
 <style>
-  /* Custom styles for the appointment form */
-  .appointment .card {
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  .appointment-hero {
+    background: linear-gradient(135deg, rgba(6, 102, 54, 0.04) 0%, rgba(233, 193, 10, 0.05) 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(6, 102, 54, 0.08);
   }
-  
-  .appointment .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-  }
-  
-  .appointment .card-header {
-    background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-  }
-  
-  .appointment .form-floating > .form-control:not(:placeholder-shown) ~ label,
-  .appointment .form-floating > .form-control:focus ~ label,
-  .appointment .form-floating > .form-select ~ label,
-  .appointment .form-floating > .form-control:not(:placeholder-shown) ~ label,
-  .appointment .form-floating > .form-control:focus ~ label,
-  .appointment .form-floating > .form-select:not([value=""]) ~ label {
-    opacity: 0.65;
-    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
-  }
-  
-  .appointment .form-floating > label {
-    padding: 0.5rem 0 0 2.5rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .appointment .form-floating > textarea.form-control {
-    height: 120px !important;
-    padding-top: 2rem;
-    padding-bottom: 1rem;
-  }
-  
-  .appointment .form-control:focus,
-  .appointment .form-select:focus {
-    border-color: var(--bs-primary);
-    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.15);
-  }
-  
-  .appointment .btn-primary {
-    padding: 0.8rem 2rem;
+
+  .badge-pill-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    font-size: 0.85rem;
     font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    font-size: 0.9rem;
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 1px solid rgba(6, 102, 54, 0.15);
   }
-  
-  .appointment .icon-box {
-    width: 50px;
-    height: 50px;
+
+  .section-tag {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .section-heading-lg {
+    font-family: var(--heading-font);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+
+  .appointment-form-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(6, 102, 54, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .appointment-form-card {
+      padding: 1.5rem;
+    }
+  }
+
+  .appointment-sidebar-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    height: 100%;
+  }
+
+  .info-icon-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.3rem;
     flex-shrink: 0;
   }
-  
-  .appointment .text-uppercase {
-    letter-spacing: 1px;
-    font-size: 0.8rem;
-    font-weight: 600;
+
+  .step-icon-round {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--brand-gold);
+    color: #000000;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
   }
-  
-  /* Responsive adjustments */
-  @media (max-width: 767.98px) {
-    .appointment .form-floating > label {
-      padding-left: 2.25rem;
-    }
-    
-    .appointment .form-floating > .form-control,
-    .appointment .form-floating > .form-select {
-      padding-left: 2.25rem;
-    }
+
+  .step-box-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.75rem 1.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+    height: 100%;
+    text-align: center;
   }
 </style>
+{% endblock %}
+
+{% block content %}
+<main class="main">
+
+  <!-- ==================== HERO / HEADER ==================== -->
+  <section class="appointment-hero">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-8" data-aos="fade-up">
+          <div class="badge-pill-custom mb-3">
+            <i class="bi bi-calendar2-check-fill text-success"></i>
+            Online Clinic & Specialist Booking
+          </div>
+          <h1 class="section-heading-lg mb-3">
+            Schedule Your Hospital Visit
+          </h1>
+          <p class="lead text-muted mb-0" style="font-size: 1.15rem; line-height: 1.7;">
+            Book an appointment with our specialist physicians and surgeons. Our clinical desk reviews each booking promptly and confirms your slot.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
+          <a href="tel:+233531047199" class="btn btn-lg text-white fw-bold px-4 py-2" style="background-color: var(--accent-color); border-radius: 10px;">
+            <i class="bi bi-telephone-fill me-2"></i>24/7 Urgent Care Call
+          </a>
+        </div>
+      </div>
+
+      <nav class="breadcrumbs mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+        <ol class="breadcrumb mb-0" style="font-size: 0.9rem;">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none text-muted"><i class="bi bi-house-door me-1"></i>Home</a></li>
+          <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Book Appointment</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ==================== APPOINTMENT FORM & SIDEBAR ==================== -->
+  <section class="py-5">
+    <div class="container">
+      
+      {% if messages %}
+        <div class="row justify-content-center mb-4">
+          <div class="col-lg-12">
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show rounded-3 p-3" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="row g-5">
+        
+        <!-- Left: Appointment Form -->
+        <div class="col-lg-8" data-aos="fade-right">
+          <div class="appointment-form-card">
+            <h3 class="fw-bold mb-1" style="color: var(--heading-color); font-family: var(--heading-font);">
+              Patient & Appointment Details
+            </h3>
+            <p class="text-muted small mb-4">Fields marked with an asterisk (*) are required for registration.</p>
+
+            <form method="post" id="appointmentForm">
+              {% csrf_token %}
+
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                  {% for error in form.non_field_errors %}
+                    <p class="mb-0">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <h6 class="fw-bold text-uppercase small text-muted mb-3"><i class="bi bi-person-fill me-1 text-success"></i>1. Patient Information</h6>
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label for="{{ form.name.id_for_label }}" class="form-label small fw-bold text-muted">Full Name *</label>
+                  {{ form.name }}
+                  {% if form.name.errors %}
+                    <div class="text-danger small mt-1">{{ form.name.errors.0 }}</div>
+                  {% endif %}
+                </div>
+                <div class="col-md-6">
+                  <label for="{{ form.phone.id_for_label }}" class="form-label small fw-bold text-muted">Phone Number *</label>
+                  {{ form.phone }}
+                  {% if form.phone.errors %}
+                    <div class="text-danger small mt-1">{{ form.phone.errors.0 }}</div>
+                  {% endif %}
+                </div>
+                <div class="col-12">
+                  <label for="{{ form.email.id_for_label }}" class="form-label small fw-bold text-muted">Email Address *</label>
+                  {{ form.email }}
+                  {% if form.email.errors %}
+                    <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <h6 class="fw-bold text-uppercase small text-muted mb-3"><i class="bi bi-hospital-fill me-1 text-success"></i>2. Clinical Department & Doctor</h6>
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label for="id_department" class="form-label small fw-bold text-muted">Select Department *</label>
+                  {{ form.department }}
+                  {% if form.department.errors %}
+                    <div class="text-danger small mt-1">{{ form.department.errors.0 }}</div>
+                  {% endif %}
+                </div>
+                <div class="col-md-6">
+                  <label for="id_doctor" class="form-label small fw-bold text-muted">Preferred Doctor / Specialist *</label>
+                  {{ form.doctor }}
+                  {% if form.doctor.errors %}
+                    <div class="text-danger small mt-1">{{ form.doctor.errors.0 }}</div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <h6 class="fw-bold text-uppercase small text-muted mb-3"><i class="bi bi-calendar-event-fill me-1 text-success"></i>3. Schedule & Notes</h6>
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label for="{{ form.appointment_date.id_for_label }}" class="form-label small fw-bold text-muted">Appointment Date *</label>
+                  {{ form.appointment_date }}
+                  {% if form.appointment_date.errors %}
+                    <div class="text-danger small mt-1">{{ form.appointment_date.errors.0 }}</div>
+                  {% endif %}
+                </div>
+                <div class="col-md-6">
+                  <label for="{{ form.appointment_time.id_for_label }}" class="form-label small fw-bold text-muted">Preferred Time *</label>
+                  {{ form.appointment_time }}
+                  {% if form.appointment_time.errors %}
+                    <div class="text-danger small mt-1">{{ form.appointment_time.errors.0 }}</div>
+                  {% endif %}
+                </div>
+                <div class="col-12">
+                  <label for="{{ form.message.id_for_label }}" class="form-label small fw-bold text-muted">Medical Reason / Symptoms (Optional)</label>
+                  {{ form.message }}
+                  {% if form.message.errors %}
+                    <div class="text-danger small mt-1">{{ form.message.errors.0 }}</div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-success fw-bold btn-lg w-100 py-3" style="border-radius: 12px;">
+                <i class="bi bi-calendar-check-fill me-2"></i>Confirm & Book Appointment
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right: Information Sidebar -->
+        <div class="col-lg-4" data-aos="fade-left">
+          <div class="appointment-sidebar-card">
+            <h4 class="fw-bold mb-4" style="color: var(--heading-color); font-family: var(--heading-font);">
+              Booking Guidelines
+            </h4>
+
+            <div class="d-flex align-items-start gap-3 mb-4">
+              <div class="info-icon-badge"><i class="bi bi-clock-history"></i></div>
+              <div>
+                <h6 class="fw-bold mb-1">Consultation Hours</h6>
+                <p class="text-muted small mb-0">Monday - Friday: 8:00 AM - 5:00 PM<br>Emergency & Triage: <strong>24/7 Open</strong></p>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-start gap-3 mb-4">
+              <div class="info-icon-badge"><i class="bi bi-shield-check text-success"></i></div>
+              <div>
+                <h6 class="fw-bold mb-1">NHIS & Insurance Cards</h6>
+                <p class="text-muted small mb-0">Please bring your active NHIS card or private health insurance card during check-in.</p>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-start gap-3 mb-4">
+              <div class="info-icon-badge"><i class="bi bi-telephone-fill text-danger"></i></div>
+              <div>
+                <h6 class="fw-bold mb-1">Immediate Emergencies</h6>
+                <p class="text-muted small mb-0">For acute trauma or urgent ambulance dispatch, please call <a href="tel:+233531047199" class="text-danger fw-bold text-decoration-none">+233 531 047 199</a> directly.</p>
+              </div>
+            </div>
+
+            <!-- Emergency Direct Call Card -->
+            <div class="p-3 rounded-3 text-center mt-4" style="background: #fff5f5; border: 1px solid rgba(226, 12, 20, 0.2);">
+              <i class="bi bi-ambulance text-danger fs-3 d-block mb-1"></i>
+              <strong class="text-danger d-block">24/7 Ambulance & Trauma</strong>
+              <small class="text-muted d-block mb-2">Hospital Emergency Helpline</small>
+              <a href="tel:+233531047199" class="btn btn-sm btn-danger fw-bold w-100 py-2">
+                <i class="bi bi-phone me-1"></i> Call +233 531 047 199
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Process Steps -->
+      <div class="row g-4 mt-5 pt-3" data-aos="fade-up">
+        <div class="col-lg-3 col-md-6">
+          <div class="step-box-card">
+            <div class="step-icon-round">1</div>
+            <h5 class="fw-bold mb-2" style="color: var(--heading-color);">Select Specialty</h5>
+            <p class="text-muted small mb-0">Choose the clinical department or specialty you wish to consult.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="step-box-card">
+            <div class="step-icon-round">2</div>
+            <h5 class="fw-bold mb-2" style="color: var(--heading-color);">Choose Doctor</h5>
+            <p class="text-muted small mb-0">Select your preferred physician or assigned specialist consultant.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="step-box-card">
+            <div class="step-icon-round">3</div>
+            <h5 class="fw-bold mb-2" style="color: var(--heading-color);">Pick Date & Time</h5>
+            <p class="text-muted small mb-0">Select a convenient available date and time slot for your appointment.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="step-box-card">
+            <div class="step-icon-round">4</div>
+            <h5 class="fw-bold mb-2" style="color: var(--heading-color);">Receive Confirmation</h5>
+            <p class="text-muted small mb-0">Our hospital reception verifies and confirms your booking details.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
 {% endblock %}
 
 {% block extra_js %}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Get the department and doctor select elements
     const departmentSelect = document.getElementById('id_department');
     const doctorSelect = document.getElementById('id_doctor');
     
-    // Add floating label effect to all form controls
-    const formControls = document.querySelectorAll('.form-floating .form-control, .form-floating .form-select');
-    formControls.forEach(control => {
-      control.addEventListener('focus', function() {
-        this.parentNode.classList.add('focused');
-      });
-      
-      control.addEventListener('blur', function() {
-        if (!this.value) {
-          this.parentNode.classList.remove('focused');
-        }
-      });
-      
-      // Initialize focused state for pre-filled fields
-      if (control.value) {
-        control.parentNode.classList.add('focused');
-      }
-    });
+    // Dynamic doctors map passed from Django backend
+    const doctorsByDept = JSON.parse('{{ doctors_json|escapejs }}' || '{}');
     
-    // Doctors data - in a real app, this would come from an API
-    const doctorsByDepartment = {
-      'Cardiology': [
-        {value: 'Dr. John Smith', text: 'Dr. John Smith'},
-        {value: 'Dr. Sarah Johnson', text: 'Dr. Sarah Johnson'}
-      ],
-      'Neurology': [
-        {value: 'Dr. Michael Brown', text: 'Dr. Michael Brown'},
-        {value: 'Dr. Emily Davis', text: 'Dr. Emily Davis'}
-      ],
-      'Pediatrics': [
-        {value: 'Dr. Robert Wilson', text: 'Dr. Robert Wilson'},
-        {value: 'Dr. Jennifer Lee', text: 'Dr. Jennifer Lee'}
-      ],
-      'Dermatology': [
-        {value: 'Dr. David Miller', text: 'Dr. David Miller'}
-      ],
-      'Orthopedics': [
-        {value: 'Dr. James Wilson', text: 'Dr. James Wilson'},
-        {value: 'Dr. Lisa Taylor', text: 'Dr. Lisa Taylor'}
-      ],
-      'Gastroenterology': [
-        {value: 'Dr. Richard Anderson', text: 'Dr. Richard Anderson'}
-      ],
-      'Ophthalmology': [
-        {value: 'Dr. Patricia Moore', text: 'Dr. Patricia Moore'}
-      ]
-    };
-    
-    // Function to update doctors based on selected department
-    function updateDoctors() {
-      const selectedDepartment = departmentSelect ? departmentSelect.value : '';
+    function updateDoctorOptions() {
+      if (!departmentSelect || !doctorSelect) return;
       
-      // Clear current options and disable the dropdown if no department is selected
-      if (doctorSelect) {
-        doctorSelect.innerHTML = '<option value="">Select a Doctor</option>';
-        
-        if (!selectedDepartment) {
-          doctorSelect.disabled = true;
-          doctorSelect.parentNode.classList.remove('focused');
-          return;
-        }
-        
-        // Enable the doctor dropdown
-        doctorSelect.disabled = false;
-        
-        // Add new options
-        const doctors = doctorsByDepartment[selectedDepartment] || [];
-        doctors.forEach(doctor => {
-          const option = new Option(doctor.text, doctor.value);
-          doctorSelect.add(option);
-        });
-      }
-    }
-    
-    // Add event listener for department change
-    if (departmentSelect) {
-      departmentSelect.addEventListener('change', updateDoctors);
+      const selectedDept = departmentSelect.value;
+      doctorSelect.innerHTML = '<option value="">Select a Doctor</option>';
       
-      // Initial population of doctors if a department is already selected
-      if (departmentSelect.value) {
-        updateDoctors();
-      } else if (doctorSelect) {
-        // Disable doctor dropdown initially if no department is selected
+      if (!selectedDept) {
         doctorSelect.disabled = true;
+        return;
+      }
+      
+      const doctors = doctorsByDept[selectedDept] || [];
+      if (doctors.length > 0) {
+        doctorSelect.disabled = false;
+        doctors.forEach(doc => {
+          const opt = new Option(doc.text, doc.value);
+          doctorSelect.add(opt);
+        });
+      } else {
+        // Fallback option
+        doctorSelect.disabled = false;
+        doctorSelect.add(new Option('Any Available ' + selectedDept + ' Specialist', 'Any ' + selectedDept + ' Specialist'));
       }
     }
     
-    // Form submission handling
-    const form = document.getElementById('appointmentForm');
-    if (form) {
-      // Enable the doctor field before form submission
-      form.addEventListener('submit', function(e) {
-        if (doctorSelect) {
-          doctorSelect.disabled = false;
-        }
-        
-        // Add loading state
-        const submitButton = form.querySelector('button[type="submit"]');
-        if (submitButton) {
-          submitButton.disabled = true;
-          submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
-        }
-      });
+    if (departmentSelect) {
+      departmentSelect.addEventListener('change', updateDoctorOptions);
+      if (departmentSelect.value) {
+        updateDoctorOptions();
+      }
     }
     
-    // Set minimum date for date picker (today)
+    // Prevent selecting past dates
     const dateInput = document.querySelector('input[type="date"]');
     if (dateInput) {
-      const today = new Date().toISOString().split('T')[0];
-      dateInput.min = today;
-    }
-    
-    // Initialize time input with 30-minute intervals
-    const timeInput = document.querySelector('input[type="time"]');
-    if (timeInput) {
-      timeInput.step = '1800'; // 30 minutes in seconds
+      dateInput.min = new Date().toISOString().split('T')[0];
     }
   });
 </script>

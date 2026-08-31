@@ -1,14 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView
 from django.utils import timezone
-from .models import Doctor
+from .models import Doctor, BlogPost
 
 # Home
 def home(request):
     # Get 6 random available doctors
     featured_doctors = Doctor.objects.filter(is_available=True).order_by('?')[:6]
+    latest_posts = BlogPost.objects.filter(status='published').order_by('-published_date')[:3]
     return render(request, "home.html", {
-        'featured_doctors': featured_doctors
+        'featured_doctors': featured_doctors,
+        'latest_posts': latest_posts,
     })
 
 # About
@@ -110,35 +112,29 @@ def appointment(request):
             initial_data['department'] = request.GET.get('department')
         form = AppointmentForm(initial=initial_data)
     
-    # Sample data for the form - in a real app, you'd get this from your database
-    departments = [
-        'Cardiology', 'Neurology', 'Pediatrics', 'Dermatology', 
-        'Orthopedics', 'Gastroenterology', 'Ophthalmology'
-    ]
+    import json
+    departments = [val for val, label in Doctor.SPECIALIZATION_CHOICES]
     
-    doctors = {
-        'Cardiology': ['Dr. John Smith', 'Dr. Sarah Johnson'],
-        'Neurology': ['Dr. Michael Brown', 'Dr. Emily Davis'],
-        'Pediatrics': ['Dr. Robert Wilson', 'Dr. Jennifer Lee'],
-        'Dermatology': ['Dr. David Miller'],
-        'Orthopedics': ['Dr. James Wilson', 'Dr. Lisa Taylor'],
-        'Gastroenterology': ['Dr. Richard Anderson'],
-        'Ophthalmology': ['Dr. Patricia Moore']
-    }
+    doctors_map = {}
+    for doc in Doctor.objects.filter(is_available=True):
+        dept = doc.specialization
+        doctors_map.setdefault(dept, []).append({
+            'value': f"Dr. {doc.name}",
+            'text': f"Dr. {doc.name} - {doc.qualifications or doc.specialization}"
+        })
     
-    # Get the selected department from the form data or initial data
     selected_department = None
     if request.method == 'POST':
         selected_department = request.POST.get('department')
     elif 'department' in request.GET:
         selected_department = request.GET.get('department')
     
-    # Filter doctors based on selected department
-    available_doctors = doctors.get(selected_department, []) if selected_department else []
+    available_doctors = doctors_map.get(selected_department, []) if selected_department else []
     
     return render(request, 'appointment.html', {
         'form': form,
         'departments': departments,
+        'doctors_json': json.dumps(doctors_map),
         'available_doctors': available_doctors,
     })
 

@@ -1,99 +1,271 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Gallery - Asamang SDA{% endblock %}
+{% block title %}Hospital Gallery & Campus Facilities | Asamang SDA Hospital{% endblock %}
+{% block meta_description %}Take a visual tour of Asamang SDA Hospital. Explore our modern clinical suites, diagnostic imaging center, surgical operating rooms, maternity wards, and healthcare staff.{% endblock %}
+{% block meta_keywords %}hospital gallery asamang, healthcare facilities ashanti, medical equipment ghana, hospital tour asamang sda{% endblock %}
 
 {% block body_class %}gallery-page{% endblock %}
 
+{% block extra_css %}
+<style>
+  .gallery-hero {
+    background: linear-gradient(135deg, rgba(6, 102, 54, 0.04) 0%, rgba(233, 193, 10, 0.05) 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(6, 102, 54, 0.08);
+  }
+
+  .badge-pill-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(6, 102, 54, 0.08);
+    color: var(--heading-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 1px solid rgba(6, 102, 54, 0.15);
+  }
+
+  .section-tag {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .section-heading-lg {
+    font-family: var(--heading-font);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+
+  .gallery-card-box {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 260px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    background: #f1f5f3;
+  }
+
+  .gallery-card-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .gallery-card-box:hover img {
+    transform: scale(1.08);
+  }
+
+  .gallery-hover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(6, 102, 54, 0.9) 0%, rgba(6, 102, 54, 0.3) 60%, transparent 100%);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    color: #ffffff;
+    transition: opacity 0.35s ease;
+  }
+
+  .gallery-card-box:hover .gallery-hover-overlay {
+    opacity: 1;
+  }
+
+  .gallery-hover-overlay h5 {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+    color: #ffffff;
+  }
+
+  .gallery-hover-overlay p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 0;
+  }
+
+  .lightbox-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--heading-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .lightbox-btn:hover {
+    background: var(--accent-color);
+    color: #ffffff;
+    transform: scale(1.1);
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-  <!-- Page Title -->
-  <div class="page-title">
-    <div class="heading">
-      <div class="container">
-        <div class="row d-flex justify-content-center text-center">
-          <div class="col-lg-8">
-            <h1 class="heading-title">Gallery</h1>
-            <p class="mb-0">
-              Explore our collection of beautiful moments and memories. 
-              From nature to architecture and people, we've captured it all.
-            </p>
+<main class="main">
+
+  <!-- ==================== HERO / PAGE TITLE ==================== -->
+  <section class="gallery-hero">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-lg-8" data-aos="fade-up">
+          <div class="badge-pill-custom mb-3">
+            <i class="bi bi-images text-success"></i>
+            Campus, Theaters & Medical Units
           </div>
+          <h1 class="section-heading-lg mb-3">
+            Hospital Facilities & Visual Tour
+          </h1>
+          <p class="lead text-muted mb-0" style="font-size: 1.15rem; line-height: 1.7;">
+            Explore photos of our clinical departments, modern laboratory diagnostic instruments, emergency suites, maternity wards, and dedicated healthcare professionals.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
+          {% if user.is_authenticated and user.is_staff %}
+            <a href="{% url 'core:gallery_add' %}" class="btn btn-success fw-bold px-4 py-2 me-2">
+              <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Photo
+            </a>
+          {% endif %}
+          <a href="{% url 'core:appointment' %}" class="btn text-white fw-bold px-4 py-2" style="background-color: var(--accent-color); border-radius: 10px;">
+            <i class="bi bi-calendar-check me-1"></i> Book Visit
+          </a>
         </div>
       </div>
-    </div>
-    <nav class="breadcrumbs">
-      <div class="container">
-        <ol>
-          <li><a href="{% url 'core:home' %}">Home</a></li>
-          <li class="current">Gallery</li>
+
+      <nav class="breadcrumbs mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+        <ol class="breadcrumb mb-0" style="font-size: 0.9rem;">
+          <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-decoration-none text-muted"><i class="bi bi-house-door me-1"></i>Home</a></li>
+          <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Gallery</li>
         </ol>
-      </div>
-    </nav>
-  </div><!-- End Page Title -->
+      </nav>
+    </div>
+  </section>
 
-  <!-- Gallery Section -->
-  <section id="gallery" class="gallery section">
-    <div class="container" data-aos="fade-up" data-aos-delay="100">
-      <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-        <ul class="gallery-filters isotope-filters" data-aos="fade-up" data-aos-delay="200">
-          <li data-filter="*" class="filter-active">All</li>
-          {% for category_value, category_label in categories %}
-            <li data-filter=".filter-{{ category_value|lower }}">{{ category_label }}</li>
-          {% endfor %}
-        </ul>
-
-        {% if user.is_authenticated and user.is_staff %}
-          <div class="text-center mb-4 mt-3" data-aos="fade-up" data-aos-delay="250">
-            <a href="{% url 'core:gallery_add' %}" class="btn btn-primary btn-lg rounded-pill shadow-sm" style="background-color: var(--accent-color, #E60000); border: none;">
-              <i class="bi bi-plus-circle me-2"></i> Add New Image
-            </a>
-          </div>
-        {% endif %}
-
-        <div class="row gallery-grid isotope-container" data-aos="fade-up" data-aos-delay="300">
-          {% for image in gallery_images %}
-            <div class="col-xl-3 col-md-4 col-sm-6 gallery-item isotope-item filter-{{ image.category }}">
-              <div class="gallery-card">
-                <div class="gallery-image">
-                  <img src="{{ image.image.url }}" class="img-fluid" alt="{{ image.title }}" loading="lazy">
-                </div>
-                <div class="gallery-overlay">
-                  <h4>{{ image.title }}</h4>
-                  {% if image.description %}<p>{{ image.description|truncatechars:50 }}</p>{% endif %}
-                  <div class="gallery-actions">
-                    <a href="{{ image.image.url }}" title="{{ image.title }}" class="glightbox" data-gallery="gallery">
-                      <i class="bi bi-eye"></i>
-                    </a>
-                    <a href="{{ image.image.url }}" 
-                       class="glightbox"
-                       data-glightbox="title: {{ image.title }}; description: {{ image.description|default:'' }}; type: image" 
-                       data-description="{{ image.description|default:'' }}" 
-                       title="View Details">
-                      <i class="bi bi-info-circle"></i>
-                    </a>
-                  </div>
-                </div>
+  <!-- ==================== GALLERY GRID ==================== -->
+  <section class="py-5">
+    <div class="container">
+      
+      <div class="row g-4">
+        {% for image in gallery_images %}
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|default:1 }}00">
+            <div class="gallery-card-box">
+              <img src="{{ image.image.url }}" alt="{{ image.title }}" loading="lazy">
+              <div class="gallery-hover-overlay">
+                <a href="{{ image.image.url }}" class="glightbox lightbox-btn" data-gallery="hospital-gallery" title="{{ image.title }}">
+                  <i class="bi bi-zoom-in"></i>
+                </a>
+                <h5>{{ image.title }}</h5>
+                {% if image.description %}
+                  <p>{{ image.description|truncatechars:70 }}</p>
+                {% endif %}
               </div>
             </div>
-          {% empty %}
-            <div class="col-12 text-center py-5">
-              <p>No images found in the gallery.</p>
+          </div>
+        {% empty %}
+          <!-- Fallback showcase if no dynamic gallery items exist yet -->
+          <div class="col-lg-4 col-md-6">
+            <div class="gallery-card-box">
+              <img src="{% static 'assets/img/health/staff-gr-1.JPG' %}" alt="Asamang Medical Staff" loading="lazy">
+              <div class="gallery-hover-overlay">
+                <a href="{% static 'assets/img/health/staff-gr-1.JPG' %}" class="glightbox lightbox-btn" data-gallery="hospital-gallery" title="Medical Staff Team">
+                  <i class="bi bi-zoom-in"></i>
+                </a>
+                <h5>Medical Staff Team</h5>
+                <p>Physicians, specialists, and nurses at Asamang SDA Hospital.</p>
+              </div>
             </div>
-          {% endfor %}
-        </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="gallery-card-box">
+              <img src="{% static 'assets/img/health/emergency-1.JPG' %}" alt="Accident & Emergency" loading="lazy">
+              <div class="gallery-hover-overlay">
+                <a href="{% static 'assets/img/health/emergency-1.JPG' %}" class="glightbox lightbox-btn" data-gallery="hospital-gallery" title="24/7 Emergency Wing">
+                  <i class="bi bi-zoom-in"></i>
+                </a>
+                <h5>24/7 Emergency Wing</h5>
+                <p>Immediate trauma stabilization and triage response.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="gallery-card-box">
+              <img src="{% static 'assets/img/health/surg-1.JPG' %}" alt="Operating Theater" loading="lazy">
+              <div class="gallery-hover-overlay">
+                <a href="{% static 'assets/img/health/surg-1.JPG' %}" class="glightbox lightbox-btn" data-gallery="hospital-gallery" title="Sterile Surgical Suite">
+                  <i class="bi bi-zoom-in"></i>
+                </a>
+                <h5>Sterile Surgical Suite</h5>
+                <p>Equipped for major, minor, and laparoscopic procedures.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="gallery-card-box">
+              <img src="{% static 'assets/img/health/staff-treat-2.JPG' %}" alt="Clinical Treatment" loading="lazy">
+              <div class="gallery-hover-overlay">
+                <a href="{% static 'assets/img/health/staff-treat-2.JPG' %}" class="glightbox lightbox-btn" data-gallery="hospital-gallery" title="Clinical Nursing & Care">
+                  <i class="bi bi-zoom-in"></i>
+                </a>
+                <h5>Clinical Nursing & Care</h5>
+                <p>Compassionate inpatient and outpatient care delivery.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="gallery-card-box">
+              <img src="{% static 'assets/img/health/facilities-3.webp' %}" alt="Diagnostic Facilities" loading="lazy">
+              <div class="gallery-hover-overlay">
+                <a href="{% static 'assets/img/health/facilities-3.webp' %}" class="glightbox lightbox-btn" data-gallery="hospital-gallery" title="Diagnostic Center">
+                  <i class="bi bi-zoom-in"></i>
+                </a>
+                <h5>Diagnostic Center</h5>
+                <p>Digital X-ray imaging, ultrasound, and ECG diagnostics.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="gallery-card-box">
+              <img src="{% static 'assets/img/health/laboratory-3.webp' %}" alt="Clinical Laboratory" loading="lazy">
+              <div class="gallery-hover-overlay">
+                <a href="{% static 'assets/img/health/laboratory-3.webp' %}" class="glightbox lightbox-btn" data-gallery="hospital-gallery" title="Automated Laboratory">
+                  <i class="bi bi-zoom-in"></i>
+                </a>
+                <h5>Automated Laboratory</h5>
+                <p>Fast and accurate pathology and blood analysis.</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
       </div>
+
     </div>
-  </section><!-- /Gallery Section -->
-{% endblock %}
+  </section>
 
-{% block extra_css %}
-  <style>
-    .glightbox-container .gslide-image img {
-      max-height: 80vh;
-      max-width: 90vw;
-      object-fit: contain;
-    }
-  </style>
+</main>
 {% endblock %}
-
-{% block extra_js %}{% endblock %}
